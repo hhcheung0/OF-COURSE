@@ -11,7 +11,7 @@
 - [x] Project Assignment [ 16 Jan. (on Web) ] 
 - [x] Team Formation [ 20 Jan. (23:59:59) ] 
 - [x] High-Level Design Document [ 4 Feb. (23:59:59) ] -----------------------5%
-- [ ] DFD Specification Document [ 25 Feb. (23:59:59) ] ----------------------8%
+- [x] DFD Specification Document [ 25 Feb. (23:59:59) ] ----------------------8%
 - [x] GitHub Repository Creation [ 25 Feb. (23:59:59) ] -----------------------2%
 - [ ] UML Specification and UI Design Document [ 25 Mar. (23:59:59) ] ----15%
 - [ ] Project Demo [ 13 and 14 Apr. ] -----------------------------------------60%
