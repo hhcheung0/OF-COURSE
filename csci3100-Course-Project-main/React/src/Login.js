@@ -1,16 +1,3 @@
-/*
-CSCI2720 Group Project Group 5
-
-Group Members:
-Chan Tsz Leung (1155127714)
-Cheung Hin Hang (1155144254)
-Choi Ching Ying (1155108224)
-Ng Chun Ying (1155144678) 
-Sze Nok Yi Victoria (1155159562)
-Yan Hiu Wun (1155142739)
-*/
-
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from './images/lcsdlogo.jpg';
