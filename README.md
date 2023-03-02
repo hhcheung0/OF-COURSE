@@ -28,8 +28,6 @@
    * ```$ cd React ```
    * ```$ npm install react-router-dom ```
    * ```$ npm install react-icons --save```
-   * ```$ npm install --save react-map-gl mapbox-gl```
-   * ```$ npm install axios```
    * ```$ npm install bcryptjs```
    * ```$ npm start```
    --> show:
