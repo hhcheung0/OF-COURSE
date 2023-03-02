@@ -19,17 +19,11 @@
 - [ ] Final Commented Code  [ 6 May (23:59:59) ] ----------------------------2%
 
 ## Download and Open project
-1. Download .zip from Github
-2. Unzip the file
-3. Open the file
-4. Open 2 powershell/cmd/in terminal of VS code
-5. Toggle on "Allow CORS: Access-Control-Allow-origin"
-6. in React file
-   * ```$ cd React ```
-   * ```$ npm install react-router-dom ```
-   * ```$ npm install react-icons --save```
-   * ```$ npm install bcryptjs```
-   * ```$ npm start```
+1. git clone from VScode or any IDE
+2. in react-app file
+   * ```$ cd react-app ```
+   * ```$ npm install ```
+   * ```$ npm start ```
    --> show:
    ```
    Compiled successfully!
@@ -46,10 +40,9 @@
    webpack compiled successfully
    ```
 
-7. in Server file
-   * ```$ cd Server ``` 
-   * ```$ npm install cors ``` 
-   * ```$ npm install express ``` 
+3. in server file
+   * ```$ cd server ``` 
+   * ```$ npm install ``` 
    * ```$ node server.js ``` 
    --> show:
    
@@ -57,4 +50,10 @@
    Example app listening on port 3001!
    Connection is open...
    ```
-8. go to go to http://localhost:3000/ or http://3.95.167.159:3000/
+4. go to go to http://localhost:3000/ or http://3.95.167.159:3000/
+
+## Push to github
+1. Go to Source Control panel in VScode.
+2. Pull first!
+3. Stage the changes you made.
+4. Commit and push.
