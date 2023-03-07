@@ -3,11 +3,15 @@ import {Outlet} from 'react-router-dom'
 const Root = () => {
     return (
         <>
-            <header>OF-COURSE</header>
+            <header>
+                <div id='title'>OF-COURSE</div>
+            </header>
             <div id="main-container">
                 <Outlet />
             </div>
-            <footer>CSCI3100 project by group C2</footer>
+            <footer>
+                <div>CSCI3100 project by group C2</div>
+            </footer>
         </>
     )
 }

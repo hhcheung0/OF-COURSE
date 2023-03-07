@@ -1,8 +1,37 @@
 body {
   margin: 0;
-  padding: 0;
   background-color:#eefffdba;
   font-family: 'Arial';
+}
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  header{
+    display: flex;
+    justify-content: center;
+
+    background: lightblue;
+
+    font-size: 2rem;
+    #title {
+      margin: 10px 0;
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
+
+    background: #444;
+
+    color: #CCC;
+  }
+
+  #main-container {
+    flex: 1
+  }
 }
 
 h2{
