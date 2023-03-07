@@ -1,19 +1,34 @@
 import React from 'react'
 import './index.scss'
-import {BrowserRouter,  Routes,  Route} from 'react-router-dom'
+import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+
+// import components
+import Root from './components/Root'
 
 // import pages
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    children: [
+      {
+        path: '/login',
+        element: <Login />
+      },
+      {
+        path: '/signup',
+        element: <Signup />
+      }
+    ]
+  }
+])
+
 function App() {
   return (
-    <BrowserRouter>
-          <Routes>
-              <Route path="/login" element={<Login />}/>
-              <Route path="/signup" element={<Signup />}/>
-          </Routes>
-      </BrowserRouter>
+    <RouterProvider router={router} />
   );
 }
 
