@@ -2,18 +2,19 @@ import React, { useState } from "react";
 //import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmpassword, setConfirmpassword] = useState('');
+    const [Username, setUsername] = useState('');
+    const [Password, setPassword] = useState('');
+    const [Confirmpassword, setConfirmpassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!e.target.name.value) {
+        if (!e.target.Username.value) {
             alert("Username is required");
-        } else if (!e.target.password.value) {
+        } else if (!e.target.Password.value) {
             alert("Password is required");
         }
-        if (e.target.password.value !== e.target.confirmpassword.value) {
+        // We actually don't need this because it is labled "required" in lines 44, 49, and 54, right? (If so, please help me erase!)
+        if (e.target.Password.value !== e.target.Confirmpassword.value) {
           alert("Passwords do not match!");
           return;
         }
@@ -24,7 +25,7 @@ const Signup = () => {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
-                name, password 
+                Username, Password 
             })
         })
         .then(res => console.log(res))
@@ -39,18 +40,18 @@ const Signup = () => {
             <h2>Signup Page</h2>
             <div className="container">
                 <form onSubmit={handleSubmit}>
-                    <label name="name"><b>Username </b></label>
-                    <input type="text" placeholder="Enter your username" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
+                    <label name="Username"><b>Username </b></label>
+                    <input type="text" placeholder="Enter your username" name="Username" value={Username} onChange={(e) => setUsername(e.target.value)} required />
                     
                     <br /><br />
 
-                    <label name="password"><b>Password </b></label>
-                    <input type="password" placeholder="Enter your password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <label name="Password"><b>Password </b></label>
+                    <input type="password" placeholder="Enter your password" name="Password" value={Password} onChange={(e) => setPassword(e.target.value)} required />
                      
                     <br /><br />
 
-                    <label name="password"><b>Confirm Password </b></label>
-                    <input type="password" placeholder="Enter your password again" name="confirmpassword" value={confirmpassword} onChange={(e) => setConfirmpassword(e.target.value)} required />
+                    <label name="Confirmpassword"><b>Confirm Password </b></label>
+                    <input type="password" placeholder="Enter your password again" name="Confirmpassword" value={Confirmpassword} onChange={(e) => setConfirmpassword(e.target.value)} required />
 
                     <br /><br />
                     
