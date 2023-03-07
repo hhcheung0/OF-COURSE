@@ -16,7 +16,6 @@ const authRoutes = require('./Routes/authRoutes')
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)
-// mongoose.connect('mongodb+srv://admin:admin@cluster0.brap3r8.mongodb.net/test')
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Connection error:'));
