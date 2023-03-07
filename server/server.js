@@ -20,7 +20,7 @@ const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Connection error:'));
 db.once('open', () => {
-    console.log('Database is open...')
+    console.log('Connection is open...')
 
     // use routers
     app.use(authRoutes)
