@@ -2,7 +2,7 @@ import React, { useState } from "react";
 //import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const [name, setname] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     
     //const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Login = () => {
             <div className="container">
                 <form onSubmit={handleSubmit}>
                     <label name="name"><b>Username </b></label>
-                    <input type="text" placeholder="Enter your username" name="name" value={name} onChange={(e) => setname(e.target.value)} required />
+                    <input type="text" placeholder="Enter your username" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
                     
                     <br /><br />
 
@@ -44,7 +44,7 @@ const Login = () => {
                     <br /><br />
                     
                     <button type="submit">Login</button>
-                    <p>Not registered? <a href="/">Create an account</a></p>   
+                    <p>Not registered? <a href="/signup">Create an account</a></p>   
                 </form>
             </div>
 

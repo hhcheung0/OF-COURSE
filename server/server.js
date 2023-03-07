@@ -33,7 +33,55 @@ db.once('open', () => {
       });
     const User = mongoose.model('User', UserSchema);
 
-  
+    app.post('/signup', (req, res) => {
+        const { name, password, confirmpassword } = req.body;
+
+        if (password !== confirmpassword) {
+            return res.status(400).send('Passwords do not match');
+        }
+
+        User.find()
+        .sort('-userid')
+        .limit(1)
+        .exec((err, user) => {
+
+            if (err) {
+                console.error(err);
+                return res.status(500).send('Internal server error');
+            }
+
+            bcrypt.hash(password, 10, (err, hash) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).send('Internal server error');
+                }
+
+                const newuserid = user.length > 0 ? user[0].userid + 1 : 1;
+
+                const newUser = new User({
+                    name: name,
+                    password: hash,
+                    userid: newuserid,
+                    accessright: 0,
+                    enrolledcourseid: [],
+                    maxCredit: 18,
+                    passedcourseid: [],
+                    shoppingcartcourseid: []
+                });
+
+                newUser.save((err) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send('Internal server error');
+                    }else{
+                        res.status(200).send('User created successfully');
+                    }
+                    
+                });
+            });
+        });
+    });
+
     app.post('/login', (req, res) => {
         const { name, password } = req.body;
 
@@ -51,6 +99,8 @@ db.once('open', () => {
             });
         });
     });  
+
+    
 
 })
 
