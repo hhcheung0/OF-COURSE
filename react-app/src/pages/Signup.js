@@ -2,33 +2,32 @@ import React, { useState } from "react";
 //import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-    const [Username, setUsername] = useState('');
-    const [Password, setPassword] = useState('');
-    const [Confirmpassword, setConfirmpassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!e.target.Username.value) {
+        if (!username) {
             alert("Username is required");
-        } else if (!e.target.Password.value) {
+        } else if (!password) {
             alert("Password is required");
         }
         // We actually don't need this because it is labled "required" in lines 44, 49, and 54, right? (If so, please help me erase!)
-        if (e.target.Password.value !== e.target.Confirmpassword.value) {
+        if (password !== confirmPassword) {
           alert("Passwords do not match!");
           return;
         }
 
-        fetch('/signup', {
+        fetch('http://localhost:3001/signup', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 
-                Username, Password 
-            })
+            body: JSON.stringify({username, password})
         })
-        .then(res => console.log(res))
+        .then(res => res.json())
+        .then(json => console.log(json))
         .catch(err => console.error(err));
     };
     // need to create a condition - 
@@ -40,18 +39,18 @@ const Signup = () => {
             <h2>Signup Page</h2>
             <div className="container">
                 <form onSubmit={handleSubmit}>
-                    <label name="Username"><b>Username </b></label>
-                    <input type="text" placeholder="Enter your username" name="Username" value={Username} onChange={(e) => setUsername(e.target.value)} required />
+                    <label name="username"><b>Username </b></label>
+                    <input type="text" placeholder="Enter your username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     
                     <br /><br />
 
-                    <label name="Password"><b>Password </b></label>
-                    <input type="password" placeholder="Enter your password" name="Password" value={Password} onChange={(e) => setPassword(e.target.value)} required />
+                    <label name="password"><b>Password </b></label>
+                    <input type="password" placeholder="Enter your password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                      
                     <br /><br />
 
-                    <label name="Confirmpassword"><b>Confirm Password </b></label>
-                    <input type="password" placeholder="Enter your password again" name="Confirmpassword" value={Confirmpassword} onChange={(e) => setConfirmpassword(e.target.value)} required />
+                    <label name="confirmPassword"><b>Confirm Password </b></label>
+                    <input type="password" placeholder="Enter your password again" name="confirmpassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
 
                     <br /><br />
                     
@@ -59,8 +58,6 @@ const Signup = () => {
                     <p>Already have an account? <a href="/login">Login here</a></p>   
                 </form>
             </div>
-
-
         </div>
     )
 
