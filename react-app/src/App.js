@@ -1,8 +1,10 @@
 import React from 'react'
 import './index.scss'
 import {BrowserRouter,  Routes,  Route} from 'react-router-dom'
-import Login from './Login'
-import Signup from './signup'
+
+// import pages
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 
 function App() {
   return (
