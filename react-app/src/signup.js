@@ -6,9 +6,14 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (password !== confirmpassword) {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!e.target.name.value) {
+            alert("Username is required");
+        } else if (!e.target.password.value) {
+            alert("Password is required");
+        }
+        if (e.target.password.value !== e.target.confirmpassword.value) {
           alert("Passwords do not match!");
           return;
         }
@@ -25,6 +30,9 @@ const Signup = () => {
         .then(res => console.log(res))
         .catch(err => console.error(err));
     };
+    // need to create a condition - 
+    // if (user === null) -> signup
+    // else -> find the user with the name (username) and return "The user already exists"
 
     return(
         <div>

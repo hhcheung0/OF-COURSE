@@ -9,12 +9,17 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!e.target.name.value) {
+            alert("Username is required");
+        } else if (!e.target.password.value) {
+            alert("Password is required");
+        }
         
         fetch('/login', {
             method: 'POST',
             headers: {'Content-type' : 'application/json'},
             body: JSON.stringify({
-                name : name,
+                name: name,
                 password: password
              })
         })
@@ -27,6 +32,9 @@ const Login = () => {
         })
         .catch(error => console.log(error));
     };
+    // if (user === null) -> The user is not found
+    // if the password is not correct -> The password is incorrect
+
 
     return(
         <div>
