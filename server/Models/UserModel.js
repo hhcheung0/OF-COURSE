@@ -5,8 +5,8 @@ const userSchema = mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     accessRight: { type: Boolean, required: true },
-    enrolledCourseID: { type: Array },
     maxCredit: { type: Number },
+    enrolledCourseID: { type: Array },
     passedCourseID: { type: Array },
     shoppingCartCourseID: { type: Array }
   });

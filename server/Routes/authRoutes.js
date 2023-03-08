@@ -19,12 +19,12 @@ router.post('/signup', (req, res) => {
     //     return res.status(400).send('Passwords do not match');
     // }
     User.create({
-        userID: 0000,
+        userID: 0000, // userID: current userID + 1?
         username: username,
         password: password,
         accessRight: true,
-        enrolledCourseID: [],
         maxCredit: 18,
+        enrolledCourseID: [],
         passedCourseID: [],
         shoppingCartCourseID: []
     })

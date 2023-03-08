@@ -8,12 +8,11 @@ const Signup = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!username) {
-            alert("Username is required");
-        } else if (!password) {
-            alert("Password is required");
-        }
-        // We actually don't need this because it is labled "required" in lines 44, 49, and 54, right? (If so, please help me erase!)
+        // if (!username) {
+        //     alert("Username is required");
+        // } else if (!password) {
+        //     alert("Password is required");
+        // }
         if (password !== confirmPassword) {
           alert("Passwords do not match!");
           return;

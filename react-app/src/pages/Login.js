@@ -1,27 +1,37 @@
 import React, { useState } from "react";
 //import { useNavigate } from "react-router-dom";
 
+// const userSchema = mongoose.Schema({
+//     userID: { type: Number, required: true, unique: true },
+//     username: { type: String, required: true, unique: true },
+//     password: { type: String, required: true },
+//     accessRight: { type: Boolean, required: true },
+//     maxCredit: { type: Number },
+//     enrolledCourseID: { type: Array },
+//     passedCourseID: { type: Array },
+//     shoppingCartCourseID: { type: Array }
+//   });
+
 const Login = () => {
-    const [Username, setUsername] = useState("");
-    const [Password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     
     //const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!e.target.Username.value) {
-            alert("Username is required");
-        } else if (!e.target.Password.value) {
-            alert("Password is required");
-        }
-        // We actually don't need this because it is labled "required" in lines 44, 49, and 54, right? (If so, please help me erase!)
-        
+        // if (!e.target.Username.value) {
+        //     alert("Username is required");
+        // } else if (!e.target.Password.value) {
+        //     alert("Password is required");
+        // }
+
         fetch('/login', {
             method: 'POST',
             headers: {'Content-type' : 'application/json'},
             body: JSON.stringify({
-                Username: Username,
-                Password: Password
+                username: username,
+                password: password
              })
         })
         .then(res => {
@@ -42,13 +52,13 @@ const Login = () => {
             <h2>Login Page</h2>
             <div className="container">
                 <form onSubmit={handleSubmit}>
-                    <label name="Username"><b>Username </b></label>
-                    <input type="text" placeholder="Enter your username" name="Username" value={Username} onChange={(e) => setUsername(e.target.value)} required />
+                    <label name="username"><b>Username </b></label>
+                    <input type="text" placeholder="Enter your username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     
                     <br /><br />
 
-                    <label name="Password"><b>Password </b></label>
-                    <input type="password" placeholder="Enter your password" name="Password" value={Password} onChange={(e) => setPassword(e.target.value)} required />
+                    <label name="password"><b>Password </b></label>
+                    <input type="password" placeholder="Enter your password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
                     <br /><br />
                     
