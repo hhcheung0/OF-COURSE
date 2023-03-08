@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-//import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // const userSchema = mongoose.Schema({
 //     userID: { type: Number, required: true, unique: true },
@@ -63,7 +63,7 @@ const Login = () => {
                     <br /><br />
                     
                     <button type="submit">Login</button>
-                    <p>Not registered? <a href="/signup">Create an account</a></p>   
+                    <p>Not registered? <Link to="/signup">Create an account</Link></p>
                 </form>
             </div>
 
