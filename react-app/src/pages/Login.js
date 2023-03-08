@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+// import Hello from '../components/Hello'
+
 // const userSchema = mongoose.Schema({
 //     userID: { type: Number, required: true, unique: true },
 //     username: { type: String, required: true, unique: true },
@@ -26,13 +28,13 @@ const Login = () => {
         //     alert("Password is required");
         // }
 
-        fetch('/login', {
+        fetch('http://localhost:3001/login', {
             method: 'POST',
             headers: {'Content-type' : 'application/json'},
             body: JSON.stringify({
                 username: username,
                 password: password
-             })
+            })
         })
         .then(res => {
             if(res.ok){
@@ -50,6 +52,7 @@ const Login = () => {
     return(
         <div>
             <h2>Login Page</h2>
+            {/* <Hello /> */}
             <div className="container">
                 <form onSubmit={handleSubmit}>
                     <label name="username"><b>Username </b></label>

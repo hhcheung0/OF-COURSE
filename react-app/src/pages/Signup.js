@@ -33,6 +33,8 @@ const Signup = () => {
     // if (user === null) -> signup
     // else -> find the user with the name (username) and return "The user already exists"
 
+
+    // check password matching
     return(
         <div>
             <h2>Signup Page</h2>

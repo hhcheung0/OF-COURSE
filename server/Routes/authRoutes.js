@@ -8,8 +8,8 @@ const router = Router()
 
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
-    const user = User.findOne({username})
-    res.send(user)
+    User.findOne({username: 'Hinson'})
+    .then(result => res.send(result))
 });
 
 router.post('/signup', (req, res) => {
@@ -18,8 +18,10 @@ router.post('/signup', (req, res) => {
     // if (Password !== Confirmpassword) {
     //     return res.status(400).send('Passwords do not match');
     // }
+
+    // hashing password
     User.create({
-        userID: 0000, // userID: current userID + 1?
+        userID: 0001, // userID: current userID + 1?
         username: username,
         password: password,
         accessRight: true,
@@ -28,6 +30,7 @@ router.post('/signup', (req, res) => {
         passedCourseID: [],
         shoppingCartCourseID: []
     })
+    .then(result => console.err(result))
     res.send({status: 'ok'})
 });
 
