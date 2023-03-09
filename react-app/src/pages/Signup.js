@@ -37,6 +37,10 @@ const Signup = () => {
     // if (user === null) -> signup
     // else -> find the user with the name (username) and return "The user already exists"
 
+    // password restrictions (for creation/sign up):
+    // ^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$
+    // ^minimum eight characters, at least one letter, one number and one special character
+
 
     // check password matching
     return(
@@ -51,12 +55,14 @@ const Signup = () => {
                     <br /><br />
 
                     <label name="password"><b>Password </b></label>
+                    {/* <p>Your password must contain minimum 8 characters, with at least 1 letter, 1 number, and 1 special character.</p> */}
                     <input type="password" placeholder="Enter your password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                     
+                    
                     <br /><br />
 
                     <label name="confirmPassword"><b>Confirm Password </b></label>
                     <input type="password" placeholder="Enter your password again" name="confirmpassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                
 
                     <br /><br />
                     
