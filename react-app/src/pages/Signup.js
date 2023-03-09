@@ -5,14 +5,11 @@ const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // if (!username) {
-        //     alert("Username is required");
-        // } else if (!password) {
-        //     alert("Password is required");
-        // }
+
         if (password !== confirmPassword) {
           alert("Passwords do not match!");
           return;
@@ -26,7 +23,14 @@ const Signup = () => {
             body: JSON.stringify({username, password})
         })
         .then(res => res.json())
-        .then(json => console.log(json))
+        .then(json => {
+            if(json.message === 'User already exists!'){
+                setErrorMessage(json.message);
+            }else{
+                console.log(json);
+                setErrorMessage('');
+            }
+        })
         .catch(err => console.error(err));
     };
     // need to create a condition - 
@@ -36,8 +40,9 @@ const Signup = () => {
 
     // check password matching
     return(
-        <div>
+        <>
             <h2>Signup Page</h2>
+            {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
             <div className="container">
                 <form onSubmit={handleSubmit}>
                     <label name="username"><b>Username </b></label>
@@ -59,7 +64,7 @@ const Signup = () => {
                     <p>Already have an account? <Link to="/login">Login here</Link></p>   
                 </form>
             </div>
-        </div>
+        </>
     )
 
 }

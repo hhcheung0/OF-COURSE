@@ -15,23 +15,40 @@ router.post('/login', (req, res) => {
 router.post('/signup', (req, res) => {
     const { username, password } = req.body;
 
-    // if (Password !== Confirmpassword) {
-    //     return res.status(400).send('Passwords do not match');
-    // }
-
-    // hashing password
-    User.create({
-        userID: 0001, // userID: current userID + 1?
-        username: username,
-        password: password,
-        accessRight: true,
-        maxCredit: 18,
-        enrolledCourseID: [],
-        passedCourseID: [],
-        shoppingCartCourseID: []
+    //check whether the username exist or not
+    User.findOne({ username })
+    .then (existUser => {
+        if(existUser){
+            return res.status(400).send({ message: 'User already exists!' })
+        }
+        // hashing password
+        return bcrypt.hash(password, 10)
+            .then(hashedPassword => {
+                return User.create({
+                    userID: 0002, //existUser.userID + 1, // userID: current userID + 1?
+                    username: username,
+                    password: hashedPassword,
+                    accessRight: true,
+                    maxCredit: 18,
+                    enrolledCourseID: [],
+                    passedCourseID: [],
+                    shoppingCartCourseID: []
+                })
+            });
     })
-    .then(result => console.err(result))
-    res.send({status: 'ok'})
+    .then(() => {
+        res.send({ message: 'Signup successfully'});
+    })
+    .catch(error => {
+        console.error(error);
+        if (error.code === 11000) {
+            res.status(400).send({ message: 'Username already exists' });
+        }else{
+            res.status(500).send({ message: 'Error creating user' });
+        }
+        
+    })
+
 });
 
 module.exports = router
