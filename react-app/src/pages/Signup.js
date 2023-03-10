@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -14,6 +15,7 @@ const Signup = () => {
           alert("Passwords do not match!");
           return;
         }
+
 
         // password restrictions (for creation/sign up):
         // ^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$
@@ -32,6 +34,8 @@ const Signup = () => {
                 setErrorMessage(json.message);
             }else{
                 console.log(json);
+                // window.location.href = "/login";
+                navigate("/login");
                 setErrorMessage('');
             }
         })

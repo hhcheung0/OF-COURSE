@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // import Hello from '../components/Hello'
 
@@ -18,6 +18,7 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
     
     //const navigate = useNavigate();
 
@@ -42,6 +43,8 @@ const Login = () => {
                 setErrorMessage(json.message);
             }else{
                 console.log(json);
+                // window.location.href = "/";
+                navigate("/");
                 setErrorMessage('');
             }
         })

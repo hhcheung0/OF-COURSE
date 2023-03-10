@@ -6,6 +6,7 @@ const User = require('../Models/UserModel')
 
 const router = Router()
 
+// LOGIN
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
     User.findOne({ username })
@@ -13,14 +14,16 @@ router.post('/login', (req, res) => {
         if(!user){
             return res.status(400).send({ message: 'User does not exist!' })
         }
-    
-        return{
-            username: username,
-            password: password
-        }
-    })
-    .then(() => {
-        res.send({ message: 'Login is successful '})
+        bcrypt.compare(password, user.password, (err, result) => {
+            if (err) res.send(err);
+            else {
+                if (result) {
+                    // return res.redirect('/') }
+                    return res.status(200).send({ message: 'Login is successful '}) }
+                else {
+                    return res.status(401).send({ message: "Login is not successful"}) } // res.status(401)? res.status(400)?
+            }
+        })
     })
     .catch(error => {
         console.error(error);
@@ -30,13 +33,12 @@ router.post('/login', (req, res) => {
         //     res.status(500).send({ message: 'Error creating user' });
         // }
         res.send({ message: 'Error login' });
-        
     })
 });
 
+// SIGNUP
 router.post('/signup', (req, res) => {
     const { username, password } = req.body;
-
     //check whether the username exist or not
     User.findOne({ username })
     .then (existUser => {
@@ -47,7 +49,7 @@ router.post('/signup', (req, res) => {
         return bcrypt.hash(password, 10)
             .then(hashedPassword => {
                 return User.create({
-                    userID: 3, //existUser.userID + 1
+                    userID: 0004, //existUser.userID + 1
                     username: username,
                     password: hashedPassword,
                     accessRight: true,
