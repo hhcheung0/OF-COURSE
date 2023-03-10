@@ -8,8 +8,30 @@ const router = Router()
 
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
-    User.findOne({username: 'Hinson'})
-    .then(result => res.send(result))
+    User.findOne({ username })
+    .then(user => {
+        if(!user){
+            return res.status(400).send({ message: 'User does not exist!' })
+        }
+    
+        return{
+            username: username,
+            password: password
+        }
+    })
+    .then(() => {
+        res.send({ message: 'Login is successful '})
+    })
+    .catch(error => {
+        console.error(error);
+        // if (error.code === 11000) {
+        //     res.status(400).send({ message: 'Username already exists' });
+        // }else{
+        //     res.status(500).send({ message: 'Error creating user' });
+        // }
+        res.send({ message: 'Error login' });
+        
+    })
 });
 
 router.post('/signup', (req, res) => {
