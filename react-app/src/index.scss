@@ -3,6 +3,9 @@ body {
   background-color:#eefffdba;
   font-family: 'Source Sans Pro';
 }
+button:hover {
+  opacity: 0.8;
+}
 #app {
   min-height: 100vh;
   display: flex;
@@ -35,43 +38,14 @@ body {
   }
 }
 
+
 h2{
   text-align: center;
   color: #277582;
   padding: 20px;
 }
-
-label{
-  color: #08362e;
-  font-size: 17px;
-}
-
-/* Full-width input fields */
-input[type=text], input[type=password] {
-  width: 100%;
-  height: 30px;
-  border: none;
-  border-radius: 3px;
-  padding-left: 8px;
-}
-
-/* Set a style for all buttons */
-button {
-  background-color: #04AA6D;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
-/* Center the image and position the close button */
 .container {
+  /* Center the image and position the close button */
   width: 70%;
   //overflow: hidden;
   margin: auto;
@@ -79,4 +53,28 @@ button:hover {
   padding: 80px;
   background: #c7e2dd;
   border-radius: 15px ;
+  label{
+    color: #08362e;
+    font-size: 17px;
+  }
+  
+  /* Full-width input fields */
+  input[type=text], input[type=password] {
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
+    padding-left: 8px;
+  }
+  
+  /* Set a style for all buttons */
+  button {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
 }

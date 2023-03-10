@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
     enrolledCourseID: { type: Array },
     passedCourseID: { type: Array },
     shoppingCartCourseID: { type: Array }
-  });
+});
 
 const User = mongoose.model('User', userSchema);
 

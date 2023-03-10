@@ -46,11 +46,11 @@ router.post('/signup', (req, res) => {
             return res.status(400).send({ message: 'User already exists!' })
         }
         // hashing password
-        return bcrypt.hash(password, 10)
+        bcrypt.hash(password, 10)
         .then(hashedPassword => {
-            return User.countDocuments()
+            User.countDocuments()
             .then(count => {
-                return User.create({
+                User.create({
                     userID: count + 1, //existUser.userID + 1
                     username: username,
                     password: hashedPassword,
@@ -60,10 +60,10 @@ router.post('/signup', (req, res) => {
                     passedCourseID: [],
                     shoppingCartCourseID: []
                 })
+                .then(() => {
+                    res.send({ message: 'Signup successfully'});
+                })
             }) 
-        })
-        .then(() => {
-            res.send({ message: 'Signup successfully'});
         })
     })
     .catch(error => {

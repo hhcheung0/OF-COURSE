@@ -50,10 +50,17 @@
    Example app listening on port 3001!
    Connection is open...
    ```
-4. go to go to http://localhost:3000/ or http://3.95.167.159:3000/
+4. go to http://localhost:3000/ or http://3.95.167.159:3000/
 
 ## Push to github
 1. Go to Source Control panel in VScode.
 2. Pull first!
 3. Stage the changes you made.
 4. Commit and push.
+
+## Division of work
+1. Course Browsing (Hinson)
+2. Profile Page (Hangkhun)
+3. Course Information Page (James)
+4. Admin Page (Suzie)
+5. Course Enrolment (Osborn)

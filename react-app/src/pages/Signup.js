@@ -40,7 +40,7 @@ const Signup = () => {
             }else{
                 console.log(json);
                 // window.location.href = "/login";
-                navigate("/login");
+                navigate("/");
                 setErrorMessage('');
             }
         })
@@ -49,7 +49,6 @@ const Signup = () => {
     // need to create a condition - 
     // if (user === null) -> signup
     // else -> find the user with the name (username) and return "The user already exists"
-
 
     // check password matching
     return(
@@ -81,7 +80,6 @@ const Signup = () => {
             </div>
         </>
     )
-
 }
 
 export default Signup;
