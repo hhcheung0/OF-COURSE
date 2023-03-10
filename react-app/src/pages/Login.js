@@ -17,12 +17,17 @@ import { Link } from "react-router-dom";
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState('');
     
     //const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         
+        // if (username === null){
+        //     console.log("User is not found");
+        // }
+
         fetch('http://localhost:3001/login', {
             method: 'POST',
             headers: {'Content-type' : 'application/json'},
@@ -31,13 +36,22 @@ const Login = () => {
                 password: password
             })
         })
-        .then(res => {
-            if(res.ok){
-                console.log("Login successful");
+        .then(res => res.json())
+        .then(json => {
+            if(json.message === 'User already exists!'){
+                setErrorMessage(json.message);
             }else{
-                console.error(res.statusText);
+                console.log(json);
+                setErrorMessage('');
             }
         })
+        // .then(res => {
+        //     if(res.ok){
+        //         console.log("Login successful");
+        //     }else{
+        //         console.error(res.statusText);
+        //     }
+        // })
         .catch(error => console.log(error));
     };
     // if (user === null) -> The user is not found
@@ -48,6 +62,7 @@ const Login = () => {
         <div>
             <h2>Login Page</h2>
             {/* <Hello /> */}
+            {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
             <div className="container">
                 <form onSubmit={handleSubmit}>
                     <label name="username"><b>Username </b></label>
