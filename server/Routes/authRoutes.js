@@ -47,9 +47,11 @@ router.post('/signup', (req, res) => {
         }
         // hashing password
         return bcrypt.hash(password, 10)
-            .then(hashedPassword => {
+        .then(hashedPassword => {
+            return User.countDocuments()
+            .then(count => {
                 return User.create({
-                    userID: 0005, //existUser.userID + 1
+                    userID: count + 1, //existUser.userID + 1
                     username: username,
                     password: hashedPassword,
                     accessRight: true,
@@ -58,10 +60,11 @@ router.post('/signup', (req, res) => {
                     passedCourseID: [],
                     shoppingCartCourseID: []
                 })
-            });
-    })
-    .then(() => {
-        res.send({ message: 'Signup successfully'});
+            }) 
+        })
+        .then(() => {
+            res.send({ message: 'Signup successfully'});
+        })
     })
     .catch(error => {
         console.error(error);
