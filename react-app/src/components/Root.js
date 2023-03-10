@@ -10,7 +10,7 @@ const Root = () => {
                 <Outlet />
             </div>
             <footer>
-                <div>CSCI3100 project by group C2</div>
+                <div>CSCI3100 Project ©Group C2</div>
             </footer>
         </>
     )

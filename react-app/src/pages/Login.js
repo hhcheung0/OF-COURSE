@@ -22,12 +22,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // if (!e.target.Username.value) {
-        //     alert("Username is required");
-        // } else if (!e.target.Password.value) {
-        //     alert("Password is required");
-        // }
-
+        
         fetch('http://localhost:3001/login', {
             method: 'POST',
             headers: {'Content-type' : 'application/json'},

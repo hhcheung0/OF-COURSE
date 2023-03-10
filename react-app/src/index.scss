@@ -12,9 +12,10 @@ body {
     display: flex;
     justify-content: center;
 
-    background: lightblue;
+    background: #277582;
 
     font-size: 2rem;
+    color: white;
     #title {
       margin: 10px 0;
     }
@@ -24,9 +25,9 @@ body {
     display: flex;
     justify-content: center;
 
-    background: #444;
+    background: black;
 
-    color: #CCC;
+    color: white;
   }
 
   #main-container {
