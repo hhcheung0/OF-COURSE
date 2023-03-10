@@ -49,7 +49,7 @@ router.post('/signup', (req, res) => {
         return bcrypt.hash(password, 10)
             .then(hashedPassword => {
                 return User.create({
-                    userID: 0004, //existUser.userID + 1
+                    userID: 0005, //existUser.userID + 1
                     username: username,
                     password: hashedPassword,
                     accessRight: true,
