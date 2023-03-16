@@ -32,9 +32,86 @@ button:hover {
 
     color: white;
   }
+  #sidebar-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
 
+  }
   #main-container {
-    flex: 1
+    flex: 1;
+  }
+}
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  
+  background: paleturquoise;
+
+  max-width: 20vh;
+  width: auto;
+
+  #expand-button {
+    all: unset;
+
+    display: flex;
+    justify-content: flex-end;
+    width: auto;
+
+    cursor: pointer;
+
+    svg {
+      margin: 3px 5px;
+      font-size: 150%;
+    }
+  }
+  #sidebar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    flex: 1;
+    
+    #profile-section {
+      margin: 20px 10px;
+      img {
+        min-height: 100px;
+        min-width: 100px;
+        height: 180px;
+        width: 180px;
+  
+        border-radius: 50%;
+      }
+      div {
+        text-align: center;
+        font-size: 125%;
+        margin: 10px 0;
+      }
+    }
+    #nav-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      margin: 50px 0;
+
+      a {
+        font-size: 125%;
+        margin: 20px 10px;
+      }
+    }
+    #log-out-button {
+      all: unset;
+
+      background: cadetblue;
+      width: 50%;
+
+      text-align: center;
+      font-weight: 600;
+
+      margin: auto 10px 30px 10px;
+    }
   }
 }
 

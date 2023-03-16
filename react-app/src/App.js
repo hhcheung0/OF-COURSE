@@ -11,8 +11,19 @@ import Signup from './pages/Signup'
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Root />,
+    path: '',
+    element: <Root nav={true} />,
+    children: [
+      {
+        path: '/',
+        element: <div>empty</div>
+      }
+    ]
+
+  },
+  {
+    path: '',
+    element: <Root nav={false} />,
     children: [
       {
         path: '/login',
