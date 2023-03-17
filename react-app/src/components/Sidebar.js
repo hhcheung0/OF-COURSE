@@ -9,10 +9,6 @@ const Sidebar = () => {
         setIsHidden(prev => !prev)
     }
 
-    useEffect(() => {
-        console.log(isHidden)
-    }, [isHidden])
-
     return (
         <div id="sidebar" style={{minWidth: isHidden? '': '100px'}}>
             <button id="expand-button" onClick={handleExpand}>
