@@ -1,12 +1,12 @@
-const {MongoClient} = require('mongoose');
-require('dotenv').config();
+const {MongoClient} = require('mongodb');
+require('dotenv').config({path:  '/Users/james/OF-COURSE/server/.env'});
 
 async function main(){
     const uri = process.env.MONGODB_URI;
     const client = new MongoClient(uri);
     try{
         await client.connect();
-        //await listDatabases(client);
+        await listDatabases(client);
         await updateDataTypes(client);
 
     } catch(e){
@@ -42,8 +42,6 @@ async function updateDataTypes(client) {
       );
       client.db("test").collection("courses").updateMany({},{$pull: {"tutorialInfo.$[].enrolledID":""}});  
       //client.db("test").collection("courses").updateMany({},{$addFields:{"comment.0.date":{$toDate: "$comment.0.date"}}});
-    
-      
 
 
 }
