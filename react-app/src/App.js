@@ -8,6 +8,7 @@ import Root from './components/Root'
 // import pages
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import CourseInfo from './pages/CourseInfo'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <Signup />
+      },
+      {
+        path: '/courseInfo',
+        element: <CourseInfo />
       }
     ]
   }
