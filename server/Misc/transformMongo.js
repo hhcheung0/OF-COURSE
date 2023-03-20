@@ -12,7 +12,7 @@ async function main(){
     } catch(e){
         console.error(e);
     }finally{
-        //await client.close();
+        await client.close();
     }
 }
 
@@ -28,19 +28,19 @@ async function listDatabases (client){
 }
 
 async function updateDataTypes(client) {
-    client.db("test").collection("courses").updateMany({},{$pull: {"courseTime":""}});
-    client.db("test").collection("courses").updateMany({},{$pull: {"enrolledID":""}});
-    client.db("test").collection("courses").updateMany({},{$pull: {"prerequisiteCourseID":""}});
-    client.db("test").collection("courses").updateMany({},{$pull: {"forbiddenCourseID":""}});
+    await client.db("test").collection("courses").updateMany({},{$pull: {"courseTime":""}});
+    await client.db("test").collection("courses").updateMany({},{$pull: {"enrolledID":""}});
+    await client.db("test").collection("courses").updateMany({},{$pull: {"prerequisiteCourseID":""}});
+    await  client.db("test").collection("courses").updateMany({},{$pull: {"forbiddenCourseID":""}});
     //client.db("test").collection("courses").updateMany({},{$set: {"comment.$[element].userID":null}},{arrayFilters: [{"element":0}]});
     //client.db("test").collection("testingaa").updateMany({'enrolledID':""},{$set: {"enrolledID.$[element]":null}},{arrayFilters: [ {"element":""}]});
     //client.db("test").collection("courses").updateMany({'enrolledID':""},{$set: {"enrolledID.$[element]":null},{arrayFilters: [ {"element":""}]})
-    client.db("test").collection("courses").updateMany(
+    await client.db("test").collection("courses").updateMany(
         {"tutorialInfo.tutorialTime": ""},
         { $pull: { tutorialInfo: { tutorialTime: "" }} },
         { multi: true }
       );
-      client.db("test").collection("courses").updateMany({},{$pull: {"tutorialInfo.$[].enrolledID":""}});  
+    await client.db("test").collection("courses").updateMany({},{$pull: {"tutorialInfo.$[].enrolledID":""}});  
       //client.db("test").collection("courses").updateMany({},{$addFields:{"comment.0.date":{$toDate: "$comment.0.date"}}});
 
 
