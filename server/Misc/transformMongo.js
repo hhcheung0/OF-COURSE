@@ -6,7 +6,7 @@ async function main(){
     const client = new MongoClient(uri);
     try{
         await client.connect();
-        await listDatabases(client);
+        //await listDatabases(client);
         await updateDataTypes(client);
 
     } catch(e){
