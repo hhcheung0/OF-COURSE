@@ -34,12 +34,20 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       },
+
+    ]
+  },
+  {
+    path: '',
+    element: <Root nav={true} />,
+    children: [
       {
         path: '/courseInfo',
         element: <CourseInfo />
       }
     ]
   }
+
 ])
 
 function App() {

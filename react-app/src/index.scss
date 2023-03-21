@@ -156,9 +156,22 @@ h2{
   }
 }
 //for half tables, courseInfo page
+  *{
+    box-sizing: border-box;
+  }
+  .row{
+    display: flex;
+    margin-left:-5px;
+    margin-right:-5px;
+    padding: 5px;
+  }
+  .column{
+    flex: 50%;
+    padding: 5px;
+  }
   table,th,td{
     padding: 10px;
-    width: 50%;
+    width: 90%;
     border: 1px solid;
     th{
       width:20%;
