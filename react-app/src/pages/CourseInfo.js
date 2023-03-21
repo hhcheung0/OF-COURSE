@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const CourseInfo = () => {
+    const [comment, addComment] = useState("");
+    const [tutorial, addToShoppingCart] = useState("");
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
     return(
         <>
             <h2>Course Information</h2>
             <div id="halfTable" class="row">
                 <div id="courseInfo" class="column">
-                    <h3> Course</h3>
+                    <h3> Lecture</h3>
                     <table>
                         <tr>
                             <th> Course ID</th>
