@@ -156,18 +156,8 @@ h2{
   }
 }
 //for half tables, courseInfo page
-  *{
+*{
     box-sizing: border-box;
-  }
-  .row{
-    display: flex;
-    margin-left:-5px;
-    margin-right:-5px;
-    padding: 5px;
-  }
-  .column{
-    flex: 50%;
-    padding: 5px;
   }
   table,th,td{
     padding: 10px;
@@ -183,4 +173,18 @@ h2{
     th:hover{
       background-color: #277582;
     }
+}
+
+#halfable{
+  box-sizing: border-box;
+}
+.row{
+  display: flex;
+  margin-left:-5px;
+  margin-right:-5px;
+  padding: 5px;
+}
+.column{
+  flex: 50%;
+  padding: 5px;
 }

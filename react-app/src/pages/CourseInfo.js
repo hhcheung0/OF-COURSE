@@ -5,10 +5,10 @@ const CourseInfo = () => {
 
     return(
         <>
-
             <h2>Course Information</h2>
-            <div class="row">
-                <div class="column">
+            <div id="halfTable" class="row">
+                <div id="courseInfo" class="column">
+                    <h3> Course</h3>
                     <table>
                         <tr>
                             <th> Course ID</th>
@@ -57,8 +57,9 @@ const CourseInfo = () => {
                         </table>
                 </div>
                 <div class="column">
+                <h3> Tutorial</h3>
                 <form>
-                    <table STYLE="margin-bottom: 10px">
+                    <table STYLE="marginBottom: 10px">
                         <tr>
                             <th> Time</th>
                             <td> Tue 5:30pm</td>
@@ -99,10 +100,7 @@ const CourseInfo = () => {
                 </div>
 
             </div>
-        </>
-
-            
-                
+        </>    
       
         
     )
