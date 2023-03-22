@@ -10,7 +10,7 @@ const Sidebar = () => {
     }
 
     return (
-        <div id="sidebar" style={{minWidth: isHidden? '': '100px'}}>
+        <div id="sidebar">
             <button id="expand-button" onClick={handleExpand}>
                 {isHidden? <HiOutlineMenu />: <HiOutlineArrowNarrowLeft />}
             </button>

@@ -1,3 +1,4 @@
+$primary-color: #277582;
 body {
   margin: 0;
   background-color:#eefffdba;
@@ -49,7 +50,8 @@ button:hover {
   display: flex;
   flex-direction: column;
   
-  background: paleturquoise;
+  background: $primary-color;
+  color: #FFFFFF;
 
   max-width: 20vh;
   width: auto;
@@ -101,18 +103,26 @@ button:hover {
       a {
         font-size: 125%;
         margin: 20px 10px;
+
+        color: #FFFFFF;
+        text-decoration: none;
+
+        &:hover {
+          font-weight: bolder;
+        }
       }
     }
     #log-out-button {
       all: unset;
 
-      background: cadetblue;
+      background: #41B6BF;
       width: 50%;
 
       text-align: center;
-      font-weight: 600;
 
+      padding: 3px 5px;
       margin: auto 10px 30px 10px;
+      cursor: pointer;
     }
   }
 }
@@ -121,8 +131,7 @@ button:hover {
   flex-direction: row;
 
   flex: 1;
-  height: auto;
-  #filter-panel {
+  #filter-list {
     flex: 1;
   }
   #table-panel {
