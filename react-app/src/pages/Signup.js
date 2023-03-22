@@ -52,7 +52,7 @@ const Signup = () => {
 
     // check password matching
     return(
-        <>
+        <div>
             <h2>Signup Page</h2>
             {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
             <div className="container">
@@ -78,7 +78,7 @@ const Signup = () => {
                     <p>Already have an account? <Link to="/login">Login here</Link></p>   
                 </form>
             </div>
-        </>
+        </div>
     )
 }
 

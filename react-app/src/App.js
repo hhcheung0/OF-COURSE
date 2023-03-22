@@ -9,6 +9,7 @@ import Root from './components/Root'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import CourseInfo from './pages/CourseInfo'
+import CourseBrowsing from './pages/CourseBrowsing'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <div>empty</div>
+      },
+      {
+        path: '/course',
+        element: <CourseBrowsing />
+      },
+      {
+        path: '/course/:courseID',
+        element: <CourseInfo />
       }
     ]
 
@@ -37,17 +46,6 @@ const router = createBrowserRouter([
 
     ]
   },
-  {
-    path: '',
-    element: <Root nav={true} />,
-    children: [
-      {
-        path: '/courseInfo',
-        element: <CourseInfo />
-      }
-    ]
-  }
-
 ])
 
 function App() {
