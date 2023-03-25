@@ -186,7 +186,7 @@ h2{
     box-sizing: border-box;
   }
   table,th,td{
-    padding: 10px;
+    padding: 5px;
     width: 90%;
     border: 1px solid;
     th{
@@ -201,6 +201,55 @@ h2{
     }
 }
 
+#course-info {
+  display: flex;
+  flex-direction: row;
+  //flex: 1;
+  #lecture-table {
+    margin-left: 5px;
+    flex: 1;
+
+ //   flex: 1 5;
+
+  }
+  #tutorial-button {
+      flex: 0.02;
+    }
+  #tutorial-table {
+    flex: 1;
+
+  }
+  #comment-table{
+    margin-left: 5px;
+    flex: 1;
+   
+  }
+  #comment-input{
+    flex:1;
+
+  }
+
+}
+#button-placement{
+  //display: flex;
+  //flex-direction:row;
+  flex:1;
+  margin-right: 2px;
+
+}
+#text-box{
+
+  height: 100px;
+  width: 90%;
+  font-size: 10pt;
+  text-align:justify;
+
+
+} 
+#submit-button{
+margin-right: 30px;
+margin-left: 400px;
+}
 #halfable{
   box-sizing: border-box;
 }

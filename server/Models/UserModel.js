@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
     accessRight: { type: Boolean, required: true },
     maxCredit: { type: Number },
     enrolledCourseID: { type: Array },
-    passedCourseID: { type: Array },
+    passedCourseID: { type: Array }, //stores the passed course ID, 
     shoppingCartCourseID: { type: Array }
 });
 
