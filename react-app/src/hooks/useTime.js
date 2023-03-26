@@ -84,7 +84,6 @@ const useTime = () => {
     }
 
     return {
-        timeslotMap,
         parseTimecodeArray
     }
 }
