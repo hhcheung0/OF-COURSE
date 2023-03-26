@@ -132,39 +132,61 @@ button:hover {
 
   flex: 1;
   color: $primary-color;
+
   #filter-list {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-
+    justify-content: space-around;
+    
     padding: 20px 0;
+    margin: 2em 4em;
     #starting-time-filter {
       display: flex;
       flex-direction: column;
-
-      h3 {
-        padding: 0 5px;
-        border-bottom: 1px solid $primary-color;
-      }
       #checkbox-container {
         column-count: 2;
-        text-align: center;
+
+        margin: 0.5em 0;
         #checkbox {
-          zoom: 1.2;
-          input {
-            margin: 3px;
-          }
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          padding: 2px 0;
+        }
+      }
+    }
+    #department-filter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      #checkbox-container {
+        overflow: auto;
+        #checkbox {
+          text-align: center;
+          display: flex;
+          align-items: center;
+  
+          padding: 2px 0;
         }
       }
     }
   }
   #table-panel {
-    flex: 1.5;
+    flex: 1;
     #search-bar {
       height: 500px;
     }
+  }
+  h3 {
+    padding: 0 5px;
+    border-bottom: 1px solid $primary-color;
+  }
+  input {
+    margin: auto 5px;
+
   }
 }
 
