@@ -15,7 +15,7 @@ const CourseInfo = () => {
     //get course info from database
     const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
 
-    console.log(course);
+    //console.log(course);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,27 +39,8 @@ const CourseInfo = () => {
 const CourseTables =() =>{
     const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
     console.log(course);
-    useEffect(() => {
-    if(course){
-        document.getElementById("courseID").innerHTML =  course.courseID;
-        document.getElementById("courseName").innerHTML =  course.courseName;
-        //document.getElementById("courseTime").innerHTML =  parseTimecodeArray(course.courseTime);
-        document.getElementById("courseLocation").innerHTML =  course.courseLocation;
-        document.getElementById("instructor").innerHTML =  course.instructor;
-        document.getElementById("department").innerHTML =  course.department;
-        if(course.prerequisiteCourseID!="")
-            document.getElementById("prerequisiteCourseID").innerHTML =  course.prerequisiteCourseID;
-        else
-            document.getElementById("prerequisiteCourseID").innerHTML = "/";
-        if(course.forbiddenCourseID!="")
-            document.getElementById("forbiddenCourseID").innerHTML =  course.forbiddenCourseID;
-        else
-            document.getElementById("forbiddenCourseID").innerHTML = "/";
-        document.getElementById("courseCapacity").innerHTML =  course.courseCapacity;
-        document.getElementById("credit").innerHTML =  course.credit;
-        document.getElementById("outline").innerHTML =  course.outline;
-    }
-      }, [course]);
+    const {parseTimecodeArray} = useTime();
+     
     return( 
         <>
         <div id="lecture-table">
@@ -69,54 +50,54 @@ const CourseTables =() =>{
                 <tbody>
                     <tr>
                         <th> Course ID</th>
-                        <td id="courseID"> </td>
+                        <td> {course.courseID}</td>
                     </tr>
                     <tr>
                         <th> Course Name</th>
-                        <td id="courseName"> </td>                    
+                        <td> {course.courseName}</td>                    
                     </tr>
                     <tr>
                         <th> Time</th>
-                        <td id="courseTime"></td>     
+                        {parseTimecodeArray(course.courseTime).map((time)=>(
+                            <td> {time}</td>    
+                        ))
+                         
+                        }   
                     </tr>
                     <tr>
                         <th> Location</th>
-                        <td id="courseLocation"> </td>     
+                        <td>{course.courseLocation} </td>     
                     </tr>
                     <tr>
                         <th> Instructor</th>
-                        <td id="instructor"></td>     
+                        <td>{course.instructor}</td>     
                     </tr>
                     <tr>
                         <th> Department</th>
-                        <td id="department"></td>     
+                        <td> {course.department}</td>     
                     </tr>
                     <tr>
                         <th> Capacity</th>
-                        <td id="courseCapacity"> </td>     
+                        <td > {course.courseCapacity}</td>     
                     </tr>
                     <tr>
                         <th> Pre-requisite Course(s)</th>
-                        <td id="prerequisiteCourseID"> ARCH3860 </td>     
+                        <td > {changeSlash(course.prerequisiteCourseID)}</td>     
                     </tr>
                     <tr>
                         <th>Forbidden Course(s)</th>
-                        <td id="forbiddenCourseID"> / </td>     
+                        <td>  {changeSlash(course.forbiddenCourseID)} </td>     
                     </tr>
                     <tr>
                         <th>Credit</th>
-                        <td id="credit"> </td>     
+                        <td> {course.credit}</td>     
                     </tr>
                     <tr>
                         <th> Outline</th>
-                        <td id="outline"> </td>     
+                        <td> {course.outline}</td>     
                     </tr>
                 </tbody>
             </table>
-            <script type="text/javascript">
-            var x="100";
-            document.getElementById("data1").innerHTML = x;
-        </script>
         </div>
         </>
     )
@@ -124,30 +105,6 @@ const CourseTables =() =>{
 const TutorialTables = () =>{
      const { course } = useCourse(window.location.href.split("/").slice(-1)[0])
 
-     console.log(course);
-    useEffect(() => {
-    if(course){
-        console.log(course);
-        
-        //document.getElementById("tutorialID1").innerHTML =  course.tutorialInfo[0].tutorialID;
-        // document.getElementById("tutorialTime1").innerHTML =  course.courseName;
-        // //document.getElementById("courseTime").innerHTML =  parseTimecodeArray(course.courseTime);
-        // document.getElementById("tutorialLocation1").innerHTML =  course.courseLocation;
-        // document.getElementById("tutor1").innerHTML =  course.instructor;
-        // document.getElementById("capacity1").innerHTML =  course.department;
-        // if(course.prerequisiteCourseID!="")
-        //     document.getElementById("prerequisiteCourseID").innerHTML =  course.prerequisiteCourseID;
-        // else
-        //     document.getElementById("prerequisiteCourseID").innerHTML = "/";
-        // if(course.forbiddenCourseID!="")
-        //     document.getElementById("forbiddenCourseID").innerHTML =  course.forbiddenCourseID;
-        // else
-        //     document.getElementById("forbiddenCourseID").innerHTML = "/";
-        // document.getElementById("courseCapacity").innerHTML =  course.courseCapacity;
-        // document.getElementById("credit").innerHTML =  course.credit;
-        // document.getElementById("outline").innerHTML =  course.outline;
-    }
-      }, [course]);
     return(
         <>
         <div id="tutorial-button">
@@ -170,7 +127,7 @@ const TutorialTables = () =>{
                     <tbody>
                         <tr>
                             <th> Tutorial ID</th>
-                            {/* <td id="tutorialID1">  </td> */}
+                            <td id="tutorialID1">  </td>
                         </tr>
                         <tr>
                             <th> Time</th>
@@ -285,5 +242,10 @@ const CommentInput = () =>{
     )
 }
 
+const changeSlash = (courseArray) =>{
+    if (courseArray=="")
+        return "/";
+    return courseArray;
+}
 
 export default CourseInfo;
