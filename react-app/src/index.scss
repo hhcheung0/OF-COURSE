@@ -263,28 +263,28 @@ h2{
     width: 100%;
   }
 }
-//for half tables, courseInfo page
-// *{
-//     box-sizing: border-box;
-//   }
-//   table,th,td{
-//     padding: 5px;
-//     width: 100%;
-//     border: 1px solid;
-//     th{
-//       width:20%;
-//       background-color:#04AA6D;
-//       position: sticky; //for scroll bar
-//       top:0px;
-//     }
-//     tr:hover{
-//       background-color: #277582;
-//     }
-//     th:hover{
-//       background-color: #277582;
-//       position: sticky;
-//     }
-// }
+for half tables, courseInfo page
+*{
+    box-sizing: border-box;
+  }
+  table,th,td{
+    padding: 5px;
+    width: 100%;
+    border: 1px solid;
+    th{
+      width:20%;
+      background-color:#04AA6D;
+      position: sticky; //for scroll bar
+      top:0px;
+    }
+    tr:hover{
+      background-color: #277582;
+    }
+    th:hover{
+      background-color: #277582;
+      position: sticky;
+    }
+}
 
 #course-info {
   display: flex;
