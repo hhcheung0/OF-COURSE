@@ -29,6 +29,7 @@ const CourseInfo = () => {
             </div>
             <div id="course-info">
                 <CommentTables />
+                <div id="tutorial-button"> </div>
                 <CommentInput />
             </div>
         </>    
@@ -36,11 +37,21 @@ const CourseInfo = () => {
         
     )
 }
+const myTime = (courseTime)=> {
+    console.log(courseTime);
+    let timeString = "";
+    courseTime.forEach(async (time)=>{
+        timeString = timeString + time + ", ";
+    })
+    console.log(timeString);
+    return timeString.substring(0,timeString.length -2);
+
+}
 const CourseTables =() =>{
     const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
     console.log(course);
     const {parseTimecodeArray} = useTime();
-     
+
     return( 
         <>
         <div id="lecture-table">
@@ -58,11 +69,7 @@ const CourseTables =() =>{
                     </tr>
                     <tr>
                         <th> Time</th>
-                        {parseTimecodeArray(course.courseTime).map((time)=>(
-                            <td> {time}</td>    
-                        ))
-                         
-                        }   
+                        <td> {myTime(parseTimecodeArray(course.courseTime))}</td>  
                     </tr>
                     <tr>
                         <th> Location</th>
@@ -102,6 +109,7 @@ const CourseTables =() =>{
         </>
     )
 }
+
 const TutorialTables = () =>{
      const { course } = useCourse(window.location.href.split("/").slice(-1)[0])
 
@@ -207,9 +215,11 @@ const TutorialTables = () =>{
 
 const CommentTables = () =>{
     return(
-        <div id="comment-table">
+        <div id="tutorial-table">
             <h3> Comment</h3>
-            <table>
+            <div id="comment-table">
+            
+            <table id>
                 <tbody>
                     <tr>
                         <th> Comment</th>
@@ -227,6 +237,7 @@ const CommentTables = () =>{
                 </tbody>
             </table>
         </div>
+        </div>
     )
 }
 
@@ -236,7 +247,7 @@ const CommentInput = () =>{
             <h3> Add Comment</h3>
             <form>
                 <textarea id="text-box"/>
-                <input type="submit" id="submit-button" style={{float: "right", marginRight: "50px"}}/>
+                <input type="submit" id="submit-button" style={{float: "right"}}/>
             </form>
     </div>
     )
