@@ -20,6 +20,7 @@ const useTime = () => {
     // ["T6", "T7", "H6"] -> ['Tue 14:30:16:15', 'Thur 14:30:15:15']
     const parseTimecodeArray = (timecodeArray) => {
         // early termination for invalid timecode
+        if (!timecodeArray) return []
         if (!timecodeArray.every(timecode => validateTimecode(timecode))) return { error: 'some timecode is invalid' }
 
         // declare a 2D array that group timeslots in the same day
