@@ -131,8 +131,34 @@ button:hover {
   flex-direction: row;
 
   flex: 1;
+  color: $primary-color;
   #filter-list {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    padding: 20px 0;
+    #starting-time-filter {
+      display: flex;
+      flex-direction: column;
+
+      h3 {
+        padding: 0 5px;
+        border-bottom: 1px solid $primary-color;
+      }
+      #checkbox-container {
+        column-count: 2;
+        text-align: center;
+        #checkbox {
+          zoom: 1.2;
+          input {
+            margin: 3px;
+          }
+        }
+      }
+    }
   }
   #table-panel {
     flex: 1.5;

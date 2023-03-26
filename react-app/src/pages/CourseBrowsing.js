@@ -2,23 +2,21 @@ import { useState, useEffect } from 'react'
 
 // import custom hooks
 import useCourse from '../hooks/useCourse'
+import useTime from '../hooks/useTime'
 
 const CourseBrowsing = () => {
 
     const { courseArray } = useCourse()
-    const { course } = useCourse('CHIN4140')
+    const { parseTimecodeArray } = useTime()
 
     useEffect(() => {
         console.log(courseArray)
     }, [courseArray])
 
-    useEffect(() => {
-        console.log(course)
-    }, [course])
 
     return (
         <div id='course-browsing'>
-            <FilterPanel />
+            <FilterList />
             <div id='table-panel'>
                 <SearchBar />
                 <Table />
@@ -26,9 +24,23 @@ const CourseBrowsing = () => {
         </div>
     )
 }
-const FilterPanel = () => {
+const FilterList = () => {
+
+    const { timeslotMap } = useTime()
+
     return (
-        <div id='filter-panel'>
+        <div id='filter-list'>
+            <div id='starting-time-filter'>
+                <h3>Class Starting Time</h3>
+                <div id='checkbox-container'>
+                    {timeslotMap.map((timeslot, idx) => (
+                        <div id='checkbox' key={idx}>
+                            <input type="checkbox" name={timeslot[0]} value={String(idx)} />
+                            <label htmlFor={timeslot[0]}>{timeslot[0]}</label>
+                        </div>
+                    ))}
+                </div>
+            </div>
             Filter
         </div>
     )
