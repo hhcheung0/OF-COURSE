@@ -8,7 +8,6 @@ import useConstant from '../hooks/useConstant'
 const CourseBrowsing = () => {
 
     const { courseArray } = useCourse()
-    const { parseTimecodeArray } = useTime()
 
     // useEffect(() => {
     //     console.log(courseArray)
@@ -23,7 +22,7 @@ const CourseBrowsing = () => {
             <FilterList />
             <div id='table-panel'>
                 <SearchBar />
-                <Table />
+                <CourseTable courseArray={courseArray} />
             </div>
         </div>
     )
@@ -65,9 +64,43 @@ const SearchBar = () => {
         <div id='search-bar'>SearchBar</div>
     )
 }
-const Table = () => {
+const CourseTable = ({courseArray}) => {
+    const { parseTimecodeArray } = useTime()
+
     return (
-        <div>Table</div>
+        <div id='table-container'>
+            <table id='course-table'>
+                <thead>
+                    <tr>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Capacity</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {courseArray && courseArray.slice(0, 27).map((course, idx) => (
+                        <CourseTableRow course={course} key={idx} />
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+const CourseTableRow = ({course}) => {
+    const { parseTimecodeArray } = useTime()
+
+    return (
+        <tr>
+            <td>{course && course.courseID}</td>
+            <td>{course && course.courseName}</td>
+            <td>{course && parseTimecodeArray(course.courseTime).join(', ')}</td>
+            <td>{course && course.courseLocation}</td>
+            <td>{course && course.courseCapacity}</td>
+        </tr>
     )
 }
 
