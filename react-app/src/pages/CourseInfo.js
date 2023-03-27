@@ -17,23 +17,30 @@ const CourseInfo = () => {
 
     //console.log(course);
 
-    const handleAddToCart = (cartOption) => {
-        cartOption.preventDefault();
-        console.log(cartOption);
-    }
+    const handleSubmit= (e) =>{
+        e.preventDefault();
+        const formID = e.target.id;
+        console.log(formID);
+        if (formID === "course-info"){
+            console.log("dasds");
+        }
+        else if (formID === "comment-info"){
 
-    const handleAddComment = (comment) => {
-        comment.preventDefault();
-    }
+        }
+
+
+
+
+    };
     return(
         <>
             <h2>Course Information</h2>
-            <form id="course-info" onSubmit={handleAddToCart}>
-                <CourseTables course={course}/> 
-                <TutorialTables course={course}/> 
+            <form id="course-info" onSubmit={handleSubmit}>
+                <CourseSection course={course}/> 
+                <TutorialSection course={course}/> 
             </form>
-            <form id="course-info" onSubmit={handleAddComment}>
-                <CommentTables course={course}/> 
+            <form id="comment-info" onSubmit={handleSubmit}>
+                <CommentSection course={course}/> 
                 <div id="tutorial-button"> </div> 
                 <CommentInput /> 
             </form>
@@ -43,14 +50,14 @@ const CourseInfo = () => {
     )
 }
 
-const CourseTables =({course}) =>{
+const CourseSection =({course}) =>{
     //const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
     //console.log(course);
     const {parseTimecodeArray} = useTime();
 
     return( 
         <>
-        <div id="lecture-table">
+        <div id="lecture-section">
             
             <h3> Lecture</h3>
             <table style={{marginBottom: '10px'}} id="abc">
@@ -114,7 +121,7 @@ const TutorialButton =({tutorial}) =>{
         
     )
 }
-const TutorialSubTable =({tutorial})=>{
+const TutorialTable =({tutorial})=>{
     const {parseTimecodeArray} = useTime();
     return(
         <table style={{marginBottom: '10px'}}>
@@ -144,7 +151,7 @@ const TutorialSubTable =({tutorial})=>{
                 </table>
     )
 }
-const TutorialTables = ({course}) =>{
+const TutorialSection = ({course}) =>{
 
     return(
         <>
@@ -153,7 +160,7 @@ const TutorialTables = ({course}) =>{
                     <TutorialButton tutorial={tutorial} key ={idx}/>
                 ))}
             </div>
-            <div id = "tutorial-table">
+            <div id = "tutorial-section">
                 <div id="tutorial-all-heading">
                     <div id="tutorial-header"><h3> Tutorial</h3></div>
                     <div id="shopping-cart-button">
@@ -161,7 +168,7 @@ const TutorialTables = ({course}) =>{
                     </div>
                 </div>
                 {course.tutorialInfo && course.tutorialInfo.map((tutorial, idx) =>(
-                    <TutorialSubTable tutorial={tutorial} key ={idx}/>
+                    <TutorialTable tutorial={tutorial} key ={idx}/>
                 ))}
 
             
@@ -169,7 +176,7 @@ const TutorialTables = ({course}) =>{
         </>
     )
 }
-const CommentSubTable = ({comment}) =>{
+const CommentTable = ({comment}) =>{
 
  return(
             <tr>
@@ -177,11 +184,11 @@ const CommentSubTable = ({comment}) =>{
             </tr>  
  )
 }
-const CommentTables = ({course}) =>{
+const CommentSection = ({course}) =>{
     return(
-        <div id="tutorial-table">
+        <div id="tutorial-section">
             <h3> Comment</h3>
-            <div id="comment-table">
+            <div id="comment-section">
                 <table>
                     <tbody>
                         <tr>
@@ -189,7 +196,7 @@ const CommentTables = ({course}) =>{
                         </tr>
 
                         {course.comment && course.comment.map((comment,idx)=>(
-                            <CommentSubTable comment={comment} key ={idx}/>
+                            <CommentTable comment={comment} key ={idx}/>
                         ))}
                     </tbody>
                 </table>

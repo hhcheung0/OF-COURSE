@@ -298,7 +298,7 @@ input[type=submit] {
   }
 }
 
-#course-info {
+#course-info,#comment-info {
   box-sizing: border-box;
   table,th,td{
     padding: 5px;
@@ -322,7 +322,7 @@ input[type=submit] {
   flex-direction: row;
   margin-right: 50px;
   //flex: 1;
-  #lecture-table {
+  #lecture-section {
     margin-left: 5px;
     margin-right: 50px;
     flex: 0.9;
@@ -333,7 +333,7 @@ input[type=submit] {
   #tutorial-button {
       flex: 0.12;
     }
-  #tutorial-table {
+  #tutorial-section {
     flex: 0.9;
 
     #tutorial-all-heading{
@@ -347,10 +347,10 @@ input[type=submit] {
       }
     }
   }
-  #comment-table{
+  #comment-section{
     margin-left: 5px;
     flex: 0.9;
-    height: 130px;
+    height: 150px;
     overflow-y: scroll;
   }
   #comment-input{
@@ -373,23 +373,8 @@ input[type=submit] {
   width: 100%;
   font-size: 10pt;
   text-align:justify;
-
-
 } 
 #submit-button{
 margin-right: 0px;
 margin-left: 400px;
-}
-#halfable{
-  box-sizing: border-box;
-}
-.row{
-  display: flex;
-  margin-left:-5px;
-  margin-right:-5px;
-  padding: 5px;
-}
-.column{
-  flex: 50%;
-  padding: 5px;
 }
