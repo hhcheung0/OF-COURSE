@@ -262,10 +262,21 @@ h2{
     cursor: pointer;
     width: 100%;
   }
+
 }
-for all tables
+// for all tables
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 10px 10px ;
+  margin: 0px 0px 8px 0px;
+  border: none;
+  cursor: pointer;
+
+}
 *{
   box-sizing: border-box;
+
   table,th,td{
     th{
 
@@ -319,7 +330,17 @@ for all tables
     }
   #tutorial-table {
     flex: 0.9;
-    
+
+    #tutorial-all-heading{
+      display: flex;
+      flex-direction: row;
+      #tutorial-header{
+        flex:3;  
+      }
+      #shopping-cart-button{
+        flex:1;  
+      }
+    }
   }
   #comment-table{
     margin-left: 5px;
@@ -333,6 +354,7 @@ for all tables
   }
 
 }
+
 #button-placement{
   //display: flex;
   //flex-direction:row;

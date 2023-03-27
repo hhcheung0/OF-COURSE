@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from "react";
+import React, { useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 // import custom hooks
 import useCourse from "../hooks/useCourse";
-import useTime,{parseTimecodeArray} from "../hooks/useTime";
+import useTime from "../hooks/useTime";
 
 
 const CourseInfo = () => {
@@ -17,39 +17,35 @@ const CourseInfo = () => {
 
     //console.log(course);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleAddToCart = (cartOption) => {
+        cartOption.preventDefault();
+        console.log(cartOption);
+    }
+
+    const handleAddComment = (comment) => {
+        comment.preventDefault();
     }
     return(
         <>
             <h2>Course Information</h2>
-            <div id="course-info">
-                <CourseTables />
-                <TutorialTables />
-            </div>
-            <div id="course-info">
-                <CommentTables />
-                <div id="tutorial-button"> </div>
-                <CommentInput />
-            </div>
+            <form id="course-info" onSubmit={handleAddToCart}>
+                <CourseTables course={course}/> 
+                <TutorialTables course={course}/> 
+            </form>
+            <form id="course-info" onSubmit={handleAddComment}>
+                <CommentTables course={course}/> 
+                <div id="tutorial-button"> </div> 
+                <CommentInput /> 
+            </form>
         </>    
       
         
     )
 }
-const myTime = (courseTime)=> {
-    console.log(courseTime);
-    let timeString = "";
-    courseTime.forEach(async (time)=>{
-        timeString = timeString + time + ", ";
-    })
-    console.log(timeString);
-    return timeString.substring(0,timeString.length -2);
 
-}
-const CourseTables =() =>{
-    const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
-    console.log(course);
+const CourseTables =({course}) =>{
+    //const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
+    //console.log(course);
     const {parseTimecodeArray} = useTime();
 
     return( 
@@ -69,7 +65,7 @@ const CourseTables =() =>{
                     </tr>
                     <tr>
                         <th> Time</th>
-                        <td> {myTime(parseTimecodeArray(course.courseTime))}</td>  
+                        <td> {parseTimecodeArray(course.courseTime).join(', ')}</td>  
                     </tr>
                     <tr>
                         <th> Location</th>
@@ -109,135 +105,97 @@ const CourseTables =() =>{
         </>
     )
 }
+const TutorialButton =({tutorial}) =>{
 
-const TutorialTables = () =>{
-     const { course } = useCourse(window.location.href.split("/").slice(-1)[0])
+    return(
+        <div id = "button-placement" style={{marginTop : "145px"}}>
+        <input type="radio" id={tutorial.tutorialID} name="tutorial"/>
+        </div>
+        
+    )
+}
+const TutorialSubTable =({tutorial})=>{
+    const {parseTimecodeArray} = useTime();
+    return(
+        <table style={{marginBottom: '10px'}}>
+                
+                    <tbody>
+                        <tr>
+                            <th> Tutorial ID</th>
+                            <td> {tutorial.tutorialID} </td>
+                        </tr>
+                        <tr>
+                            <th> Time</th>
+                            <td> {parseTimecodeArray(tutorial.tutorialTime).join(', ')}</td>
+                        </tr>
+                        <tr>
+                            <th> Location </th>
+                            <td> {tutorial.tutorialLocation}</td>                    
+                        </tr>
+                        <tr>
+                            <th> Tutor</th>
+                            <td> {tutorial.tutor} </td>     
+                        </tr>
+                        <tr>
+                            <th> Capacity</th>
+                            <td> {tutorial.tutorialCapacity} </td>  
+                        </tr>
+                    </tbody>
+                </table>
+    )
+}
+const TutorialTables = ({course}) =>{
 
     return(
         <>
-        <div id="tutorial-button">
-            <div id = "button-placement" style={{marginTop : "120px"}}>
-                <input type="radio" id="tutorial" name="tutorial"/>
+            <div id="tutorial-button">
+                {course.tutorialInfo && course.tutorialInfo.map((tutorial,idx)=>(
+                    <TutorialButton tutorial={tutorial} key ={idx}/>
+                ))}
             </div>
-            <div id = "button-placement" style={{marginTop : "160px"}}>
-                <input type="radio" id="tutorial" name="tutorial"/>
-            </div>
-            <div id = "button-placement" style={{marginTop : "160px"}}>
-                <input type="radio" id="tutorial" name="tutorial"/>
-            </div>
-        </div>
-        <div id = "tutorial-table">
-            <h3> Tutorial</h3>
+            <div id = "tutorial-table">
+                <div id="tutorial-all-heading">
+                    <div id="tutorial-header"><h3> Tutorial</h3></div>
+                    <div id="shopping-cart-button">
+                        <input type="submit" value="Add to Cart"/>
+                    </div>
+                </div>
+                {course.tutorialInfo && course.tutorialInfo.map((tutorial, idx) =>(
+                    <TutorialSubTable tutorial={tutorial} key ={idx}/>
+                ))}
+
             
-
-                <table style={{marginBottom: '10px'}}>
-                
-                    <tbody>
-                        <tr>
-                            <th> Tutorial ID</th>
-                            <td id="tutorialID1">  </td>
-                        </tr>
-                        <tr>
-                            <th> Time</th>
-                            <td> Tue 5:30pm</td>
-                        </tr>
-                        <tr>
-                            <th> Location </th>
-                            <td> KKB Room 1</td>                    
-                        </tr>
-                        <tr>
-                            <th> Tutor</th>
-                            <td> Mrs. Madelynn Ulsamer</td>     
-                        </tr>
-                        <tr>
-                            <th> Capacity</th>
-                            <td> 200</td>  
-                        </tr>
-                    </tbody>
-                </table>
-
-                <table style={{marginBottom: '10px'}}>
-                
-                    <tbody>
-                        <tr>
-                            <th> Tutorial ID</th>
-                            <td> T01 </td>
-                        </tr>
-                        <tr>
-                            <th> Time</th>
-                            <td> Tue 5:30pm</td>
-                        </tr>
-                        <tr>
-                            <th> Location </th>
-                            <td> KKB Room 1</td>                    
-                        </tr>
-                        <tr>
-                            <th> Tutor</th>
-                            <td> Mrs. Madelynn Ulsamer</td>     
-                        </tr>
-                        <tr>
-                            <th> Capacity</th>
-                            <td> 200</td>  
-                        </tr>
-                    </tbody>
-                </table>
-                <table style={{marginBottom: '10px'}}>
-                
-                    <tbody>
-                        <tr>
-                            <th> Tutorial ID</th>
-                            <td> T01 </td>
-                        </tr>
-                        <tr>
-                            <th> Time</th>
-                            <td> Tue 5:30pm</td>
-                        </tr>
-                        <tr>
-                            <th> Location </th>
-                            <td> KKB Room 1</td>                    
-                        </tr>
-                        <tr>
-                            <th> Tutor</th>
-                            <td> Mrs. Madelynn Ulsamer</td>     
-                        </tr>
-                        <tr>
-                            <th> Capacity</th>
-                            <td> 200</td>  
-                        </tr>
-                    </tbody>
-                </table>
-           
-        </div>
-
+            </div>
         </>
     )
 }
+const CommentSubTable = ({comment}) =>{
 
-const CommentTables = () =>{
+ return(
+            <tr>
+                <td> {comment}</td>
+            </tr>  
+ )
+}
+const CommentTables = ({course}) =>{
     return(
         <div id="tutorial-table">
             <h3> Comment</h3>
             <div id="comment-table">
-            
-            <table id>
-                <tbody>
-                    <tr>
-                        <th> Comment</th>
-                    </tr>
-                    <tr>
-                        <td> ARCH4180</td>
-                    </tr>
-                    <tr>
-                        <td> Applications of Architectural Studies</td>   
-                    </tr>
-                    <tr>                 
-                        <td> Tue 16:30-18:30</td>     
-                    </tr>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th> Comment</th>
+                        </tr>
 
-                </tbody>
-            </table>
+                        {course.comment && course.comment.map((comment,idx)=>(
+                            <CommentSubTable comment={comment} key ={idx}/>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        </div>
+        
     )
 }
 
@@ -245,10 +203,8 @@ const CommentInput = () =>{
     return(
         <div id="comment-input">
             <h3> Add Comment</h3>
-            <form>
                 <textarea id="text-box"/>
-                <input type="submit" id="submit-button" style={{float: "right"}}/>
-            </form>
+                <input type="submit" id="submit-button" value="Add" style={{float: "right"}}/>
     </div>
     )
 }
