@@ -140,8 +140,8 @@ button:hover {
     align-items: center;
     justify-content: space-around;
     
-    padding: 20px 0;
-    margin: 2em 4em;
+    padding: 0.5em 0;
+    margin: 1em 1em;
     #starting-time-filter {
       display: flex;
       flex-direction: column;
@@ -155,7 +155,7 @@ button:hover {
           justify-content: center;
           align-items: center;
 
-          padding: 2px 0;
+          padding: 0.2em 0;
         }
       }
     }
@@ -163,14 +163,17 @@ button:hover {
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      margin: 0;
       #checkbox-container {
-        overflow: auto;
+        overflow-y: auto;
+        max-height: 50vh;
         #checkbox {
           text-align: center;
           display: flex;
           align-items: center;
   
-          padding: 2px 0;
+          padding: 0.2em 0;
         }
       }
     }
@@ -185,7 +188,8 @@ button:hover {
     #table-container {
       flex: 1;
       max-height: 70vh;
-      overflow-y: scroll;
+      overflow-y: auto;
+      margin: 0 auto;
       #course-table {
         border: 2px solid #A7D094;
         thead {
@@ -195,9 +199,10 @@ button:hover {
           top: 0;
           
           th {
-            padding: 0.5em 3em;
-            border: 2px 0 solid #A7D094;
+            padding: 0.5em 1em;
             text-align: center;
+            border: 2px 0 solid #A7D094;
+            background-clip: padding-box;
           }
           
         }
@@ -207,19 +212,19 @@ button:hover {
             border: 2px solid #A7D094;
             text-align: center;
             td {
-              padding: 0.5em 3em;
+              padding: 0.5em 1em;
             }
           }
         }
       }
     }
   }
-  h3 {
-    padding: 0 5px;
+  #filter-header {
     border-bottom: 1px solid $primary-color;
+    font-size: 1.4em;
   }
   input {
-    margin: auto 5px;
+    margin: auto 0.2em;
 
   }
 }
