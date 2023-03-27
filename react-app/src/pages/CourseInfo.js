@@ -128,7 +128,7 @@ const TutorialTables = () =>{
         </div>
         <div id = "tutorial-table">
             <h3> Tutorial</h3>
-            <form>
+            
 
                 <table style={{marginBottom: '10px'}}>
                 
@@ -206,7 +206,7 @@ const TutorialTables = () =>{
                         </tr>
                     </tbody>
                 </table>
-            </form>
+           
         </div>
 
         </>

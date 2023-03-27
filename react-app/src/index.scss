@@ -229,10 +229,27 @@ h2{
     width: 100%;
   }
 }
-//for half tables, courseInfo page
+//for all tables
 *{
-    box-sizing: border-box;
+  box-sizing: border-box;
+  table,th,td{
+    th{
+
+      background-color:#04AA6D;
+ 
+    }
+    tr:hover{
+      background-color: #277582;
+    }
+    th:hover{
+      background-color: #277582;
+      position: sticky;
+    }
   }
+}
+
+#course-info {
+  box-sizing: border-box;
   table,th,td{
     padding: 5px;
     width: 100%;
@@ -251,8 +268,6 @@ h2{
       position: sticky;
     }
 }
-
-#course-info {
   display: flex;
   flex-direction: row;
   margin-right: 50px;
