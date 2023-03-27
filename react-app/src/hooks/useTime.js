@@ -63,7 +63,7 @@ const useTime = () => {
                 // for the right pointer is the consecutive of the previous element, right pointer++
                 else right++
             }
-            stringArray.push(`${prefix} ${storage.map(range => (getStartingTime(range[0])+':'+getEndingTime(range.pop()))).join(', ')}`)
+            stringArray.push(`${prefix} ${storage.map(range => (getStartingTime(range[0])+'-'+getEndingTime(range.pop()))).join(', ')}`)
         }
         return stringArray
     }
