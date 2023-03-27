@@ -34,7 +34,7 @@ const FilterList = () => {
     return (
         <div id='filter-list'>
             <div id='starting-time-filter'>
-                <h3>Class Starting Time</h3>
+                <div id='filter-header'>Class Starting Time</div>
                 <div id='checkbox-container'>
                     {classStartingTimeList.map((timeslot, idx) => (
                         <div id='checkbox' key={idx}>
@@ -46,7 +46,7 @@ const FilterList = () => {
             </div>
             
             <div id='department-filter'>
-                <h3>Department</h3>
+                <div id='filter-header'>Department</div>
                 <div id='checkbox-container'>
                     {departmentList.map((department, idx) => (
                         <div id='checkbox' key={idx}>
@@ -94,13 +94,19 @@ const CourseTableRow = ({course}) => {
     const { parseTimecodeArray } = useTime()
 
     return (
-        <tr>
-            <td>{course && course.courseID}</td>
-            <td>{course && course.courseName}</td>
-            <td>{course && parseTimecodeArray(course.courseTime).join(', ')}</td>
-            <td>{course && course.courseLocation}</td>
-            <td>{course && course.courseCapacity}</td>
-        </tr>
+        <>
+        {course &&
+            <tr>
+                <td>{course.courseID}</td>
+                <td>{course.courseName}</td>
+                <td>{parseTimecodeArray(course.courseTime).map((str, idx) => (
+                    <div key={idx}>{str}</div>
+                ))}</td>
+                <td>{course.courseLocation}</td>
+                <td>{course.courseCapacity}</td>
+            </tr>
+        }
+        </>
     )
 }
 
