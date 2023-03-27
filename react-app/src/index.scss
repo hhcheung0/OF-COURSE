@@ -47,6 +47,48 @@ button:hover {
   }
 }
 
+#profile {
+  #user {
+    padding: 10px 50px;
+  }
+
+  #change-icon {
+    b {
+      padding: 10px;
+    }
+  
+    #current-icon {
+      height: 150px;
+      width: 150px;
+
+      border-radius: 50%;
+    }
+
+    #select-icon {
+      img {
+        height: 100px;
+        width: 100px;
+        margin: 20px 5px;
+  
+        border-radius: 50%;
+      }
+    }
+  }
+
+  #change-pw {
+    b {
+      padding: 10px;
+    }
+    input {
+      width: 90%;
+    }
+    button {
+      margin: 0 1em;
+      float: right;
+    }
+  }
+}
+
 #sidebar {
   display: flex;
   flex-direction: column;
@@ -229,46 +271,49 @@ button:hover {
   }
 }
 
-h2{
-  text-align: center;
-  color: #277582;
-  padding: 20px;
+#login, #signUp {
+  h2{
+    text-align: center;
+    color: #277582;
+    padding: 20px;
+  }
+  .container {
+    /* Center the image and position the close button */
+    width: 70%;
+    //overflow: hidden;
+    margin: auto;
+    margin: 20 20 0 450px;
+    padding: 80px;
+    background: #c7e2dd;
+    border-radius: 15px ;
+    label{
+      color: #08362e;
+      font-size: 17px;
+    }
+    
+    /* Full-width input fields */
+    input[type=text], input[type=password] {
+      width: 100%;
+      height: 30px;
+      border: none;
+      border-radius: 3px;
+      padding-left: 8px;
+    }
+    
+    /* Set a style for all buttons */
+    button {
+      background-color: #04AA6D;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+  
+  }
 }
-.container {
-  /* Center the image and position the close button */
-  width: 70%;
-  //overflow: hidden;
-  margin: auto;
-  margin: 20 20 0 450px;
-  padding: 80px;
-  background: #c7e2dd;
-  border-radius: 15px ;
-  label{
-    color: #08362e;
-    font-size: 17px;
-  }
-  
-  /* Full-width input fields */
-  input[type=text], input[type=password] {
-    width: 100%;
-    height: 30px;
-    border: none;
-    border-radius: 3px;
-    padding-left: 8px;
-  }
-  
-  /* Set a style for all buttons */
-  button {
-    background-color: #04AA6D;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-  }
 
-}
 // for all tables
 input[type=submit] {
   background-color: #04AA6D;

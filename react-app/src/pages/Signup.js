@@ -52,7 +52,7 @@ const Signup = () => {
 
     // check password matching
     return(
-        <div>
+        <div id="signUp">
             <h2>Signup Page</h2>
             {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
             <div className="container">

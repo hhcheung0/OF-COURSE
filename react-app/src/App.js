@@ -10,6 +10,9 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import CourseInfo from './pages/CourseInfo'
 import CourseBrowsing from './pages/CourseBrowsing'
+import Home from './pages/Home'
+import Profile from './pages/Profile'
+import Admin from './pages/Admin'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +30,18 @@ const router = createBrowserRouter([
       {
         path: '/course/:courseID',
         element: <CourseInfo />
+      },
+      {
+        path: '/home',
+        element: <Home />
+      },
+      {
+        path: '/profile',
+        element: <Profile />
+      },
+      {
+        path: '/admin',
+        element: <Admin />
       }
     ]
 
