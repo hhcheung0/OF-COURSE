@@ -5,6 +5,7 @@ const useCourse = (courseID) => {
     const [course, setCourse] = useState({})
 
     // fetch all course data from server and store at "courseArray"
+    // or fetch a specific course by the courseID argument
     useEffect(() => {
         fetch(`http://localhost:3001/data/course/${courseID? courseID: ''}`)
         .then(res => res.json())
