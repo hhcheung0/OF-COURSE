@@ -179,21 +179,22 @@ button:hover {
 
   color: $primary-color;
 
+  margin: auto;
+  flex: 1;
+
   #filter-list {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     
-    padding: 0.5em 0;
-    margin: 1em 1em;
+    margin: 0 3vw;
     #starting-time-filter {
       display: flex;
       flex-direction: column;
       #checkbox-container {
         column-count: 2;
 
-        margin: 0.5em 0;
         #checkbox {
           text-align: center;
           display: flex;
@@ -201,6 +202,9 @@ button:hover {
           align-items: center;
 
           padding: 0.2em 0;
+          input {
+            margin: 0 0.5em;
+          }
         }
       }
     }
@@ -209,32 +213,40 @@ button:hover {
       flex-direction: column;
       align-items: center;
 
-      margin: 0;
+      margin-top: 2em;
       #checkbox-container {
         overflow-y: auto;
-        max-height: 50vh;
+        max-height: 60vh;
+
+        padding: 0 1em;
         #checkbox {
           text-align: center;
           display: flex;
           align-items: center;
   
           padding: 0.2em 0;
+          input {
+            margin: 0 0.5em;
+          }
         }
       }
+    }
+    #filter-header {
+      padding: 0 0.2em;
     }
   }
   #table-panel {
     flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     #search-bar {
       height: 100px;
     }
     #table-container {
       flex: 1;
       max-height: 70vh;
-      overflow-y: auto;
-      margin: 0 auto;
+      overflow: auto;
       #course-table {
         border: 2px solid #A7D094;
         thead {
