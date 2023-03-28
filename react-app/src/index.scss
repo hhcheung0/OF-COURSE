@@ -215,7 +215,6 @@ thead,tr {
   color: $primary-color;
 
   margin: auto;
-  flex: 1;
 
   #filter-list {
     display: flex;
@@ -237,9 +236,6 @@ thead,tr {
           align-items: center;
 
           padding: 0.2em 0;
-          input {
-            margin: 0 0.5em;
-          }
         }
       }
     }
@@ -260,11 +256,11 @@ thead,tr {
           align-items: center;
   
           padding: 0.2em 0;
-          input {
-            margin: 0 0.5em;
-          }
         }
       }
+    }
+    input {
+      margin: 0 0.5em;
     }
     #filter-header {
       padding: 0 0.2em;
@@ -276,17 +272,45 @@ thead,tr {
     flex-direction: column;
     justify-content: center;
     #search-bar {
-      height: 100px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      margin: 1em 0;
+      div {
+        font-size: 1.4em;
+        margin: 0 1vw;
+      }
+
+      input {
+        flex: 1;
+        border: 1px solid $primary-color;
+        
+        padding: 0.25em 0.5em;
+        outline: none;
+      }
+    }
+    #toggle-button-panel {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+
+      font-size: 1.4em;
+      
+      padding: 0 2em;
+      margin: 0.25em 0;
     }
     #table-container {
       flex: 1;
       max-height: 70vh;
       overflow: auto;
+
+      margin: auto 0;
       #course-table {
         border: 2px solid #A7D094;
         thead {
-          background-color: $primary-color;
-          color: #F7FAFA;
           position: sticky;
           top: 0;
           

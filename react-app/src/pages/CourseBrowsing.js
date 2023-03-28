@@ -22,6 +22,7 @@ const CourseBrowsing = () => {
             <FilterList />
             <div id='table-panel'>
                 <SearchBar />
+                <EligibleCourseToggle />
                 <CourseTable courseArray={courseArray} />
             </div>
         </div>
@@ -61,11 +62,29 @@ const FilterList = () => {
 }
 const SearchBar = () => {
     return (
-        <div id='search-bar'>SearchBar</div>
+        <div id='search-bar'>
+            <div>Search</div>
+            <input type="text" />
+        </div>
+    )
+}
+const EligibleCourseToggle = () => {
+    return (
+        <div id='toggle-button-panel'>
+            <div>
+                <input type="radio" name="course-toggle" id="all" value={false} default />
+                <label htmlFor="all">All Courses</label>
+            </div>
+
+            <div>
+                <input type="radio" name="course-toggle" id="eligible" value={true} />
+                <label htmlFor="eligible">Eligible Courses Only</label>
+
+            </div>
+        </div>
     )
 }
 const CourseTable = ({courseArray}) => {
-    const { parseTimecodeArray } = useTime()
 
     return (
         <div id='table-container'>
@@ -81,7 +100,7 @@ const CourseTable = ({courseArray}) => {
                 </thead>
 
                 <tbody>
-                    {courseArray && courseArray.slice(0, 27).map((course, idx) => (
+                    {courseArray && courseArray.map((course, idx) => (
                         <CourseTableRow course={course} key={idx} />
                     ))}
                 </tbody>
