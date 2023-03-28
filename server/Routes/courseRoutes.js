@@ -24,4 +24,8 @@ router.get('/data/course/:courseID', (req, res) => {
     .catch(error => res.json({error}))
 })
 
+router.post('data/course/addtocart', (req,res)=>{
+    console.log(req.body);
+})
+
 module.exports = router

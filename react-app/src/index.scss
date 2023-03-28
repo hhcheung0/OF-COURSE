@@ -6,9 +6,44 @@ body {
   background-color:#eefffdba;
   font-family: 'Source Sans Pro';
 }
+button {
+  background-color: $primary-color;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
 button:hover {
   opacity: 0.8;
 }
+input[type=submit] {
+  background-color: $primary-color;
+  color: white;
+  padding: 10px 10px ;
+  margin: 0px 0px 8px 0px;
+  border: none;
+  cursor: pointer;
+
+}
+h2{
+  text-align: center;
+  color: #277582;
+  padding: 15px;
+}
+h3{
+  color: #277582;
+}
+thead,tr {
+  //border: 2px solid #A7D094;
+  
+  thead,th{
+    background-color: $primary-color;
+    color: #F7FAFA;
+  }
+}
+
 #app {
   min-height: 100vh;
   display: flex;
@@ -287,11 +322,7 @@ button:hover {
 }
 
 #login, #signUp {
-  h2{
-    text-align: center;
-    color: #277582;
-    padding: 20px;
-  }
+
   .container {
     /* Center the image and position the close button */
     width: 70%;
@@ -316,29 +347,21 @@ button:hover {
     }
     
     /* Set a style for all buttons */
-    button {
-      background-color: #04AA6D;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-    }
+    // button {
+    //   background-color: #04AA6D;
+    //   color: white;
+    //   padding: 14px 20px;
+    //   margin: 8px 0;
+    //   border: none;
+    //   cursor: pointer;
+    //   width: 100%;
+    // }
   
   }
 }
 
 // for all tables
-input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 10px 10px ;
-  margin: 0px 0px 8px 0px;
-  border: none;
-  cursor: pointer;
 
-}
 *{
   box-sizing: border-box;
 
@@ -366,7 +389,6 @@ input[type=submit] {
     border: 1px solid;
     th{
       width:20%;
-      background-color:#04AA6D;
       position: sticky; //for scroll bar
       top:0px;
     }
