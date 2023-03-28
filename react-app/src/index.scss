@@ -1,3 +1,4 @@
+@import "~bootstrap/scss/bootstrap";
 $primary-color: #277582;
 $background-color: #F2FFFD;
 body {
@@ -44,6 +45,9 @@ button:hover {
     flex: 1;
     display: flex;
     flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -173,7 +177,6 @@ button:hover {
   display: flex;
   flex-direction: row;
 
-  flex: 1;
   color: $primary-color;
 
   #filter-list {
@@ -327,20 +330,20 @@ input[type=submit] {
 *{
   box-sizing: border-box;
 
-  table,th,td{
-    th{
+  // table,th,td{
+  //   th{
 
-      background-color:#04AA6D;
+  //     background-color:#04AA6D;
  
-    }
-    tr:hover{
-      background-color: #277582;
-    }
-    th:hover{
-      background-color: #277582;
-      position: sticky;
-    }
-  }
+  //   }
+  //   tr:hover{
+  //     background-color: #277582;
+  //   }
+  //   th:hover{
+  //     background-color: #277582;
+  //     position: sticky;
+  //   }
+  // }
 }
 
 #course-info,#comment-info {
