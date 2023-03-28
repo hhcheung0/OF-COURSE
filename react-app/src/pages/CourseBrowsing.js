@@ -6,31 +6,49 @@ import useTime from '../hooks/useTime'
 import useConstant from '../hooks/useConstant'
 
 const CourseBrowsing = () => {
+    const [searchString, setSearchString] = useState('')
+    const [filter, setFilter] = useState({startingTime: [], department: []})
 
     const { courseArray } = useCourse()
 
-    // useEffect(() => {
-    //     console.log(courseArray)
-    //     if (courseArray[0]) {
-    //         console.log(courseArray[0].courseTime)
-    //         console.log(parseTimecodeArray(courseArray[0].courseTime))
-    //     }
-    // }, [courseArray])
+    useEffect(() => {
+        console.log(searchString)
+    }, [searchString])
+    useEffect(() => {
+        console.log(filter)
+    }, [filter])
 
     return (
         <div id='course-browsing'>
-            <FilterList />
+            <FilterList controller={setFilter} />
             <div id='table-panel'>
-                <SearchBar />
+                <SearchBar value={searchString} controller={setSearchString} />
                 <EligibleCourseToggle />
                 <CourseTable courseArray={courseArray} />
             </div>
         </div>
     )
 }
-const FilterList = () => {
-
+const FilterList = (props) => {
     const { classStartingTimeList, departmentList } = useConstant()
+
+    const handleStartingTimeCheck = (e) => {
+        // if user check an arbitrary starting time
+        // add the corresponding starting time into the array inside filter
+        // else remove the starting time from the array
+        if (e.target.checked) {
+            props.controller(filter => ({
+                ...filter,
+                startingTime: [...filter.startingTime, e.target.value]
+            }))
+        }
+        else {
+            props.controller(filter => ({
+                ...filter,
+                startingTime: filter.startingTime.filter((time => time !== e.target.value))
+            }))
+        }
+    }
 
     return (
         <div id='filter-list'>
@@ -39,7 +57,12 @@ const FilterList = () => {
                 <div id='checkbox-container'>
                     {classStartingTimeList.map((timeslot, idx) => (
                         <div id='checkbox' key={idx}>
-                            <input type="checkbox" name={timeslot} value={String(idx)} />
+                            <input
+                                type="checkbox"
+                                name={timeslot}
+                                value={String(idx)}
+                                onChange={handleStartingTimeCheck}
+                            />
                             <label htmlFor={timeslot}>{timeslot}</label>
                         </div>
                     ))}
@@ -60,27 +83,31 @@ const FilterList = () => {
         </div>
     )
 }
-const SearchBar = () => {
+const SearchBar = (props) => {
     return (
         <div id='search-bar'>
             <div>Search</div>
-            <input type="text" />
+            <input
+                type="text"
+                onChange={(e) => props.controller(e.target.value)}
+                value={props.value}
+            />
         </div>
     )
 }
 const EligibleCourseToggle = () => {
+
     return (
         <div id='toggle-button-panel'>
+            <div>
+                <input type="radio" name="course-toggle" id="eligible" value={true} />
+                <label htmlFor="eligible">Eligible Courses Only</label>
+            </div>
             <div>
                 <input type="radio" name="course-toggle" id="all" value={false} default />
                 <label htmlFor="all">All Courses</label>
             </div>
 
-            <div>
-                <input type="radio" name="course-toggle" id="eligible" value={true} />
-                <label htmlFor="eligible">Eligible Courses Only</label>
-
-            </div>
         </div>
     )
 }
