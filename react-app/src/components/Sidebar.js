@@ -20,8 +20,8 @@ const Sidebar = () => {
                     <div>User</div>
                 </div>
                 <div id="nav-section">
-                    <Link to={'/profile'}>Homepage</Link>
-                    <Link to={'/course'}>Browse</Link>
+                    <Link to={'/profile'}>Profile Page</Link>
+                    <Link to={'/course'}>Course Browsing</Link>
                 </div>
                 <button id="log-out-button">Log out</button>
             </div>
