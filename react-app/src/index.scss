@@ -215,6 +215,7 @@ thead,tr {
   color: $primary-color;
 
   margin: auto;
+  flex-grow: 1;
 
   #filter-list {
     display: flex;
@@ -223,6 +224,7 @@ thead,tr {
     justify-content: center;
     
     margin: 0 3vw;
+    height: 100%;
     #starting-time-filter {
       display: flex;
       flex-direction: column;
@@ -235,7 +237,7 @@ thead,tr {
           justify-content: center;
           align-items: center;
 
-          padding: 0.2em 0;
+          padding: 1px 0;
         }
       }
     }
@@ -244,18 +246,18 @@ thead,tr {
       flex-direction: column;
       align-items: center;
 
-      margin-top: 2em;
+      margin-top: 1vh;
       #checkbox-container {
         overflow-y: auto;
         max-height: 60vh;
 
-        padding: 0 1em;
+        padding: 0 1vw;
         #checkbox {
           text-align: center;
           display: flex;
           align-items: center;
   
-          padding: 0.2em 0;
+          padding: 1px 0;
         }
       }
     }
@@ -263,7 +265,7 @@ thead,tr {
       margin: 0 0.5em;
     }
     #filter-header {
-      padding: 0 0.2em;
+      padding: 0 02px;
     }
   }
   #table-panel {
@@ -276,8 +278,6 @@ thead,tr {
       flex-direction: row;
       align-items: center;
       justify-content: center;
-
-      margin: 1em 0;
       div {
         font-size: 1.4em;
         margin: 0 1vw;
@@ -287,7 +287,7 @@ thead,tr {
         flex: 1;
         border: 1px solid $primary-color;
         
-        padding: 0.25em 0.5em;
+        padding: 1px 5px;
         outline: none;
       }
     }
@@ -296,18 +296,15 @@ thead,tr {
       flex-direction: row;
       align-items: center;
       justify-content: space-around;
-
-      font-size: 1.4em;
       
-      padding: 0 2em;
-      margin: 0.25em 0;
+      padding: 0 2vw;
+      margin: 2vh 0;
     }
     #table-container {
       flex: 1;
       max-height: 70vh;
       overflow: auto;
 
-      margin: auto 0;
       #course-table {
         border: 2px solid #A7D094;
         thead {
@@ -328,7 +325,7 @@ thead,tr {
             border: 2px solid #A7D094;
             text-align: center;
             td {
-              padding: 0.5em 1em;
+              padding: 5px 10px;
             }
           }
         }
