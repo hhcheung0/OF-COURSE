@@ -6,7 +6,7 @@ const Course = require('../Models/CourseModel')
 
 // get an array of all courses
 router.get('/data/course', (req, res) => {
-    Course.find()
+    Course.find().sort('courseID')
     .then(courseArray => {
         if (!courseArray) return res.json({error: 'course array is empty'})
         return res.json(courseArray)

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 const useCourse = (courseID) => {
     const [courseArray, setCourseArray] = useState([])
     const [course, setCourse] = useState({})
-    const [query, setQuery] = useState({})
     const [filter, setFilter] = useState({startingTime: [], department: []})
     const [filteredCourseArray, setFilteredCourseArray] = useState([])
 
@@ -19,13 +18,8 @@ const useCourse = (courseID) => {
         })
     }, [courseID, setCourse, setCourseArray])
 
-    useEffect(() => {
-        console.log(filteredCourseArray)
-    }, [filteredCourseArray])
-    useEffect(() => {
-        console.log(filter)
-    }, [filter])
-
+    // Retrieve the array from courseArray and apply filter and store in filtered CourseArray
+    // This function is called whenever filter is updated
     useEffect(() => {
         if (!filter.department.length) {
             setFilteredCourseArray(courseArray.filter(course => filter.startingTime.some(value => course.courseTime.some(time => time[1] === value))))
@@ -38,6 +32,7 @@ const useCourse = (courseID) => {
         }
     }, [courseArray, filter])
 
+    // get function to retrieve either the filtered or whole course array
     const getCourse = () => {
         if (filter.startingTime.length || filter.department.length) return filteredCourseArray
         else return courseArray
