@@ -7,16 +7,12 @@ import useConstant from '../hooks/useConstant'
 
 const CourseBrowsing = () => {
     const [searchString, setSearchString] = useState('')
-    const [filter, setFilter] = useState({startingTime: [], department: []})
-
-    const { courseArray } = useCourse()
+    
+    const { getCourse, setFilter } = useCourse()
 
     useEffect(() => {
         console.log(searchString)
     }, [searchString])
-    useEffect(() => {
-        console.log(filter)
-    }, [filter])
 
     return (
         <div id='course-browsing'>
@@ -24,7 +20,7 @@ const CourseBrowsing = () => {
             <div id='table-panel'>
                 <SearchBar value={searchString} controller={setSearchString} />
                 <EligibleCourseToggle />
-                <CourseTable courseArray={courseArray} />
+                <CourseTable courseArray={getCourse()} />
             </div>
         </div>
     )
@@ -32,20 +28,36 @@ const CourseBrowsing = () => {
 const FilterList = (props) => {
     const { classStartingTimeList, departmentList } = useConstant()
 
+    // controller for checking starting time filter
+    // add the checked time into the starting time array inside filter
     const handleStartingTimeCheck = (e) => {
-        // if user check an arbitrary starting time
-        // add the corresponding starting time into the array inside filter
-        // else remove the starting time from the array
         if (e.target.checked) {
-            props.controller(filter => ({
-                ...filter,
-                startingTime: [...filter.startingTime, e.target.value]
+            props.controller(prev => ({
+                ...prev,
+                startingTime: [...prev.startingTime, e.target.value]
             }))
         }
         else {
-            props.controller(filter => ({
-                ...filter,
-                startingTime: filter.startingTime.filter((time => time !== e.target.value))
+            props.controller(prev => ({
+                ...prev,
+                startingTime: prev.startingTime.filter(time => time !== e.target.value)
+            }))
+        }
+    }
+    // controller for checking department filter
+    // add the checked department into the department array inside filter
+    const handleDepartmentCheck = (e) => {
+        // similar to starting time
+        if (e.target.checked) {
+            props.controller(prev => ({
+                ...prev,
+                department: [...prev.department, e.target.value]
+            }))
+        }
+        else {
+            props.controller(prev => ({
+                ...prev,
+                department: prev.department.filter(department => department !== e.target.value)
             }))
         }
     }
@@ -74,7 +86,12 @@ const FilterList = (props) => {
                 <div id='checkbox-container'>
                     {departmentList.map((department, idx) => (
                         <div id='checkbox' key={idx}>
-                            <input type="checkbox" name={department} value={department} />
+                            <input
+                                type="checkbox"
+                                name={department}
+                                value={department}
+                                onChange={handleDepartmentCheck}
+                            />
                             <label htmlFor={department}>{department}</label>
                         </div>
                     ))}

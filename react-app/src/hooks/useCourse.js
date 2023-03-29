@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react'
 const useCourse = (courseID) => {
     const [courseArray, setCourseArray] = useState([])
     const [course, setCourse] = useState({})
+    const [query, setQuery] = useState({})
+    const [filter, setFilter] = useState({startingTime: [], department: []})
+    const [filteredCourseArray, setFilteredCourseArray] = useState([])
 
     // fetch all course data from server and store at "courseArray"
     // or fetch a specific course by the courseID argument
@@ -15,9 +18,34 @@ const useCourse = (courseID) => {
             else return setCourse(json)
         })
     }, [courseID, setCourse, setCourseArray])
+
+    useEffect(() => {
+        console.log(filteredCourseArray)
+    }, [filteredCourseArray])
+    useEffect(() => {
+        console.log(filter)
+    }, [filter])
+
+    useEffect(() => {
+        if (!filter.department.length) {
+            setFilteredCourseArray(courseArray.filter(course => filter.startingTime.some(value => course.courseTime.some(time => time[1] === value))))
+        }
+        else if (!filter.startingTime.length) {
+            setFilteredCourseArray(courseArray.filter(course => filter.department.includes(course.department)))
+        }
+        else {
+            setFilteredCourseArray(courseArray.filter(course => filter.department.includes(course.department) && filter.startingTime.some(value => course.courseTime.some(time => time[1] === value))))
+        }
+    }, [courseArray, filter])
+
+    const getCourse = () => {
+        if (filter.startingTime.length || filter.department.length) return filteredCourseArray
+        else return courseArray
+    }
     
     return {
-        courseArray,
+        setFilter,
+        getCourse,
         course
     }
 }
