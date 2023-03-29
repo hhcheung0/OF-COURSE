@@ -261,11 +261,6 @@ thead,tr {
         }
       }
     }
-    #clear-button {
-      width: auto;
-      height: auto;
-      padding: 7px 15px;
-    }
     input {
       margin: 0 0.5em;
     }
@@ -333,6 +328,12 @@ thead,tr {
             text-align: center;
             td {
               padding: 0 10px;
+            }
+            .link {
+              cursor: pointer;
+              &:hover {
+                text-decoration: underline;
+              }
             }
           }
         }

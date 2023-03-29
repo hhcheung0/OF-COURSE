@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 // import custom hooks
 import useCourse from '../hooks/useCourse'
@@ -161,8 +162,16 @@ const CourseTableRow = ({course}) => {
         <>
         {course &&
             <tr>
-                <td>{course.courseID}</td>
-                <td>{course.courseName}</td>
+                <td>
+                    <div className='link' onClick={() => window.location.replace(`/course/${course.courseID}`)}>
+                        {course.courseID}
+                    </div>
+                </td>
+                <td>
+                    <div className='link' onClick={() => window.location.replace(`/course/${course.courseID}`)}>
+                        {course.courseName}
+                    </div>
+                </td>
                 <td>{parseTimecodeArray(course.courseTime).map((str, idx) => (
                     <div key={idx}>{str}</div>
                 ))}</td>
