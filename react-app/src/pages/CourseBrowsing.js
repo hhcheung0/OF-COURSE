@@ -6,19 +6,14 @@ import useTime from '../hooks/useTime'
 import useConstant from '../hooks/useConstant'
 
 const CourseBrowsing = () => {
-    const [searchString, setSearchString] = useState('')
     
-    const { getCourse, setFilter } = useCourse()
-
-    useEffect(() => {
-        console.log(searchString)
-    }, [searchString])
+    const { getCourse, setFilter, setSearch } = useCourse()
 
     return (
         <div id='course-browsing'>
             <FilterList controller={setFilter} />
             <div id='table-panel'>
-                <SearchBar value={searchString} controller={setSearchString} />
+                <SearchBar controller={setSearch} />
                 <EligibleCourseToggle />
                 <CourseTable courseArray={getCourse()} />
             </div>
@@ -101,13 +96,19 @@ const FilterList = (props) => {
     )
 }
 const SearchBar = (props) => {
+    const handleChange = (e) => {
+        props.controller(e.target.value)
+        setSearch(e.target.value)
+    }
+
+    const [search, setSearch] = useState('')
     return (
         <div id='search-bar'>
             <div>Search</div>
             <input
                 type="text"
-                onChange={(e) => props.controller(e.target.value)}
-                value={props.value}
+                onChange={handleChange}
+                value={search}
             />
         </div>
     )
