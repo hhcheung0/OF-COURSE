@@ -434,6 +434,7 @@ thead,tr {
   display: flex;
   flex-direction: column;
   height: 100%;
+  justify-content: flex-start;
 
   h2{
     text-align: left;
@@ -441,11 +442,10 @@ thead,tr {
 
   #homepage-course-up{
     display: flex;
-    justify-content: space-between;
-    
+    flex: 3;
+
     #homepage-course-upperleft{
       flex: 3;
-      height: auto;
     }
   
     #homepage-course-upperright{
@@ -453,6 +453,7 @@ thead,tr {
       display: flex;
       flex-direction: column;
       text-align: center;
+      height: 100%;
     }
   }
 
@@ -460,11 +461,12 @@ thead,tr {
     background-color: #277582;
     color: white;
     height: 100%;
-    justify-content: center;  
+    justify-content: center;
+    padding-top: 30px;   
   
     h2{
       color: white;
-      padding: 0 0 15px 30px; 
+      padding: 0 0 30px 30px; 
     }
 
     p{
@@ -486,7 +488,6 @@ thead,tr {
       color: black;
       justify-content: center;  
       width: 50%;
-      height:auto;
     }
   }
 
@@ -514,6 +515,8 @@ thead,tr {
     border: 2px solid #A7D094;
     width: 100%;
     color: $primary-color;
+    max-height: 50%;
+    overflow-y:scroll;
 
     thead {
       position: sticky;

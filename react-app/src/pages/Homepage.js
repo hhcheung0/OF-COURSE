@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
+import { BsArrowDown, BsArrowUp, BsTrash3} from 'react-icons/bs';
 
 const Homepage = () => {
     const [activeTab, setActiveTab] = useState("courseTab");
@@ -64,22 +64,13 @@ const EnrolledTable = () => {
         </thead>
         <tbody>
           <tr>
-            <td>MGNT1040</td>
-            <td>Introduction to Management 1</td>
-            <td>LEC</td>
-            <td>Tue 14:30–16:15</td>
-            <td>MMW Room 1</td>
-            <td>2</td>
-            <th><button>Drop</button></th>
-          </tr>
-          <tr>
             <td>BIOL2410</td>
             <td>Applications of Biology</td>
             <td>LEC</td>
             <td>Tue 8:30 – 10:15</td>
             <td>YIA Room 1</td>
             <td>3</td>
-            <th><button>Drop</button></th>
+            <th><button><BsTrash3 /> Drop</button></th>
           </tr>
           <tr>
             <td></td>
@@ -121,7 +112,7 @@ const ShoppingCartTable = () => {
             <td>Tue 14:30–16:15</td>
             <td>MMW Room 1</td>
             <td>2</td>
-            <th><button>Delete</button></th>
+            <th><button><BsTrash3 /> Delete</button></th>
           </tr>
           <tr>
             <td></td>
