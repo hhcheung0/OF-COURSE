@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 // import custom hooks
 import useCourse from '../hooks/useCourse'

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 
 const useCourse = (courseID) => {
     const [courseArray, setCourseArray] = useState([])
@@ -40,7 +40,6 @@ const useCourse = (courseID) => {
         }
         setFilteredCourseArray(courseArray.filter(course => departmentFilter(course) && classTimeFilter(course) && weekdayFilter(course)))
     }, [courseArray, filter])
-
 
     // function for searching keywords in courseID and courseName
     const searchArray = (courseArray) => {
