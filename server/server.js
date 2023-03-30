@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // require modules
 const authRoutes = require('./Routes/authRoutes')
 const courseRoutes = require('./Routes/courseRoutes')
+const userRoutes = require('./Routes/userRoutes')
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)
@@ -25,6 +26,7 @@ db.once('open', () => {
     // use routers
     app.use(authRoutes)
     app.use(courseRoutes)
+    app.use(userRoutes)
 })
 
 var port = 3001
