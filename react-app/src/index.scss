@@ -664,18 +664,22 @@ thead,tr {
     }
   }
 
-  table,th,td{
+  table,th,td {
+    border: 2px solid #A7D094;
+    width: 100%;
     table{
     border: 2px solid #A7D094;
     }
     th{
       top:0px;
     }
+    
   }
 
   // flex-direction: row;
   // margin-right: 50px;
   #userForm{
+    // border: 2px solid #A7D094;
     background-color:#277582;
     border: white;
     border: solid;
@@ -688,14 +692,20 @@ thead,tr {
 
   #usertable{
     border: 2px solid #A7D094;
+    width: 100%;
   }
 }
 
 #admin-course{
+  display: flex;
+  .column {
+    // float: left;
+    flex: 50%;
+    // width: 50%;
+  }  
   #search-bar {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
     div {
       font-size: 1.4em;
       margin: 0 1vw;
@@ -707,20 +717,6 @@ thead,tr {
       padding: 1px 5px;
       outline: none;
     }
-  }
-
-  #left{
-    width: 50%;
-  }
-  #right{
-    width: 50%;
-  }
-  .row {
-    display: flex;
-  }
-  
-  .column {
-    flex: 50%;
   }
 }
 
@@ -743,7 +739,7 @@ margin-right: 0px;
 margin-left: 400px;
 }
 
-// // table
+// table
 // border: 2px solid #A7D094;
 //     width: 100%;
 //     color: $primary-color;
@@ -776,4 +772,3 @@ margin-left: 400px;
 //     button{
 //       color: white;
 //     }
-//   }
