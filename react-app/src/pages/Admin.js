@@ -18,7 +18,7 @@ const Admin = () => {
     return (
         <div>
             <UserPanel />
-            <CoursePanel />
+            {/* <CoursePanel /> */}
         </div>
     )
 }
@@ -52,37 +52,89 @@ const UserPanel = () => {
 
     return(
         <>
-            <div><h4>Search _______________________</h4></div>
-            <div id='table-container'>
-                <table id='user-table'>
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Username</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
+            <div class="userLeft">
+                <div class="centered">
 
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mary</td>
-                            <td>Show button</td>
-                            <td>Delete button</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <h4>Search <input type="text"></input> </h4>
+                    <table id='user-table'>
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Username</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Mary</td>
+                                <td><button id="showUser">Show</button></td>
+                                <td><button id="deleteUser">🗑Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Bob</td>
+                                <td><button id="showUser">Show</button></td>
+                                <td><button id="deleteUser">🗑Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Jason</td>
+                                <td><button id="showUser">Show</button></td>
+                                <td><button id="deleteUser">🗑Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Peter</td>
+                                <td><button id="showUser">Show</button></td>
+                                <td><button id="deleteUser">🗑Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+                <form method="post">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username"/>
+                    <br/>
+
+                    <label for="userpw">Password</label>
+                    <input type="text" id="userpw" name="password"/>
+                    <br/>
+
+                    <div id='toggle-button-panel'>
+                        <div>
+                            <input type="radio" name="course-toggle" id="student" value={true} />
+                            <label htmlFor="student">Student</label>
+                            <input type="radio" name="course-toggle" id="admin" value={false} default />
+                            <label htmlFor="admin">Admin</label>
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Add/Update" />
+                    <br/>
+                    </form>
+                    
+                </div>
             </div>
                 {/* <table style={{marginBottom: '10px'}} id="username"> */}
+
+            <div class="userRight">
+                <div class="centered">
+
+                </div>
+            </div>
         </>
     )
 }
 
-const CoursePanel = () => {
-    return(
-        <div>
-            <h1>Hi</h1>
-        </div>
-    )
-}
+// const CoursePanel = () => {
+//     return(
+//         <div>
+//             <h1>Hi</h1>
+//         </div>
+//     )
+// }
+
+export default Admin;
