@@ -216,6 +216,11 @@ thead,tr {
 
   margin: auto;
   flex-grow: 1;
+  #filter-wrap {
+    height: 80vh;
+    overflow-y: scroll;
+    margin: auto 0;
+  }
 
   #filter-list {
     display: flex;
@@ -224,10 +229,12 @@ thead,tr {
     justify-content: center;
     
     margin: 0 3vw;
-    height: 100%;
     #starting-time-filter {
       display: flex;
       flex-direction: column;
+      align-items: center;
+
+      margin: 2vh 0;
       #checkbox-container {
         column-count: 2;
 
@@ -245,8 +252,6 @@ thead,tr {
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      margin-top: 1vh;
       #checkbox-container {
         overflow-y: auto;
         max-height: 60vh;
@@ -265,7 +270,9 @@ thead,tr {
       margin: 0 0.5em;
     }
     #filter-header {
-      padding: 0 02px;
+      padding: 0 2px;
+      text-align: center;
+      margin-bottom: 5px;
     }
   }
   #table-panel {
