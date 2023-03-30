@@ -115,14 +115,15 @@ const UserPanel = () => {
                     <input type="submit" value="Add/Update" />
                     <br/>
                     </form>
-                    
+
                 </div>
             </div>
                 {/* <table style={{marginBottom: '10px'}} id="username"> */}
 
             <div class="userRight">
                 <div class="centered">
-
+                    <h4>Username: Mary</h4>
+                    
                 </div>
             </div>
         </>
