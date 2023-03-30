@@ -424,7 +424,7 @@ thead,tr {
 
     div {
       width: 100%; /* set the width of the tab content container */
-      padding: 20px;
+      padding: 5px 10px; 
     }
   }
 
@@ -435,45 +435,85 @@ thead,tr {
   flex-direction: column;
   height: 100%;
 
+  h2{
+    text-align: left;
+  }
+
   #homepage-course-up{
     display: flex;
-    flex-direction: row;
-
+    justify-content: space-between;
+    
     #homepage-course-upperleft{
-      flex: 2;
+      flex: 3;
+      height: auto;
     }
   
     #homepage-course-upperright{
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 20px;
       text-align: center;
     }
+  }
+
+  #swap-container{
+    background-color: #277582;
+    color: white;
+    height: 100%;
+    justify-content: center;  
   
-    #swap-container{
-      background-color: #277582;
+    h2{
       color: white;
-      height:100%;
-      justify-content: center;  
-      padding: 30px 0 0 0; 
-
-      select {
-        width: 75%;
-        height: 10%;
-      }
-
-      option{
-        text-align: center;
-      }
-
+      padding: 0 0 15px 30px; 
     }
+
+    p{
+      text-align: left;
+      padding-left: 13%;
+    }
+
+    select {
+      width: 75%;
+      height: 10%;
+    }
+
+    option{
+      text-align: center;
+    }
+
+    button{
+      background-color: #c7e2dd;
+      color: black;
+      justify-content: center;  
+      width: 50%;
+      height:auto;
+    }
+  }
+
+  #homepage-course-bottom{
+    justify-content: center;
+    flex: 1;
+  }
+
+  #homepage-course-text{
+    color: #277582;
+    text-align:end;
+    margin: 0; 
+    flex: 1;
+  }
+
+  #homepage-course-gpa{
+    color: #277582;
+    text-align:end;
+    margin: 0; 
+    flex: 1;
+    margin-top: 40px; 
   }
   
   #homepage-table{
     border: 2px solid #A7D094;
     width: 100%;
+    color: $primary-color;
 
     thead {
       position: sticky;
@@ -496,6 +536,10 @@ thead,tr {
           padding: 0 10px;
         }
       }
+    }
+
+    button{
+      color: white;
     }
   }
 }
