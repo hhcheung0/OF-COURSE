@@ -12,16 +12,27 @@ const Admin = () => {
 //     // const [user, setUser] = useState("");    // const [enrolledCourseID] = useState("");
 //     // // const [shoppingCartCourseID] = useState("");
 //     // // const [passedCourseID] = useState(""); // Completed Courses
-
+    const [activeTab, setActiveTab] = useState("userPanelTab");
+    
+    return (
+    <div id="full-page-tab">
+        <div className="tab-buttons">
+        <button className={activeTab === "userPanelTab" ? "active" : ""} onClick={() => setActiveTab("userPanelTab")}>
+            User Information
+        </button>
+        <button className={activeTab === "coursePanelTab" ? "active" : ""} onClick={() => setActiveTab("coursePanelTab")}>
+            Course Information
+        </button>
+        </div>
+        <div className="tab-content">
+        {activeTab === "userPanelTab" && <UserPanel />}
+        {activeTab === "coursePanelTab" && <CoursePanel />}
+        </div>
+    </div>
+    );
+};
 //     // // get user info from DB
 //     // const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);  
-    return (
-        <div>
-            <UserPanel />
-            {/* <CoursePanel /> */}
-        </div>
-    )
-}
 
 // const UserSearchBar = (props) => {
 //     const handleChange = (e) => {
@@ -41,18 +52,13 @@ const Admin = () => {
 //     )
 // }
 
-const UserPanel = () => {
-
-    // const columnDefs = [
-    //     {field: 'User ID'},
-    //     {field: 'Username'},
-    //     {field: ''},
-    //     {field: ''},
-    // ];
-    return(
+function UserPanel() {
+    return (
+        <div id="admin-user">
         <div class="row">
-            <div class="column">
-                <div class="centered">
+{/* Left side of the userPanel */}
+            <div class="column" id="left">
+                    <br></br><br></br>
                     <h3>Search <input type="text"></input> </h3>
                     <table id='user-table'>
                         <thead>
@@ -91,7 +97,8 @@ const UserPanel = () => {
                             </tr>
                         </tbody>
                     </table>
-                
+
+                <div id="userForm">
                 <form method="post">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username"/>
@@ -103,26 +110,24 @@ const UserPanel = () => {
 
                     <div id='toggle-button-panel'>
                         <div>
-                            <input type="radio" name="course-toggle" id="student" value={true} />
+                            <input type="radio" name="course-toggle" id="studentCreate" value={true} />
                             <label htmlFor="student">Student</label>
-                            <input type="radio" name="course-toggle" id="admin" value={false} default />
+                            <input type="radio" name="course-toggle" id="adminCreate" value={false} default />
                             <label htmlFor="admin">Admin</label>
                         </div>
                     </div>
 
                     <input type="submit" value="Add/Update" />
                     <br/>
-                    </form>
-
+                </form>
                 </div>
             </div>
                 {/* <table style={{marginBottom: '10px'}} id="username"> */}
-
-            <div class="column">
-                <div class="centered">
+{/* Right-side of the userPanel */}
+            <div class="column" id="right">
+            <div id="usertable">
                     <h3>Username: Mary</h3>
-
-                        <div>
+                    <div>
                         <h3>Enrolled Courses</h3>
                         <table id='user-enrolled'>
                             <thead>
@@ -208,8 +213,14 @@ const UserPanel = () => {
                             </tbody>
                         </table>
 
-                        <h3>Add Courses <input type="text"></input> </h3>
-                        <input type="text"></input>
+                        <h3>Add Courses  
+                            <select name="addCourseCategory" id="addCourseCategory">
+                            <option value="enrolledCourses">Enrolled Courses</option>  
+                            <option value="shoppingCart">Shopping Cart</option>
+                            <option value="passedCourses">Completed Courses</option>
+                            </select> 
+                            <input type="text"></input> 
+                        </h3>
                         <table id='user-addcourse'>
                             <thead>
                                 <tr>
@@ -232,21 +243,169 @@ const UserPanel = () => {
                             </tbody>
                         </table>
                         <button>Add</button>
-                        </div>  
+                    </div>  
+            </div>
+            </div>
+        </div>
+        </div>
+    );
+}
 
+function CoursePanel() {
+    return (
+        <div id="admin-course">
+            <div class="row">
+                <h3>Search <input type="text"></input> </h3>
+            </div>
+
+            <div class="row">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Course ID</th>
+                            <th>Course Name</th>
+                            <th>Time</th>
+                            <th>Location</th>
+                            <th>Capacity</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ARCH4180</td>
+                            <td>Applications of Architectural studies</td>
+                            <td>Tue 16:30-18:15</td>
+                            <td>MMW Room 1</td>
+                            <td>200</td>
+                            <td><button id="deleteCourse">🗑Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+            <div class="row">
+                    <div id="lectureForm">
+                        <form method="post">
+                        <div class="column" id="left">
+{/* Left side of the form */}
+                        <h3>Lecture</h3>
+                            <label for="courseid">Course ID</label>
+                            <input type="text" id="courseid" name="courseid"/>
+                            <br/>
+
+                            <label for="coursename">Course Name</label>
+                            <input type="text" id="coursename" name="coursename"/>
+                            <br/>
+
+                            <label for="coursetime">Time</label>
+                            <input type="text" id="coursetime" name="coursetime"/>
+                            <br/>
+                            
+                            <label for="courseloc">Location</label>
+                            <input type="text" id="courseloc" name="courseloc"/>
+                            <br/>
+
+                            <label for="courseinst">Instructor</label>
+                            <input type="text" id="courseinst" name="courseinst"/>
+                            <br/>
+
+                            <label for="coursedep">Department</label>
+                            <input type="text" id="coursede[" name="coursedep"/>
+                            <br/>
+
+                            <label for="coursecap">Capacity</label>
+                            <input type="text" id="coursecap" name="coursecap"/>
+                            <br/>
+
+                            <label for="coursepre">Pre-requisite Course(s)</label>
+                            <input type="text" id="coursepre" name="coursepre"/>
+                            <br/>
+
+                            <label for="courseforb">Forbidden Course(s)</label>
+                            <input type="text" id="courseforb" name="courseforb"/>
+                            <br/>
+
+                            <label for="coursecred">Credit</label>
+                            <input type="text" id="coursecred" name="coursecred"/>
+                            <br/>
+
+                            <label for="courseoutl">Outline</label>
+                            <input type="text" id="courseoutl" name="courseoutl"/>
+                            <br/>
+                        </div>
+
+                        <div class="column" id="right">
+{/* Right side of the form */}
+                        <h3>Tutorial
+                            <select name="tutNo" id="tutNo">
+                            <option value="one">1</option>  
+                            <option value="two">2</option>
+                            <option value="three">3</option>
+                            </select> 
+                        </h3>
+                            <label for="tutid">Tutorial ID</label>
+                            <input type="text" id="tutid" name="tutid"/>
+                            <br/>
+
+                            <label for="tuttime">Time</label>
+                            <input type="text" id="tuttime" name="tuttime"/>
+                            <br/>
+                            
+                            <label for="tutloc">Location</label>
+                            <input type="text" id="tutloc" name="tutloc"/>
+                            <br/>
+
+                            <label for="tutor">Tutor</label>
+                            <input type="text" id="tutor" name="tutor"/>
+                            <br/>
+
+                            <label for="tutcap">Capacity</label>
+                            <input type="text" id="tutcap" name="tutcap"/>
+                            <br/>
+                        </div>
+                        
+                        <input type="submit" value="Add/Update" />
+                        <br/>
+
+                        </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Comment</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>I really enjoyed this course.</td>
+                                <td><button id="deleteUser">🗑Delete</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>FANTASTIC, OFFER MORE CLASSES.</td>
+                                <td><button id="deleteUser">🗑Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="column">
+                    <h3>To Add Comment:</h3>
+                    <br/>
+                    <button><Link to="/course">Course Information Page</Link></button>
                 </div>
             </div>
 
         </div>
-    )
+    );
 }
-
-// const CoursePanel = () => {
-//     return(
-//         <div>
-//             <h1>Hi</h1>
-//         </div>
-//     )
-// }
 
 export default Admin;

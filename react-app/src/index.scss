@@ -500,10 +500,71 @@ thead,tr {
 
 }
 
-#admin {
-  .column {
-    float: left;
+#admin-user {
+  #left{
     width: 50%;
+  }
+  #right{
+    width: 50%;
+  }
+  .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
+  }
+
+  table,th,td{
+    table{
+    width: 100%;
+    border: 2px solid #A7D094;
+    }
+    th{
+      width:20%;
+      position: sticky; //for scroll bar
+      top:0px;
+    }
+    tr:hover{
+      background-color: #277582;
+    }
+    th:hover{
+      background-color: #277582;
+      position: sticky;
+    }
+  }
+  display: flex;
+  // flex-direction: row;
+  // margin-right: 50px;
+  #userForm{
+    background-color:#277582;
+    border: white;
+    border: solid;
+    color: white;
+    button{
+      background-color:white;
+      color:#277582;
+    }
+  }
+
+  #usertable{
+    border: 2px solid #A7D094;
+  }
+}
+
+#admin-course{
+  #left{
+    width: 50%;
+  }
+  #right{
+    width: 50%;
+  }
+  .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
   }
 }
 
