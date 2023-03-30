@@ -197,12 +197,12 @@ const CourseTableRow = ({course}) => {
         {course &&
             <tr>
                 <td>
-                    <div className='link' onClick={() => window.location.replace(`/course/${course.courseID}`)}>
+                    <div className='link' onClick={() => window.location.assign(`/course/${course.courseID}`)}>
                         {course.courseID}
                     </div>
                 </td>
                 <td>
-                    <div className='link' onClick={() => window.location.replace(`/course/${course.courseID}`)}>
+                    <div className='link' onClick={() => window.location.assign(`/course/${course.courseID}`)}>
                         {course.courseName}
                     </div>
                 </td>

@@ -219,7 +219,7 @@ thead,tr {
   #filter-wrap {
     height: 80vh;
     overflow-y: scroll;
-    margin: auto 0;
+    margin: auto 3vw;
   }
 
   #filter-list {
@@ -525,7 +525,7 @@ thead,tr {
         border: 2px 0 solid #A7D094;
         background-clip: padding-box;
       }
-      
+
     }
     tbody {
       color: black;
@@ -567,6 +567,7 @@ thead,tr {
 #course-info,#comment-info {
   box-sizing: border-box;
 
+  float: left;
   table,th,td{
     padding: 5px;
     width: 100%;
@@ -587,6 +588,8 @@ thead,tr {
   display: flex;
   flex-direction: row;
   margin-right: 50px;
+  align-items: flex-start;
+  justify-content: left;
   //flex: 1;
   #lecture-section {
     margin-left: 5px;
@@ -614,11 +617,16 @@ thead,tr {
     }
   }
   #comment-section{
+    width: 40vw;
+    
+  }
+  #comment-table{
     margin-left: 5px;
     flex: 0.9;
     height: 150px;
     overflow-y: scroll;
     text-align: left;
+
   }
   #comment-input{
     flex:1;
@@ -626,10 +634,71 @@ thead,tr {
 
 }
 
-#admin {
-  .column {
-    float: left;
+#admin-user {
+  #left{
     width: 50%;
+  }
+  #right{
+    width: 50%;
+  }
+  .row {
+    display: flex;
+  }
+
+  .column {
+    flex: 50%;
+  }
+
+  table,th,td{
+    table{
+    width: 100%;
+    border: 2px solid #A7D094;
+    }
+    th{
+      width:20%;
+      position: sticky; //for scroll bar
+      top:0px;
+    }
+    tr:hover{
+      background-color: #277582;
+    }
+    th:hover{
+      background-color: #277582;
+      position: sticky;
+    }
+  }
+  display: flex;
+  // flex-direction: row;
+  // margin-right: 50px;
+  #userForm{
+    background-color:#277582;
+    border: white;
+    border: solid;
+    color: white;
+    button{
+      background-color:white;
+      color:#277582;
+    }
+  }
+
+  #usertable{
+    border: 2px solid #A7D094;
+  }
+}
+
+#admin-course{
+  #left{
+    width: 50%;
+  }
+  #right{
+    width: 50%;
+  }
+  .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
   }
 }
 

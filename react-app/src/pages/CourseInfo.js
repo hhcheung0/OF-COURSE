@@ -179,9 +179,9 @@ const CourseInfo = () => {
     }
     const CommentSection = ({course}) =>{
         return(
-            <div id="tutorial-section">
+            <div id="comment-section">
                 <h3> Comment</h3>
-                <div id="comment-section">
+                <div id="comment-table">
                     <table>
                         <tbody>
                             <tr>
