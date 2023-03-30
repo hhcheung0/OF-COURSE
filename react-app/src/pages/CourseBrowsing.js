@@ -22,23 +22,39 @@ const CourseBrowsing = () => {
     )
 }
 const FilterList = (props) => {
-    const { classStartingTimeList, departmentList } = useConstant()
+    const { classTimeList, departmentList, weekdayList } = useConstant()
 
     // controller for checking starting time filter
     // add the checked time into the starting time array inside filter
-    const handleStartingTimeCheck = (e) => {
+    const handleClassTimeCheck = (e) => {
         if (e.target.checked) {
             props.controller(prev => ({
                 ...prev,
-                startingTime: [...prev.startingTime, e.target.value]
+                classTime: [...prev.classTime, e.target.value]
             }))
         }
         else {
             props.controller(prev => ({
                 ...prev,
-                startingTime: prev.startingTime.filter(time => time !== e.target.value)
+                classTime: prev.classTime.filter(time => time !== e.target.value)
             }))
         }
+    }
+    // controller for checking weekday filter
+    // add the checked weekday into the weekday array inside filter
+    const handleWeekdayCheck = (e) => {
+        if (e.target.checked) {
+            props.controller(prev => ({
+                ...prev,
+                weekday: [...prev.weekday, e.target.value]
+            }))
+        }
+        else {
+            props.controller(prev => ({
+                ...prev,
+                weekday: prev.weekday.filter(time => time !== e.target.value)
+            }))
+        }        
     }
     // controller for checking department filter
     // add the checked department into the department array inside filter
@@ -59,38 +75,56 @@ const FilterList = (props) => {
     }
 
     return (
-        <div id='filter-list'>
-            <div id='starting-time-filter'>
-                <div id='filter-header'>Class Starting Time</div>
-                <div id='checkbox-container'>
-                    {classStartingTimeList.map((timeslot, idx) => (
-                        <div id='checkbox' key={idx}>
-                            <input
-                                type="checkbox"
-                                name={timeslot}
-                                value={String(idx)}
-                                onChange={handleStartingTimeCheck}
-                            />
-                            <label htmlFor={timeslot}>{timeslot}</label>
-                        </div>
-                    ))}
+        <div id='filter-wrap'>
+            <div id='filter-list'>
+                <div id="weekday-filter">
+                    <div id='filter-header' >Weekday</div>
+                    <div className="checkbox-container">
+                        {weekdayList.map((array, idx) => (
+                            <div id='checkbox' key={idx}>
+                                <input
+                                    type="checkbox"
+                                    name={array[0]}
+                                    value={array[0]}
+                                    onChange={handleWeekdayCheck}
+                                />
+                                <label htmlFor={array[0]}>{array[1]}</label>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
-            
-            <div id='department-filter'>
-                <div id='filter-header'>Department</div>
-                <div id='checkbox-container'>
-                    {departmentList.map((department, idx) => (
-                        <div id='checkbox' key={idx}>
-                            <input
-                                type="checkbox"
-                                name={department}
-                                value={department}
-                                onChange={handleDepartmentCheck}
-                            />
-                            <label htmlFor={department}>{department}</label>
-                        </div>
-                    ))}
+                <div id='starting-time-filter'>
+                    <div id='filter-header'>Class Time</div>
+                    <div id='checkbox-container'>
+                        {classTimeList.map((timeslot, idx) => (
+                            <div id='checkbox' key={idx}>
+                                <input
+                                    type="checkbox"
+                                    name={timeslot}
+                                    value={String(idx)}
+                                    onChange={handleClassTimeCheck}
+                                />
+                                <label htmlFor={timeslot}>{timeslot}</label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
+                <div id='department-filter'>
+                    <div id='filter-header'>Department</div>
+                    <div id='checkbox-container'>
+                        {departmentList.map((department, idx) => (
+                            <div id='checkbox' key={idx}>
+                                <input
+                                    type="checkbox"
+                                    name={department}
+                                    value={department}
+                                    onChange={handleDepartmentCheck}
+                                />
+                                <label htmlFor={department}>{department}</label>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

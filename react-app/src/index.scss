@@ -216,6 +216,11 @@ thead,tr {
 
   margin: auto;
   flex-grow: 1;
+  #filter-wrap {
+    height: 80vh;
+    overflow-y: scroll;
+    margin: auto 0;
+  }
 
   #filter-list {
     display: flex;
@@ -224,10 +229,12 @@ thead,tr {
     justify-content: center;
     
     margin: 0 3vw;
-    height: 100%;
     #starting-time-filter {
       display: flex;
       flex-direction: column;
+      align-items: center;
+
+      margin: 2vh 0;
       #checkbox-container {
         column-count: 2;
 
@@ -245,8 +252,6 @@ thead,tr {
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      margin-top: 1vh;
       #checkbox-container {
         overflow-y: auto;
         max-height: 60vh;
@@ -265,7 +270,9 @@ thead,tr {
       margin: 0 0.5em;
     }
     #filter-header {
-      padding: 0 02px;
+      padding: 0 2px;
+      text-align: center;
+      margin-bottom: 5px;
     }
   }
   #table-panel {
@@ -402,12 +409,11 @@ thead,tr {
     align-items: center;
     height: 50px;
     background-color: #277582;
-    
-  }
-  
-  .tab-buttons button.active {
-    background-color: #F2FFFD;
-    color: black;
+
+    .active {
+      background-color: #F2FFFD;
+      color: black;
+    }
   }
   
   .tab-content {
@@ -415,6 +421,82 @@ thead,tr {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    div {
+      width: 100%; /* set the width of the tab content container */
+      padding: 20px;
+    }
+  }
+
+}
+
+#homepage-course{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  #homepage-course-up{
+    display: flex;
+    flex-direction: row;
+
+    #homepage-course-upperleft{
+      flex: 2;
+    }
+  
+    #homepage-course-upperright{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+  
+    #swap-container{
+      background-color: #277582;
+      color: white;
+      height:100%;
+      justify-content: center;  
+      padding: 30px 0 0 0; 
+
+      select {
+        width: 75%;
+        height: 10%;
+      }
+
+      option{
+        text-align: center;
+      }
+
+    }
+  }
+  
+  #homepage-table{
+    border: 2px solid #A7D094;
+    width: 100%;
+
+    thead {
+      position: sticky;
+      top: 0;
+      
+      th {
+        padding: 0.5em 1em;
+        text-align: center;
+        border: 2px 0 solid #A7D094;
+        background-clip: padding-box;
+      }
+      
+    }
+    tbody {
+      color: black;
+      tr {
+        border: 2px solid #A7D094;
+        text-align: center;
+        td {
+          padding: 0 10px;
+        }
+      }
+    }
   }
 }
 

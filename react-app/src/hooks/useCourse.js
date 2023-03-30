@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 const useCourse = (courseID) => {
     const [courseArray, setCourseArray] = useState([])
     const [course, setCourse] = useState({})
-    const [filter, setFilter] = useState({startingTime: [], department: []})
+    const [filter, setFilter] = useState({classTime: [], department: [], weekday: []})
     const [search, setSearch] = useState('')
     const [filteredCourseArray, setFilteredCourseArray] = useState([])
 
@@ -22,16 +22,25 @@ const useCourse = (courseID) => {
     // Retrieve the array from courseArray and apply filter and store in filtered CourseArray
     // This function is called whenever filter is updated
     useEffect(() => {
-        if (!filter.department.length) {
-            setFilteredCourseArray(courseArray.filter(course => filter.startingTime.some(value => course.courseTime.some(time => time[1] === value))))
+        // helper function for returning boolean that whether the course satisfy the filter
+        // (course) => bool
+        const departmentFilter = (course) => {
+            if (!filter.department.length) return true
+            else return filter.department.includes(course.department)
         }
-        else if (!filter.startingTime.length) {
-            setFilteredCourseArray(courseArray.filter(course => filter.department.includes(course.department)))
+        // Determining whether the course satisfy the class time filter
+        // (course) => bool
+        const classTimeFilter = (course) => {
+            if (!filter.classTime.length) return true
+            else return filter.classTime.every(value => course.courseTime.some(time => time[1] === value))
         }
-        else {
-            setFilteredCourseArray(courseArray.filter(course => filter.department.includes(course.department) && filter.startingTime.some(value => course.courseTime.some(time => time[1] === value))))
+        const weekdayFilter = (course) => {
+            if (!filter.weekday.length) return true
+            else return filter.weekday.every(value => course.courseTime.some(time => time[0] === value))
         }
+        setFilteredCourseArray(courseArray.filter(course => departmentFilter(course) && classTimeFilter(course) && weekdayFilter(course)))
     }, [courseArray, filter])
+
 
     // function for searching keywords in courseID and courseName
     const searchArray = (courseArray) => {
@@ -41,7 +50,7 @@ const useCourse = (courseID) => {
 
     // get function for retrieving either the filtered or whole course array
     const getCourse = () => {
-        if (filter.startingTime.length || filter.department.length) return searchArray(filteredCourseArray)
+        if (Object.values(filter).some(array => array.length)) return searchArray(filteredCourseArray)
         else return searchArray(courseArray)
     }
     
