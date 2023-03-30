@@ -97,8 +97,8 @@ thead,tr {
     }
   
     #current-icon {
-      height: 150px;
-      width: 150px;
+      height: 100px;
+      width: 100px;
 
       border-radius: 50%;
     }
@@ -637,39 +637,42 @@ thead,tr {
 }
 
 #admin-user {
-  #left{
-    width: 50%;
-  }
-  #right{
-    width: 50%;
-  }
-  .row {
-    display: flex;
-  }
-
+  display: flex;
   .column {
+    // float: left;
     flex: 50%;
+    // width: 50%;
+  }  
+  // #left{
+  //   width: 50%;
+  // }
+  // #right{
+  //   width: 50%;
+  // }
+
+  #search-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    input {
+      flex: 1;
+      border: 1px solid $primary-color;
+      
+      padding: 1px 5px;
+      outline: none;
+    }
   }
 
   table,th,td{
     table{
-    width: 100%;
     border: 2px solid #A7D094;
     }
     th{
-      width:20%;
-      position: sticky; //for scroll bar
       top:0px;
     }
-    tr:hover{
-      background-color: #277582;
-    }
-    th:hover{
-      background-color: #277582;
-      position: sticky;
-    }
   }
-  display: flex;
+
   // flex-direction: row;
   // margin-right: 50px;
   #userForm{
@@ -689,6 +692,23 @@ thead,tr {
 }
 
 #admin-course{
+  #search-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    div {
+      font-size: 1.4em;
+      margin: 0 1vw;
+    }
+    input {
+      flex: 1;
+      border: 1px solid $primary-color;
+      
+      padding: 1px 5px;
+      outline: none;
+    }
+  }
+
   #left{
     width: 50%;
   }
@@ -722,3 +742,38 @@ thead,tr {
 margin-right: 0px;
 margin-left: 400px;
 }
+
+// // table
+// border: 2px solid #A7D094;
+//     width: 100%;
+//     color: $primary-color;
+//     max-height: 50%;
+//     overflow-y:scroll;
+
+//     thead {
+//       position: sticky;
+//       top: 0;
+      
+//       th {
+//         padding: 0.5em 1em;
+//         text-align: center;
+//         border: 2px 0 solid #A7D094;
+//         background-clip: padding-box;
+//       }
+
+//     }
+//     tbody {
+//       color: black;
+//       tr {
+//         border: 2px solid #A7D094;
+//         text-align: center;
+//         td {
+//           padding: 0 10px;
+//         }
+//       }
+//     }
+
+//     button{
+//       color: white;
+//     }
+//   }
