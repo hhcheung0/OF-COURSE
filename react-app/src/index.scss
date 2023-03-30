@@ -221,7 +221,7 @@ thead,tr {
     overflow-y: scroll;
     margin: auto 3vw;
   }
-  
+
   #filter-list {
     display: flex;
     flex-direction: column;
@@ -485,7 +485,7 @@ thead,tr {
         border: 2px 0 solid #A7D094;
         background-clip: padding-box;
       }
-      
+
     }
     tbody {
       color: black;
@@ -523,6 +523,7 @@ thead,tr {
 #course-info,#comment-info {
   box-sizing: border-box;
 
+  float: left;
   table,th,td{
     padding: 5px;
     width: 100%;
@@ -543,6 +544,8 @@ thead,tr {
   display: flex;
   flex-direction: row;
   margin-right: 50px;
+  align-items: flex-start;
+  justify-content: left;
   //flex: 1;
   #lecture-section {
     margin-left: 5px;
@@ -570,11 +573,16 @@ thead,tr {
     }
   }
   #comment-section{
+    width: 40vw;
+    
+  }
+  #comment-table{
     margin-left: 5px;
     flex: 0.9;
     height: 150px;
     overflow-y: scroll;
     text-align: left;
+
   }
   #comment-input{
     flex:1;
@@ -592,7 +600,7 @@ thead,tr {
   .row {
     display: flex;
   }
-  
+
   .column {
     flex: 50%;
   }
