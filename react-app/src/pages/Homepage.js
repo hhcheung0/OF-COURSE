@@ -6,16 +6,10 @@ const Homepage = () => {
     return (
       <div id="full-page-tab">
         <div className="tab-buttons">
-          <button
-            className={activeTab === "courseTab" ? "active" : ""}
-            onClick={() => setActiveTab("courseTab")}
-          >
+          <button className={activeTab === "courseTab" ? "active" : ""} onClick={() => setActiveTab("courseTab")}>
             Courses
           </button>
-          <button
-            className={activeTab === "timetableTab" ? "active" : ""}
-            onClick={() => setActiveTab("timetableTab")}
-          >
+          <button className={activeTab === "timetableTab" ? "active" : ""} onClick={() => setActiveTab("timetableTab")}>
             Timetable
           </button>
         </div>
@@ -29,17 +23,17 @@ const Homepage = () => {
 
 function CourseTab() {
     return (
-      <div>
+      <>
         <h1>Course</h1>
-      </div>
+      </>
     );
   }
   
   function TimetableTab() {
     return (
-      <div>
+      <>
         <h1>Timetable</h1>
-      </div>
+      </>
     );
   }
 
