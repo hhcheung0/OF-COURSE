@@ -389,8 +389,36 @@ thead,tr {
   }
 }
 
-// for all tables
+#full-page-tab{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  margin: 0 auto; 
 
+  .tab-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: #277582;
+    
+  }
+  
+  .tab-buttons button.active {
+    background-color: #F2FFFD;
+    color: black;
+  }
+  
+  .tab-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+// for all tables
 *{
   box-sizing: border-box;
 
