@@ -24,11 +24,13 @@ const CourseInfo = () => {
         if (formID === "course-info"){
             console.log("dasds");
 
-            fetch('http://localhost:3001/addtocart', {
+            fetch('http://localhost:3001/data/course/addtocart', {
                 method: 'POST',
                 headers: {'Content-type' : 'application/json'},
                 body: JSON.stringify({
-                    tutorial: tutorialID,
+                    courseID: course.courseID,
+                    tutorialID: tutorialID,
+
                 })
             })
             .then(res => res.json())

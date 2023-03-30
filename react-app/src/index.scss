@@ -412,6 +412,7 @@ thead,tr {
 
 #course-info,#comment-info {
   box-sizing: border-box;
+
   table,th,td{
     padding: 5px;
     width: 100%;
@@ -446,7 +447,7 @@ thead,tr {
     }
   #tutorial-section {
     flex: 0.9;
-
+    width: 50vw;
     #tutorial-all-heading{
       display: flex;
       flex-direction: row;
@@ -463,10 +464,10 @@ thead,tr {
     flex: 0.9;
     height: 150px;
     overflow-y: scroll;
+    text-align: left;
   }
   #comment-input{
-    flex:0.9;
-
+    flex:1;
   }
 
 }
