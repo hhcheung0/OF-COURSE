@@ -37,7 +37,7 @@ const Admin = () => {
 // const UserSearchBar = (props) => {
 //     const handleChange = (e) => {
 //         props.controller(e.target.value)
-//         setSearch(e.target.value)
+//         setuser(e.target.value)
 //     }
 //     const [search, setSearch] = useState('')
 //     return (
@@ -52,14 +52,14 @@ const Admin = () => {
 //     )
 // }
 
-function UserPanel() {
+const UserPanel = () => {
     return (
         <div id="admin-user">
         <div class="row">
 {/* Left side of the userPanel */}
             <div class="column" id="left">
                     <br></br><br></br>
-                    <h3>Search <input type="text"></input> </h3>
+                    <h3 id="searchbar">Search <input type="text"></input> </h3>
                     <table id='user-table'>
                         <thead>
                             <tr>
@@ -109,7 +109,7 @@ function UserPanel() {
                     <br/>
 
                     <div id='toggle-button-panel'>
-                        <div>
+                        <div id="opt">
                             <input type="radio" name="course-toggle" id="studentCreate" value={true} />
                             <label htmlFor="student">Student</label>
                             <input type="radio" name="course-toggle" id="adminCreate" value={false} default />
@@ -125,9 +125,9 @@ function UserPanel() {
                 {/* <table style={{marginBottom: '10px'}} id="username"> */}
 {/* Right-side of the userPanel */}
             <div class="column" id="right">
-            <div id="usertable">
+            <div>
                     <h3>Username: Mary</h3>
-                    <div>
+                    <div id="usertable">
                         <h3>Enrolled Courses</h3>
                         <table id='user-enrolled'>
                             <thead>
@@ -213,13 +213,13 @@ function UserPanel() {
                             </tbody>
                         </table>
 
-                        <h3>Add Courses  
+                        <h3>Add Courses <p>
                             <select name="addCourseCategory" id="addCourseCategory">
                             <option value="enrolledCourses">Enrolled Courses</option>  
                             <option value="shoppingCart">Shopping Cart</option>
                             <option value="passedCourses">Completed Courses</option>
                             </select> 
-                            <input type="text"></input> 
+                            <input type="text"></input> </p>
                         </h3>
                         <table id='user-addcourse'>
                             <thead>
@@ -251,14 +251,14 @@ function UserPanel() {
     );
 }
 
-function CoursePanel() {
+const CoursePanel = () => {
     return (
         <div id="admin-course">
             <div class="row">
-                <h3>Search <input type="text"></input> </h3>
+                <h3 id="searchbar">Search <input type="text"></input> </h3>
             </div>
 
-            <div class="row">
+            <div class="row" id="searchedCourse">
                 <table>
                     <thead>
                         <tr>
