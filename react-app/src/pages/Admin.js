@@ -49,13 +49,11 @@ const UserPanel = () => {
     //     {field: ''},
     //     {field: ''},
     // ];
-
     return(
-        <>
-            <div class="userLeft">
+        <div class="row">
+            <div class="column">
                 <div class="centered">
-
-                    <h4>Search <input type="text"></input> </h4>
+                    <h3>Search <input type="text"></input> </h3>
                     <table id='user-table'>
                         <thead>
                             <tr>
@@ -120,13 +118,126 @@ const UserPanel = () => {
             </div>
                 {/* <table style={{marginBottom: '10px'}} id="username"> */}
 
-            <div class="userRight">
+            <div class="column">
                 <div class="centered">
-                    <h4>Username: Mary</h4>
-                    
+                    <h3>Username: Mary</h3>
+
+                        <div>
+                        <h3>Enrolled Courses</h3>
+                        <table id='user-enrolled'>
+                            <thead>
+                                <tr>
+                                    <th>Course ID</th>
+                                    <th>Course Name</th>
+                                    <th>Credit</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ARCH4180</td>
+                                    <td>Applications of Architectural studies</td>
+                                    <td>2</td>
+                                    <td><button id="deleteCourse">🗑Delete</button></td>
+                                </tr>
+                                <tr>
+                                    <td>BIOL2410</td>
+                                    <td>Applications of Biology</td>
+                                    <td>3</td>
+                                    <td><button id="deleteCourse">🗑Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Shopping Cart</h3>
+                        <table id='user-shoppingcart'>
+                            <thead>
+                                <tr>
+                                    <th>Course ID</th>
+                                    <th>Course Name</th>
+                                    <th>Credit</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ANTH4440</td>
+                                    <td>Applications of Anthropology</td>
+                                    <td>3</td>
+                                    <td><button id="deleteCourse">🗑Delete</button></td>
+                                </tr>
+                                <tr>
+                                    <td>ARCH2110</td>
+                                    <td>Advanced Architectural studies</td>
+                                    <td>3</td>
+                                    <td><button id="deleteCourse">🗑Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <h3>Completed Courses</h3>
+                        <table id='user-completed'>
+                            <thead>
+                                <tr>
+                                    <th>Course ID</th>
+                                    <th>Course Name</th>
+                                    <th>Semester</th>
+                                    <th>Credit</th>
+                                    <th>Grade</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>GEOG2350</td>
+                                    <td>Recent History of Geography</td>
+                                    <td>2021-2022 Sem 1</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                    <td><button id="deleteCourse">🗑Delete</button></td>
+                                </tr>
+                                <tr>
+                                    <td>CHEM3860</td>
+                                    <td>Recent History of Chemistry</td>
+                                    <td>2021-2022 Sem 1</td>
+                                    <td>3</td>
+                                    <td>A</td>
+                                    <td><button id="deleteCourse">🗑Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Add Courses <input type="text"></input> </h3>
+                        <input type="text"></input>
+                        <table id='user-addcourse'>
+                            <thead>
+                                <tr>
+                                    <th>Course ID</th>
+                                    <th>Course Name</th>
+                                    <th>Time</th>
+                                    <th>Location</th>
+                                    <th>Capacity</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PHIL2410</td>
+                                    <td>Advanced Philosophy</td>
+                                    <td>Fri 8:30-10:15</td>
+                                    <td>CML Room 1</td>
+                                    <td>20</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button>Add</button>
+                        </div>  
+
                 </div>
             </div>
-        </>
+
+        </div>
     )
 }
 
