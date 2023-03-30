@@ -12,16 +12,16 @@ router.post('/login', (req, res) => {
     User.findOne({ username })
     .then(user => {
         if(!user){
-            return res.status(400).send({ message: 'User does not exist!' })
+            return res.status(400).send({success: false, error: 'User does not exist!' })
         }
         bcrypt.compare(password, user.password, (err, result) => {
             if (err) res.send(err);
             else {
                 if (result) {
                     // return res.redirect('/') }
-                    return res.status(200).send({ message: 'Login is successful '}) }
+                    return res.status(200).send({success: true}) }
                 else {
-                    return res.status(401).send({ message: "Login is not successful"}) } // res.status(401)? res.status(400)?
+                    return res.status(401).send({success: false, error: "Login is not successful"}) } // res.status(401)? res.status(400)?
             }
         })
     })
@@ -32,7 +32,7 @@ router.post('/login', (req, res) => {
         // }else{
         //     res.status(500).send({ message: 'Error creating user' });
         // }
-        res.send({ message: 'Error login' });
+        res.send({success: false, error: 'Error login' });
     })
 });
 
@@ -43,7 +43,7 @@ router.post('/signup', (req, res) => {
     User.findOne({ username })
     .then (existUser => {
         if(existUser){
-            return res.status(400).send({ message: 'User already exists!' })
+            return res.status(400).send({ success: false, error: 'User already exists!' })
         }
         // hashing password
         bcrypt.hash(password, 10)
@@ -61,7 +61,7 @@ router.post('/signup', (req, res) => {
                     shoppingCartCourseID: []
                 })
                 .then(() => {
-                    res.send({ message: 'Signup successfully'});
+                    res.send({success: true, error: 'Signup successfully'});
                 })
             }) 
         })
@@ -69,9 +69,9 @@ router.post('/signup', (req, res) => {
     .catch(error => {
         console.error(error);
         if (error.code === 11000) {
-            res.status(400).send({ message: 'Username already exists' });
+            res.status(400).send({success: false, error: 'Username already exists' });
         }else{
-            res.status(500).send({ message: 'Error creating user' });
+            res.status(500).send({success: false, error: 'Error creating user' });
         }
         
     })

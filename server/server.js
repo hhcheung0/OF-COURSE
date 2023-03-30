@@ -15,6 +15,9 @@ const authRoutes = require('./Routes/authRoutes')
 const courseRoutes = require('./Routes/courseRoutes')
 const userRoutes = require('./Routes/userRoutes')
 
+// require tools
+const {createToken, verifyToken} = require('./Tools/authTools')
+
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)
 const db = mongoose.connection;
@@ -22,7 +25,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error:'));
 db.once('open', () => {
     console.log('Connection is open...')
-
+    console.log(verifyToken('abc'))
     // use routers
     app.use(authRoutes)
     app.use(courseRoutes)

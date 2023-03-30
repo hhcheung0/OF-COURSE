@@ -20,8 +20,8 @@ const Login = () => {
         })
         .then(res => res.json())
         .then(json => {
-            if(json.message === 'User already exists!'){
-                setErrorMessage(json.message);
+            if(!json.success){
+                setErrorMessage(json.error);
             }else{
                 console.log(json);
                 // window.location.href = "/";
