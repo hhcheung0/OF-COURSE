@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt')
 // require Models
 const User = require('../Models/UserModel')
 
+// require tools
+const { createToken } = require('../Tools/authTools')
+
 const router = Router()
 
 // LOGIN
@@ -18,7 +21,7 @@ router.post('/login', (req, res) => {
             if (err) res.send(err);
             else {
                 if (result) {
-                    // return res.redirect('/') }
+                    res.cookie('jwt', createToken(username))
                     return res.status(200).send({success: true}) }
                 else {
                     return res.status(401).send({success: false, error: "Login is not successful"}) } // res.status(401)? res.status(400)?
@@ -27,11 +30,6 @@ router.post('/login', (req, res) => {
     })
     .catch(error => {
         console.error(error);
-        // if (error.code === 11000) {
-        //     res.status(400).send({ message: 'Username already exists' });
-        // }else{
-        //     res.status(500).send({ message: 'Error creating user' });
-        // }
         res.send({success: false, error: 'Error login' });
     })
 });
@@ -61,6 +59,7 @@ router.post('/signup', (req, res) => {
                     shoppingCartCourseID: []
                 })
                 .then(() => {
+                    res.cookie('jwt', createToken(username))
                     res.send({success: true, error: 'Signup successfully'});
                 })
             }) 

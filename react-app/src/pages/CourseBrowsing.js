@@ -9,6 +9,8 @@ const CourseBrowsing = () => {
     
     const { getCourse, setFilter, setSearch } = useCourse()
 
+    console.log(document.cookie)
+
     return (
         <div id='course-browsing'>
             <FilterList controller={setFilter} />
