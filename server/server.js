@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcrypt')
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
 require('dotenv').config();
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // require modules
