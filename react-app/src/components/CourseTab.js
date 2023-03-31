@@ -3,7 +3,7 @@ import { BsArrowDown, BsArrowUp, BsTrash3} from 'react-icons/bs';
 const CourseTab = () => {
     const EnrolledTable = () => {
         return(
-            <div>
+            <>
             <h2>Enrolled Courses</h2>
             <table id='homepage-table'>
                 <thead>
@@ -37,13 +37,13 @@ const CourseTab = () => {
                 </tr>
                 </tbody>
             </table>
-            </div>
+            </>
         )
     }
         
     const ShoppingCartTable = () => {
         return(
-        <div>
+        <>
             <div id="ShoppingCart" style={{display: 'flex'}}>
                 <h2 style={{flex: 8}}>Shopping Cart</h2>
                 <button style={{flex: 1}}>Enroll</button>
@@ -83,13 +83,13 @@ const CourseTab = () => {
                 </tr>
             </tbody>
             </table>
-        </div>
+        </>
         )
     }
         
     const CompletedTable = () => {
         return(
-        <div>
+        <>
             <div style={{display: 'flex'}}> 
             <h2>Completed Courses </h2> 
             <p id="homepage-course-gpa">GPA 4.00/4.30</p> 
@@ -114,7 +114,7 @@ const CourseTab = () => {
                 </tr>
             </tbody>
             </table>
-        </div>
+        </>
         )
     }
         
