@@ -25,7 +25,7 @@ const CourseTab = () => {
                     <td>Tue 8:30 – 10:15</td>
                     <td>YIA Room 1</td>
                     <td>3</td>
-                    <th><button><BsTrash3 /> Drop</button></th>
+                    <td><button><BsTrash3 /> Drop</button></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -44,7 +44,10 @@ const CourseTab = () => {
     const ShoppingCartTable = () => {
         return(
         <div>
-            <h2>Shopping Cart</h2>
+            <div id="ShoppingCart" style={{display: 'flex'}}>
+                <h2 style={{flex: 8}}>Shopping Cart</h2>
+                <button style={{flex: 1}}>Enroll</button>
+            </div>
             <table id ="homepage-table">
             <thead>
                 <tr>
@@ -60,23 +63,23 @@ const CourseTab = () => {
             </thead>
             <tbody>
                 <tr>
-                <td><input type="checkbox" /></td>
-                <td>MGNT1040</td>
-                <td>Introduction to Management 1</td>
-                <td>LEC</td>
-                <td>Tue 14:30–16:15</td>
-                <td>MMW Room 1</td>
-                <td>2</td>
-                <th><button><BsTrash3 /> Delete</button></th>
+                    <td><input type="checkbox" /></td>
+                    <td>MGNT1040</td>
+                    <td>Introduction to Management 1</td>
+                    <td>LEC</td>
+                    <td>Tue 14:30–16:15</td>
+                    <td>MMW Room 1</td>
+                    <td>2</td>
+                    <td><button><BsTrash3 /> Delete</button></td>
                 </tr>
                 <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>T01</td>
-                <td>Fri 9:30 – 10:15</td>
-                <td>YIA Room 1</td>
-                <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>T01</td>
+                    <td>Fri 9:30 – 10:15</td>
+                    <td>YIA Room 1</td>
+                    <td></td>
                 </tr>
             </tbody>
             </table>
@@ -150,8 +153,8 @@ const CourseTab = () => {
 
             <div id ="homepage-course-upperright">
                 <div id = "homepage-course-text">
-                <p>total credits currently enrolled: </p>
-                <p>maximum credit limit: </p>
+                <p>total credits currently enrolled: 5</p>
+                <p>maximum credit limit: 18</p>
                 </div>
                 <SwapCourse />
             </div>
