@@ -9,8 +9,6 @@ const CourseBrowsing = () => {
     
     const { getCourse, setFilter, setSearch } = useCourse()
 
-    console.log(document.cookie)
-
     return (
         <div id='course-browsing'>
             <FilterList controller={setFilter} />
@@ -24,7 +22,27 @@ const CourseBrowsing = () => {
 }
 const FilterList = (props) => {
     const { classTimeList, departmentList, weekdayList } = useConstant()
+    const [weekdayCheckbox, setWeekdayCheckbox] = useState(new Array(weekdayList.length).fill(false))
+    const [classTimeCheckbox, setClassTimeCheckbox] = useState(new Array(classTimeList.length).fill(false))
+    const [departmentCheckbox, setDepartmentCheckbox] = useState(new Array(departmentList.length).fill(false))
 
+    // controller for checking weekday filter
+    // add the checked weekday into the weekday array inside filter
+    const handleWeekdayCheck = (e) => {
+        if (e.target.checked) {
+            props.controller(prev => ({
+                ...prev,
+                weekday: [...prev.weekday, e.target.value]
+            }))
+        }
+        else {
+            props.controller(prev => ({
+                ...prev,
+                weekday: prev.weekday.filter(time => time !== e.target.value)
+            }))
+        }
+        setWeekdayCheckbox(prev => prev.map((bool, idx) => idx === Number(e.target.id)? !bool: bool))        
+    }
     // controller for checking starting time filter
     // add the checked time into the starting time array inside filter
     const handleClassTimeCheck = (e) => {
@@ -40,22 +58,7 @@ const FilterList = (props) => {
                 classTime: prev.classTime.filter(time => time !== e.target.value)
             }))
         }
-    }
-    // controller for checking weekday filter
-    // add the checked weekday into the weekday array inside filter
-    const handleWeekdayCheck = (e) => {
-        if (e.target.checked) {
-            props.controller(prev => ({
-                ...prev,
-                weekday: [...prev.weekday, e.target.value]
-            }))
-        }
-        else {
-            props.controller(prev => ({
-                ...prev,
-                weekday: prev.weekday.filter(time => time !== e.target.value)
-            }))
-        }        
+        setClassTimeCheckbox(prev => prev.map((bool, idx) => idx === Number(e.target.value)? !bool: bool))
     }
     // controller for checking department filter
     // add the checked department into the department array inside filter
@@ -73,6 +76,7 @@ const FilterList = (props) => {
                 department: prev.department.filter(department => department !== e.target.value)
             }))
         }
+        setDepartmentCheckbox(prev => prev.map((bool, idx) => idx === departmentList.indexOf(e.target.value)? !bool: bool))
     }
 
     return (
@@ -88,12 +92,15 @@ const FilterList = (props) => {
                                     name={array[0]}
                                     value={array[0]}
                                     onChange={handleWeekdayCheck}
+                                    checked={weekdayCheckbox[idx]}
+                                    id={idx}
                                 />
                                 <label htmlFor={array[0]}>{array[1]}</label>
                             </div>
                         ))}
                     </div>
                 </div>
+
                 <div id='starting-time-filter'>
                     <div id='filter-header'>Class Time</div>
                     <div id='checkbox-container'>
@@ -104,13 +111,14 @@ const FilterList = (props) => {
                                     name={timeslot}
                                     value={String(idx)}
                                     onChange={handleClassTimeCheck}
+                                    checked={classTimeCheckbox[idx]}
                                 />
                                 <label htmlFor={timeslot}>{timeslot}</label>
                             </div>
                         ))}
                     </div>
                 </div>
-                
+
                 <div id='department-filter'>
                     <div id='filter-header'>Department</div>
                     <div id='checkbox-container'>
@@ -121,6 +129,7 @@ const FilterList = (props) => {
                                     name={department}
                                     value={department}
                                     onChange={handleDepartmentCheck}
+                                    checked={departmentCheckbox[idx]}
                                 />
                                 <label htmlFor={department}>{department}</label>
                             </div>
@@ -132,12 +141,13 @@ const FilterList = (props) => {
     )
 }
 const SearchBar = (props) => {
+    const [search, setSearch] = useState('')
+    
     const handleChange = (e) => {
         props.controller(e.target.value)
         setSearch(e.target.value)
     }
 
-    const [search, setSearch] = useState('')
     return (
         <div id='search-bar'>
             <div>Search</div>
