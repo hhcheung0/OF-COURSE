@@ -724,21 +724,47 @@ thead,tr {
 
 }
 
+
 #admin-user {
   display: flex;
   .column {
-    // float: left;
     flex: 50%;
-    // width: 50%;
-  }  
-  // #left{
-  //   width: 50%;
-  // }
-  // #right{
-  //   width: 50%;
-  // }
-
-  #search-bar {
+  }
+  table{    
+    border: 2px solid #A7D094;
+    width: 100%;
+    color: $primary-color;
+    max-height: 50%;
+    overflow-y:scroll;
+    thead {
+      position: sticky;
+      top: 0;
+      th {
+        padding: 0.5em 1em;
+        text-align: center;
+        border: 2px 0 solid #A7D094;
+        background-clip: padding-box;
+      }
+    }
+    tbody {
+      color: black;
+      tr {
+        border: 2px solid #A7D094;
+        text-align: center;
+        td {
+          padding: 0 10px;
+        }
+      }
+    }
+    button{
+      color: white;
+    }
+  }
+  #userCourseTable{
+    border: 2px solid #A7D094;
+    width: 100%;
+  }
+  #userSearchbar {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -746,47 +772,129 @@ thead,tr {
     input {
       flex: 1;
       border: 1px solid $primary-color;
-      
       padding: 1px 5px;
       outline: none;
     }
   }
-
-  table{
-    border: 2px solid #A7D094;
-    width: 100%;
-  }
-
-  // flex-direction: row;
-  // margin-right: 50px;
   #userForm{
-    // border: 2px solid #A7D094;
-    background-color:#277582;
-    border: white;
-    border: solid;
+    display: flex;
+    background-color: #277582;
     color: white;
+    height: 50%;
+    width:100%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    // h2{
+    //   // color: white;
+    //   // padding: 0 0 30px 30px; 
+    // }
+    p{
+      color:white;
+      text-align: center;
+      width: 100%;
+      // padding-left: 13%;
+    }
+    // input {
+    //   width: 75%;
+    //   height: 10%;
+    // }
+    #toggle-button-panel{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        padding: 0 2vw;
+        margin: 2vh 0;
+    }
+    // input[type=submit] {
+    //   padding: 16px 32px;
+    //   margin: 4px 2px;
+    //   cursor: pointer;
+    //   align-items: right;
+    //   background-color: #c7e2dd;
+    //   color: black;
+    // }
     button{
-      background-color:white;
-      color:#277582;
+      background-color: #c7e2dd;
+      color: black;
+      justify-content: right;
+      padding: 16px 32px;
+      margin: 4px 2px;
+      cursor: pointer;
+      // width: 50%;
     }
   }
-
-  #usertable{
-    border: 2px solid #A7D094;
-    width: 100%;
+}
+#addCourseCategory{
+  div{
+  h3{
+    display:inline;
+  }
   }
 }
+// #userCourseTable-add{
+//   #submit-button{
+//       // margin-right: 20px;
+//       // margin-left: 600px;
+//       // justify-content: right;
+//       // display: block;
+//       padding: 10px 16px;
+//       flex: 1;
+//       // margin: 4px 2px;
+//       cursor: pointer;
+//   }
+// }
+
 
 #admin-course{
-  display: flex;
-  .column {
-    // float: left;
-    flex: 50%;
-    // width: 50%;
-  }  
-  #search-bar {
+  #courseForm.column {
     display: flex;
-    flex-direction: column;
+    flex: 50%;
+  }
+  .column {
+    flex: 50%;
+  }
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  table {
+    border: 2px solid #A7D094;
+    width: 100%;
+    color: $primary-color;
+    max-height: 50%;
+    overflow-y:scroll;
+    thead {
+      position: sticky;
+      top: 0;
+      th {
+        padding: 0.5em 1em;
+        text-align: center;
+        border: 2px 0 solid #A7D094;
+        background-clip: padding-box;
+      }
+    }
+    tbody {
+      color: black;
+      tr {
+        border: 2px solid #A7D094;
+        text-align: center;
+        td {
+          padding: 0 10px;
+        }
+      }
+    }
+    button{
+      color: white;
+    }
+  }
+  #courseSearchbar {
+    display: flex;
+    flex-direction: row;
     div {
       font-size: 1.4em;
       margin: 0 1vw;
@@ -794,12 +902,25 @@ thead,tr {
     input {
       flex: 1;
       border: 1px solid $primary-color;
-      
       padding: 1px 5px;
       outline: none;
     }
   }
+  #courseForm{
+    display: flex;
+    height: 50%;
+    width:100%;
+    position: relative;
+  }
+  #courseCommentAdd{
+    button {
+      color:white;
+      text-decoration: none;
+    }
+  }
 }
+
+
 
 #button-placement{
   //display: flex;
