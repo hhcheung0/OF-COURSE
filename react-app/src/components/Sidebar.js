@@ -9,17 +9,17 @@ const Sidebar = () => {
     const [isHidden, setIsHidden] = useState(true)
     const [accessRight, setAccessRight] = useState(false)
     const [username, setUsername] = useState('')
-    const { getUser } = useUser()
+    const { getUserByToken } = useUser()
 
     const handleExpand = () => {
         setIsHidden(prev => !prev)
     }
 
     useEffect(() => {
-        const { accessRight, username } = getUser()
+        const { accessRight, username } = getUserByToken()
         setAccessRight(accessRight)
         setUsername(username)
-    }, [getUser])
+    }, [getUserByToken])
 
     return (
         <div id="sidebar">

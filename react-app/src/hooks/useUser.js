@@ -20,11 +20,11 @@ const useUser = () => {
     }, [])
 
     // get function for retrieving user
-    const getUser = () => {
+    const getUserByToken = () => {
         return user
     }
 
-    return { getUser }
+    return { getUserByToken }
 }
 
 export default useUser
