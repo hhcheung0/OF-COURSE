@@ -15,13 +15,13 @@ const timeSlots = [
     { startTime: '17:30', endTime: '18:15' },
 ];
 
-const subjects = [
+const courses = [
     { courseID: 'BIOL2420', type: 'LEC', day: 'Tuesday', startTime: '08:30', endTime: '10:15', location: 'YIA Room 1' },
     { courseID: 'MGNT1040', type: 'LEC', day: 'Wednesday', startTime: '14:30', endTime: '16:15', location: 'MMW Room 1' },
 ];
 
 // Define colors for each course
-const subjectColors = {
+const courseColors = {
     BIOL2420: '#FFA07A',
     MGNT1040: '#87CEFA',
 };
@@ -51,16 +51,16 @@ const Upperpart = () => {
     )
 }
 
-const rowSpanChecker = subjects.map((subject) => {
+const rowSpanChecker = courses.map((course) => {
     const startIdx = timeSlots.findIndex(
-        (timeSlot) => timeSlot.startTime === subject.startTime
+        (timeSlot) => timeSlot.startTime === course.startTime
     );
     const endIdx = timeSlots.findIndex(
-        (timeSlot) => timeSlot.endTime === subject.endTime
+        (timeSlot) => timeSlot.endTime === course.endTime
     );
 
     return {
-        ...subject,
+        ...course,
         rowSpan: endIdx - startIdx + 1,
     };
 });
@@ -81,28 +81,28 @@ const Timetable = () => {
                             {timeSlot.startTime}
                         </td>
                         {days.map((day) => {
-                            const subject = rowSpanChecker.find(
-                                (subject) =>
-                                    subject.day === day &&
-                                    subject.startTime === timeSlot.startTime
+                            const course = rowSpanChecker.find(
+                                (course) =>
+                                    course.day === day &&
+                                    course.startTime === timeSlot.startTime
                             );
 
-                            if (subject) {
+                            if (course) {
                                 return (
                                     <td
                                         key={`${day}-${timeSlot.startTime}`}
-                                        style={{background: subjectColors[subject.courseID],}}
-                                        rowSpan={subject.rowSpan}
+                                        style={{background: courseColors[course.courseID],}}
+                                        rowSpan={course.rowSpan}
                                     >   
-                                        <div>{subject.courseID} [{subject.type}]</div>
-                                        <div>{subject.location}</div>
+                                        <div>{course.courseID} [{course.type}]</div>
+                                        <div>{course.location}</div>
                                     </td>
                                 );
-                            } else if (!rowSpanChecker.some((subject) => subject.day === day && subject.startTime <= timeSlot.startTime && subject.endTime >= timeSlot.endTime)) {
+                            } else if (!rowSpanChecker.some((course) => course.day === day && course.startTime <= timeSlot.startTime && course.endTime >= timeSlot.endTime)) {
                                 return (
                                     <td key={`${day}-${timeSlot.startTime}`}></td>
                                 );
-                                
+
                             }else{
                                 return null;
                             }
