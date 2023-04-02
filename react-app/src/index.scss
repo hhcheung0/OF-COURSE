@@ -973,3 +973,13 @@ thead,tr {
 margin-right: 0px;
 margin-left: 400px;
 }
+
+
+// Buttons for Tabs in HomePage and Admin page
+#full-page-tab{
+  .tab-buttons{
+    button{
+      width:100%;
+    }
+  }
+}
