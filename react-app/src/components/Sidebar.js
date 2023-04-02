@@ -11,8 +11,18 @@ const Sidebar = () => {
     const [username, setUsername] = useState('')
     const { getUserByToken } = useUser()
 
-    const handleExpand = () => {
+    const handleExpand = (e) => {
         setIsHidden(prev => !prev)
+    }
+    const handleLogout = (e) => {
+        fetch('http://localhost:3001/logout', {
+            method: 'POST',
+            credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) window.location.assign('/login')
+        })
     }
 
     useEffect(() => {
@@ -37,7 +47,7 @@ const Sidebar = () => {
                     <Link to={'/course'}>Course Browsing</Link>
                     {accessRight && <Link to={'/admin'} >Admin Page</Link>}
                 </div>
-                <button id="log-out-button">Log out</button>
+                <button id="log-out-button" onClick={handleLogout}>Log out</button>
             </div>
         </div>
     )

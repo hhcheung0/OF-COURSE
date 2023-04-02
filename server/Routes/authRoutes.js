@@ -77,4 +77,9 @@ router.post('/signup', (req, res) => {
 
 });
 
+router.post('/logout', (req, res) => {
+    res.clearCookie('jwt')
+    res.json({success: true})
+})
+
 module.exports = router
