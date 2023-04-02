@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react'
 
+// import hooks
+import useUser from './useUser'
+
 const useCourse = (courseID) => {
     const [courseArray, setCourseArray] = useState([])
     const [course, setCourse] = useState({})
     const [filter, setFilter] = useState({classTime: [], department: [], weekday: []})
     const [search, setSearch] = useState('')
+    const [eligibleToggle, setEligibleToggle] = useState(false)
     const [filteredCourseArray, setFilteredCourseArray] = useState([])
+
+    const { getUserByToken } = useUser()
 
     // fetch all course data from server and store at "courseArray"
     // or fetch a specific course by the courseID argument
@@ -41,21 +47,33 @@ const useCourse = (courseID) => {
         setFilteredCourseArray(courseArray.filter(course => departmentFilter(course) && classTimeFilter(course) && weekdayFilter(course)))
     }, [courseArray, filter])
 
+    // function for determining whether a course is eligible by user
+    // return true if user choose to show all courses
+    // return true if there are no pre-requisite courses or the user has completed the pre-requisite course
+    const isEligible = (course) => {
+        const { passedCourseID } = getUserByToken()
+        if (!passedCourseID) return true
+        if (!eligibleToggle) return true
+        else return !course.prerequisiteCourseID.length || course.prerequisiteCourseID.some(course => passedCourseID.includes(course))
+    }
     // function for searching keywords in courseID and courseName
     const searchArray = (courseArray) => {
         if (!course) return courseArray
         return courseArray.filter(course => course.courseID.toLowerCase().includes(search.toLowerCase()) || course.courseName.toLowerCase().includes(search.toLowerCase()))
     }
 
+
     // get function for retrieving either the filtered or whole course array
+    // the eligible filter is implemented here
     const getCourse = () => {
-        if (Object.values(filter).some(array => array.length)) return searchArray(filteredCourseArray)
-        else return searchArray(courseArray)
+        if (Object.values(filter).some(array => array.length)) return searchArray(filteredCourseArray).filter(course => isEligible(course))
+        else return searchArray(courseArray).filter(course => isEligible(course))
     }
     
     return {
         setFilter,
         setSearch,
+        setEligibleToggle,
         getCourse,
         course
     }

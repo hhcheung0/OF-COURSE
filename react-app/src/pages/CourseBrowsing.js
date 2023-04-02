@@ -7,14 +7,14 @@ import useConstant from '../hooks/useConstant'
 
 const CourseBrowsing = () => {
     
-    const { getCourse, setFilter, setSearch } = useCourse()
+    const { getCourse, setFilter, setSearch, setEligibleToggle } = useCourse()
 
     return (
         <div id='course-browsing'>
             <FilterList controller={setFilter} />
             <div id='table-panel'>
                 <SearchBar controller={setSearch} />
-                <EligibleCourseToggle />
+                <EligibleCourseToggle controller={setEligibleToggle} />
                 <CourseTable courseArray={getCourse()} />
             </div>
         </div>
@@ -159,16 +159,34 @@ const SearchBar = (props) => {
         </div>
     )
 }
-const EligibleCourseToggle = () => {
+const EligibleCourseToggle = (props) => {
+    const [eligibleCourse, setEligibleCourse] = useState(false)
+
+    const handleChange = (e) => {
+        props.controller(e.target.value === 'true')
+        setEligibleCourse(e.target.value === 'true')
+    }
 
     return (
         <div id='toggle-button-panel'>
             <div>
-                <input type="radio" name="course-toggle" id="eligible" value={true} />
+                <input
+                    type="radio"
+                    name="course-toggle"
+                    value={true}
+                    checked={eligibleCourse}
+                    onChange={handleChange}
+                />
                 <label htmlFor="eligible">Eligible Courses Only</label>
             </div>
             <div>
-                <input type="radio" name="course-toggle" id="all" value={false} default />
+                <input
+                    type="radio"
+                    name="course-toggle"
+                    value={false}
+                    checked={!eligibleCourse}
+                    onChange={handleChange}
+                />
                 <label htmlFor="all">All Courses</label>
             </div>
 
