@@ -115,9 +115,9 @@ const CoursePanel = () => {
                             <label for="tutcap">Capacity</label>
                             <input type="text" id="tutcap" name="tutcap"/>
                             <br/>
+                        <input type="submit" value="Add/Update" />
                         </div>
                         
-                        <input type="submit" value="Add/Update" />
                         <br/>
 
                         </form>

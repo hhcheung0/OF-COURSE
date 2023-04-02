@@ -81,7 +81,6 @@ const UserPanel = () => {
 {/* Right-side of the userPanel */}
 {/* admin-userRight */}
             <div class="column" id="admin-userRight">
-            <div>
                     <h3>Username: Mary</h3>
 {/* userCourseTable */}
                     <div id="userCourseTable" class="container">
@@ -208,10 +207,9 @@ const UserPanel = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <button>Add</button>
+                        <button id="add-button">Add</button>
                         {/* <input type="submit" id="submit-button" value="Add" style={{float: "right"}}/> */}
                     </div>  
-            </div>
             </div>
         </div>
         </div>

@@ -13,7 +13,6 @@ button {
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 100%;
 }
 button:hover {
   opacity: 0.8;
@@ -729,6 +728,8 @@ thead,tr {
   display: flex;
   .column {
     flex: 50%;
+    display: flex;
+    flex-direction: column;
   }
   table{    
     border: 2px solid #A7D094;
@@ -780,7 +781,7 @@ thead,tr {
     display: flex;
     background-color: #277582;
     color: white;
-    height: 50%;
+    flex-grow: 1;
     width:100%;
     justify-content: center;
     align-items: center;
@@ -819,15 +820,18 @@ thead,tr {
     button{
       background-color: #c7e2dd;
       color: black;
-      justify-content: right;
-      padding: 16px 32px;
-      margin: 4px 2px;
       cursor: pointer;
-      // width: 50%;
+      margin-left: auto;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
     }
   }
 }
 #addCourseCategory{
+  display: flex;
+  flex-direction: row;
   div{
   h3{
     display:inline;
@@ -845,6 +849,14 @@ thead,tr {
     padding: 16px 32px;
     margin: 4px 2px;
   }
+}
+#userCourseTable {
+  display: flex;
+  flex-direction: column;
+}
+#add-button {
+  margin-left: auto;
+  justify-self: flex-end;
 }
 //   #submit-button{
 //       // margin-right: 20px;
@@ -925,25 +937,18 @@ thead,tr {
     height: 50%;
     width:100%;
     position: relative;
+
+    form {
+      display: flex;
+    }
   }
   #courseCommentAdd{
     button {
       color:white;
       text-decoration: none;
     }
-    link {      
-      a:link{
-        text-decoration:none;
-      }
-      a:visited{
-        text-decoration:none;
-      }
-      a:hover{
-        text-decoration:none;
-      }
-      a:active{
-        text-decoration:none;
-      }
+    a {
+      all: inherit
     }
   }
 }
