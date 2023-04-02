@@ -55,7 +55,7 @@ const UserPanel = () => {
                 <br></br>
                 <br></br>
 {/* userForm */}
-                <div id="userForm">
+                <div class="container" id="userForm">
                 <form method="post">
                     <p><label for="username">Username</label>
                     <input type="text" id="username" name="username"/></p>
@@ -84,7 +84,7 @@ const UserPanel = () => {
             <div>
                     <h3>Username: Mary</h3>
 {/* userCourseTable */}
-                    <div id="userCourseTable">
+                    <div id="userCourseTable" class="container">
                         <h3>Enrolled Courses</h3>
 {/* userCourseTable-enrolled */}
                         <table id='userCourseTable-enrolled'>
@@ -208,7 +208,8 @@ const UserPanel = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <input type="submit" id="submit-button" value="Add" style={{float: "right"}}/>
+                        <button>Add</button>
+                        {/* <input type="submit" id="submit-button" value="Add" style={{float: "right"}}/> */}
                     </div>  
             </div>
             </div>

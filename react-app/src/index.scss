@@ -834,7 +834,18 @@ thead,tr {
   }
   }
 }
-// #userCourseTable-add{
+#userCourseTable-add{
+  button{
+    color: white;
+    text-align: center;
+    // display: inline-block;
+    cursor: pointer;
+    justify-content: right;
+    align-items: right;
+    padding: 16px 32px;
+    margin: 4px 2px;
+  }
+}
 //   #submit-button{
 //       // margin-right: 20px;
 //       // margin-left: 600px;
@@ -849,9 +860,12 @@ thead,tr {
 
 
 #admin-course{
-  #courseForm.column {
+  .row {
     display: flex;
-    flex: 50%;
+    #courseForm.column {
+      float: left;
+      width: 50%;
+    }
   }
   .column {
     flex: 50%;
@@ -917,6 +931,20 @@ thead,tr {
       color:white;
       text-decoration: none;
     }
+    link {      
+      a:link{
+        text-decoration:none;
+      }
+      a:visited{
+        text-decoration:none;
+      }
+      a:hover{
+        text-decoration:none;
+      }
+      a:active{
+        text-decoration:none;
+      }
+    }
   }
 }
 
@@ -940,37 +968,3 @@ thead,tr {
 margin-right: 0px;
 margin-left: 400px;
 }
-
-// table
-// border: 2px solid #A7D094;
-//     width: 100%;
-//     color: $primary-color;
-//     max-height: 50%;
-//     overflow-y:scroll;
-
-//     thead {
-//       position: sticky;
-//       top: 0;
-      
-//       th {
-//         padding: 0.5em 1em;
-//         text-align: center;
-//         border: 2px 0 solid #A7D094;
-//         background-clip: padding-box;
-//       }
-
-//     }
-//     tbody {
-//       color: black;
-//       tr {
-//         border: 2px solid #A7D094;
-//         text-align: center;
-//         td {
-//           padding: 0 10px;
-//         }
-//       }
-//     }
-
-//     button{
-//       color: white;
-//     }
