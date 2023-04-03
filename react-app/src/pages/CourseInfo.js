@@ -22,8 +22,6 @@ const CourseInfo = () => {
         const formID = e.target.id;
         console.log(formID);
         if (formID === "course-info"){
-            console.log("dasds");
-
             fetch('http://localhost:3001/data/course/addtocart', {
                 method: 'POST',
                 headers: {'Content-type' : 'application/json'},
