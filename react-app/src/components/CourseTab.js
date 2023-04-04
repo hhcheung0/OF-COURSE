@@ -1,21 +1,34 @@
+import { useState, useEffect } from "react"
 import { BsArrowDown, BsArrowUp, BsTrash3} from 'react-icons/bs';
 
+// import hooks
+import useUser from '../hooks/useUser'
+
 const CourseTab = () => {
+
+    const [maxCredit, setMaxCredit] = useState('')
+    const { getUserByToken } = useUser()
+
+    useEffect(() => {
+        const { maxCredit } = getUserByToken()
+        setMaxCredit(maxCredit)
+    }, [getUserByToken])
+
     return (
         <div id="homepage-course-tab">
             <div id="homepage-course-up">
-            <div id = "homepage-course-upperleft">
-                <EnrolledTable />
-                <ShoppingCartTable />
-            </div>
-
-            <div id ="homepage-course-upperright">
-                <div id = "homepage-course-text">
-                <p>total credits currently enrolled: 5</p>
-                <p>maximum credit limit: 18</p>
+                <div id = "homepage-course-upperleft">
+                    <EnrolledTable />
+                    <ShoppingCartTable />
                 </div>
-                <SwapCourse />
-            </div>
+
+                <div id ="homepage-course-upperright">
+                    <div id = "homepage-course-text">
+                        <p>total credits currently enrolled: 5</p>
+                        <p>maximum credit limit: {maxCredit}</p>
+                    </div>
+                    <SwapCourse />
+                </div>
             </div>
             <div id='homepage-course-bottom'>
             <CompletedTable />

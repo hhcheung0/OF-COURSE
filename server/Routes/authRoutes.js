@@ -54,9 +54,9 @@ router.post('/signup', (req, res) => {
                     password: hashedPassword,
                     accessRight: true,
                     maxCredit: 18,
-                    enrolledCourseID: [],
-                    passedCourseID: [],
-                    shoppingCartCourseID: []
+                    enrolledCourse: [],
+                    completedCourse: [],
+                    shoppingCartCourse: []
                 })
                 .then(() => {
                     res.cookie('jwt', createToken(username))
