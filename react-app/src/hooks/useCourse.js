@@ -51,10 +51,20 @@ const useCourse = (courseID) => {
     // return true if user choose to show all courses
     // return true if there are no pre-requisite courses or the user has completed the pre-requisite course
     const isEligible = (course) => {
-        const { passedCourseID } = getUserByToken()
-        if (!passedCourseID) return true
+        const { completedCourse } = getUserByToken()
         if (!eligibleToggle) return true
-        else return !course.prerequisiteCourseID.length || course.prerequisiteCourseID.some(course => passedCourseID.includes(course))
+
+        // return true if
+        // (no prerequisite for the course or the user has completed the requirement) and
+        // (no forbidden course for the course or the user did not complete the forbidden course) and
+        // the user did not complete the course
+        return (
+            (!course.prerequisiteCourseID.length || course.prerequisiteCourseID.some(courseID => completedCourse.map(course => course.courseID).includes(courseID)))
+            &&
+            !(course.forbiddenCourseID.length && course.forbiddenCourseID.some(courseID => completedCourse.map(course => course.courseID).includes(courseID)))
+            &&
+            !completedCourse.map(course => course.courseID).includes(course.courseID)
+        )
     }
     // function for searching keywords in courseID and courseName
     const searchArray = (courseArray) => {
