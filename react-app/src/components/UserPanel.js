@@ -183,8 +183,11 @@ const UserPanel = () => {
                             <option value="shoppingCart">Shopping Cart</option>
                             <option value="passedCourses">Completed Courses</option>
                             </select> 
-                            <input type="text"></input> 
+                            <input type="text"></input>
                         </div>
+                            <h5>Completed Course Grade:
+                            <input type="text"></input></h5>
+                        
 {/* userCourseTable-add */}
                         <table id='userCourseTable-add'>
                             <thead>
