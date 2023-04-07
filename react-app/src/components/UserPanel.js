@@ -3,6 +3,7 @@
 // import { useState, useEffect } from 'react'
 // import { BrowserRouter, Route, Routes, Link, useLocation, useNavigate} from "react-router-dom";
 
+
 const UserPanel = () => {
     return (
         <div id="admin-user">
@@ -61,8 +62,8 @@ const UserPanel = () => {
                     <input type="text" id="username" name="username"/></p>
                     <br/>
 
-                    <p><label for="userpw">Password</label>
-                    <input type="text" id="userpw" name="password"/></p>
+                    <p><label for="password">Password</label>
+                    <input type="text" id="password" name="password"/></p>
                     <br/>
 
                     <div id='toggle-button-panel'>

@@ -943,9 +943,18 @@ table{
     height: 50%;
     width:100%;
     position: relative;
-
     form {
       display: flex;
+      width: 100%;
+    }
+    input {
+      width: 80%;
+    }
+    .btn1{
+      margin-left: 20px;
+    }
+    .btn2{
+      margin-right: 20px;
     }
   }
   #courseCommentAdd{
