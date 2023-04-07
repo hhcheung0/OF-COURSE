@@ -1,37 +1,49 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 // import custom hooks
 import useCourse from "../hooks/useCourse";
 import useTime from "../hooks/useTime";
+import useUser from "../hooks/useUser";
 
 
 const CourseInfo = () => {
     const [comment, setComment] = useState("");
-    const [tutorialID, addToShoppingCart] = useState("");
+    const [tutorialID, setTutorialID] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
+    const [username, setUsername] = useState(' ');
     const navigate = useNavigate();
 
     //get course info from database
     const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
+    const { getUserByToken } = useUser()
 
     //console.log(course);
+    useEffect(() => {
+        const { username } = getUserByToken()
+        setUsername(username)
+    }, [getUserByToken])
 
     const handleSubmit= (e) =>{
         e.preventDefault();
         const formID = e.target.id;
         console.log(formID);
         if (formID === "course-info"){
-            fetch('http://localhost:3001/data/course/addtocart', {
-                method: 'POST',
+            fetch('http://localhost:3001/data/addtocart', {
+                method: 'PUT',
+                credentials: 'include',
                 headers: {'Content-type' : 'application/json'},
                 body: JSON.stringify({
                     courseID: course.courseID,
                     tutorialID: tutorialID,
-
+                    username: username, 
                 })
             })
             .then(res => res.json())
+            .then(json => {
+
+            })
+            .catch(err => console.error(err));
         }
         else if (formID === "comment-info"){
 
@@ -107,7 +119,7 @@ const CourseInfo = () => {
     
         return(
             <div id = "button-placement" style={{marginTop : "145px"}}>
-            <input type="radio" id={tutorial.tutorialID} name="tutorial" value={tutorialID} onChange={(e) => addToShoppingCart(e.target.value)}/>
+            <input type="radio" id={tutorial.tutorialID} name="tutorial" value={tutorialID} onChange={(e) => setTutorialID(e.target.value)}/>
             </div>
             
         )

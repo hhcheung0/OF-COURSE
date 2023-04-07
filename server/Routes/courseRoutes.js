@@ -3,6 +3,7 @@ const router = Router()
 
 // require models
 const Course = require('../Models/CourseModel')
+const User = require('../Models/UserModel')
 
 // get an array of all courses
 router.get('/data/course', (req, res) => {
@@ -24,8 +25,21 @@ router.get('/data/course/:courseID', (req, res) => {
     .catch(error => res.json({error}))
 })
 
-router.post('data/course/addtocart', (req,res)=>{
-    console.log(req.body);
+router.put('/data/addtocart', (req,res)=>{
+    const {courseID, tutorialID, username} = req.body;
+
+    User.findOne({enrolledCourse: {$elemMatch: {courseID, tutorialID}}})
+    .then(existCourse =>{
+        if(existCourse){
+            return res.status(400).send({success: false, error: "Course already added to shopping cart"})
+        }
+        User.updateOne({ username }, {$push: { shoppingCartCourse: {courseID, tutorialID}}})
+        .then(()=> {
+            res.send({success: true, error: 'Added to shopping cart'})
+        })
+    })
+    .catch(error => res.json({error}))
+    
 })
 
 module.exports = router
