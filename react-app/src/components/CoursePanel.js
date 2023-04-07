@@ -1,16 +1,24 @@
 // ADMIN PAGE
+import React, { useState, useEffect} from "react";
+import { BrowserRouter, Route, Routes, Link, useLocation, useNavigate } from "react-router-dom";
 
-// import { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Link, useLocation, useNavigate} from "react-router-dom";
-
-// COURSE ID should not be manipulative
+// import custom hooks
+import useCourse from '../hooks/useCourse'
+import useTime from '../hooks/useTime'
+import useConstant from '../hooks/useConstant'
+import useUser from "../hooks/useUser";
 
 const CoursePanel = () => {
+
+    const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
+    const { parseTimecodeArray } = useTime();
+
     return (
         <div id="admin-course">
             <div class="row">
 {/* courseSearchbar */}
-                <h3 id="courseSearchbar">Search <input type="text"></input> </h3>
+                <h3 id="courseSearchbar">Search <input type="text"></input></h3>
+                
             </div>
 {/* courseTable */}
             <div class="row" id="courseTable">
@@ -45,49 +53,48 @@ const CoursePanel = () => {
 {/* Left side of the form - Lecture*/}
                         <div class="column" id="left">
                         <h3>Lecture</h3>
-                        <div id="courseFormInput">
-                            <p><label for="courseid">Course ID</label>
-                            <input type="text" id="courseid" name="courseid"/></p>
+                            <label for="courseID">Course ID</label>
+                            <input type="text" id="courseID" name="courseID" disabled/>
                             <br/>
 
-                            <p><label for="coursename">Course Name</label>
-                            <input type="text" id="coursename" name="coursename"/></p>
+                            <label for="courseName">Course Name</label>
+                            <input type="text" id="courseName" name="courseName"/>
                             <br/>
 
-                            <p><label for="coursetime">Time</label>
-                            <input type="text" id="coursetime" name="coursetime"/></p>
+                            <label for="courseTime">Time</label>
+                            <input type="text" id="courseTime" name="courseTime"/>
                             <br/>
                             
-                            <p><label for="courseloc">Location</label>
-                            <input type="text" id="courseloc" name="courseloc"/></p>
+                            <label for="courseLocation">Location</label>
+                            <input type="text" id="courseLocation" name="courseLocation"/>
                             <br/>
 
-                            <p><label for="courseinst">Instructor</label>
-                            <input type="text" id="courseinst" name="courseinst"/></p>
+                            <label for="instructor">Instructor</label>
+                            <input type="text" id="instructor" name="instructor"/>
                             <br/>
 
-                            <p><label for="coursedep">Department</label>
-                            <input type="text" id="coursede[" name="coursedep"/></p>
+                            <label for="department">Department</label>
+                            <input type="text" id="department" name="department"/>
                             <br/>
 
-                            <p><label for="coursecap">Capacity</label>
-                            <input type="text" id="coursecap" name="coursecap"/></p>
+                            <label for="courseCapacity">Capacity</label>
+                            <input type="text" id="courseCapacity" name="courseCapacity"/>
                             <br/>
 
-                            <p><label for="coursepre">Pre-requisite Course(s)</label>
-                            <input type="text" id="coursepre" name="coursepre"/></p>
+                            <label for="prerequisiteCourseID">Pre-requisite Course(s)</label>
+                            <input type="text" id="prerequisiteCourseID" name="prerequisiteCourseID"/>
                             <br/>
 
-                            <p><label for="courseforb">Forbidden Course(s)</label>
-                            <input type="text" id="courseforb" name="courseforb"/></p>
+                            <label for="forbiddenCourseID">Forbidden Course(s)</label>
+                            <input type="text" id="forbiddenCourseID" name="forbiddenCourseID"/>
                             <br/>
 
-                            <p><label for="coursecred">Credit</label>
-                            <input type="text" id="coursecred" name="coursecred"/></p>
+                            <label for="credit">Credit</label>
+                            <input type="text" id="credit" name="credit"/>
                             <br/>
 
-                            <p><label for="courseoutl">Outline</label>
-                            <input type="text" id="courseoutl" name="courseoutl"/></p>
+                            <label for="outline">Outline</label>
+                            <input type="text" id="outline" name="outline"/>
                             <br/>
                         </div>
 {/* Right side of the form - Tutorial */}
@@ -99,30 +106,31 @@ const CoursePanel = () => {
                             <option value="three">3</option>
                             </select> 
                         </h3>
-                            <p><label for="tutid">Tutorial ID</label>
-                            <input type="text" id="tutid" name="tutid"/></p>
+                            <label for="tutid">Tutorial ID</label>
+                            <input type="text" id="tutid" name="tutid"/>
                             <br/>
 
-                            <p><label for="tuttime">Time</label>
-                            <input type="text" id="tuttime" name="tuttime"/></p>
+                            <label for="tuttime">Time</label>
+                            <input type="text" id="tuttime" name="tuttime"/>
                             <br/>
                             
-                            <p><label for="tutloc">Location</label>
-                            <input type="text" id="tutloc" name="tutloc"/></p>
+                            <label for="tutloc">Location</label>
+                            <input type="text" id="tutloc" name="tutloc"/>
                             <br/>
 
-                            <p><label for="tutor">Tutor</label>
-                            <input type="text" id="tutor" name="tutor"/></p>
+                            <label for="tutor">Tutor</label>
+                            <input type="text" id="tutor" name="tutor"/>
                             <br/>
 
-                            <p><label for="tutcap">Capacity</label>
-                            <input type="text" id="tutcap" name="tutcap"/></p>
+                            <label for="tutcap">Capacity</label>
+                            <input type="text" id="tutcap" name="tutcap"/>
                             <br/>
+                        {/* <input type="submit" class="btn1" value="Add/Update" />
+                        <input type="submit" class="btn2" value="Clear" /> */}
+                        <button class="btn1">Add/Update</button>
+                        <button class="btn2">Clear</button>
+
                         </div>
-                        <input type="submit" class="btn1" value="Add/Update" />
-                        <input type="submit" class="btn2" value="Clear" />
-                        </div>
-                        
                         <br/>
 
                         </form>
