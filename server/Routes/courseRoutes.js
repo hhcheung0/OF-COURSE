@@ -5,6 +5,8 @@ const router = Router()
 const Course = require('../Models/CourseModel')
 const User = require('../Models/UserModel')
 
+const { verifyToken } = require('../Tools/authTools')
+
 // get an array of all courses
 router.get('/data/course', (req, res) => {
     Course.find().sort('courseID')
@@ -25,10 +27,12 @@ router.get('/data/course/:courseID', (req, res) => {
     .catch(error => res.json({error}))
 })
 
-router.put('/data/addtocart', (req,res)=>{
-    const {courseID, tutorialID, username} = req.body;
 
-    User.findOne({enrolledCourse: {$elemMatch: {courseID, tutorialID}}})
+router.put('/shoppingCart/add', (req,res)=>{
+    const {courseID, tutorialID} = req.body;
+    const username = verifyToken(req.cookies.jwt)
+
+    User.findOne({shoppingCartCourse: {$elemMatch: {courseID, tutorialID}}})
     .then(existCourse =>{
         if(existCourse){
             return res.status(400).send({success: false, error: "Course already added to shopping cart"})
@@ -40,6 +44,26 @@ router.put('/data/addtocart', (req,res)=>{
     })
     .catch(error => res.json({error}))
     
+})
+
+router.put('/enrolledCourse/enroll', (req,res)=>{
+    //console.log(req.body);
+    const {courseID, username} = req.body;
+
+    Course.findOne({courseID})
+    .then(course => {
+        User.findOne({username})
+        .then(user => {
+            console.log(user.shoppingCartCourse)
+        })
+    })
+    /*
+    User.findOne({username})
+    .then(user => {
+        res.send(user)
+    }
+    )
+    */
 })
 
 module.exports = router
