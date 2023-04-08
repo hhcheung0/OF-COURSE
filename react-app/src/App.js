@@ -13,6 +13,7 @@ import CourseBrowsing from './pages/CourseBrowsing'
 import Homepage from './pages/Homepage'
 import Profile from './pages/Profile'
 import Admin from './pages/Admin'
+import Osborn from './pages/osborn'
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: '/admin',
         element: <Admin />
+      },
+      {
+        path: '/osborn',
+        element: <Osborn />
       }
     ]
 

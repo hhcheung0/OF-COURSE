@@ -234,4 +234,30 @@ router.put('/enrolledCourse/enroll', (req,res)=>{
     .catch(error => res.json({error}))    
 })
 
+router.put('/enrolledCourse/drop', (req,res)=> {
+    const {courseID, tutorialID} = req.body;
+    const username = verifyToken(req.cookies.jwt)
+
+    User.findOne({username})
+    .then(user => {
+        User.updateOne(
+            {username},
+            {$pull : {enrolledCourse : {courseID : courseID}}}
+        )
+        .then(() => {
+            Course.updateOne({courseID : courseID},{$pull: {enrolledID : user.userID}})
+            .then(()=> {
+                Course.updateOne({courseID : courseID, "tutorialInfo.tutorialID" : tutorialID},{$pull: {"tutorialInfo.$.enrolledID" : user.userID}})
+                .then(() => {
+                    res.send({success: true, error: 'Successful to drop'})
+                })
+                .catch(error => res.json(error))
+            })
+            .catch(error => res.json(error))
+        })
+        .catch(error => res.json(error))
+    })
+    .catch(error => res.json(error))
+})
+
 module.exports = router
