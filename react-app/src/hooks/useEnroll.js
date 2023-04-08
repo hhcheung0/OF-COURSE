@@ -27,7 +27,7 @@ const useEnroll = () => {
     }
 
     const enroll = (courseID) => {
-        fetch('http://localhost:3001/enrolledCourse/add', {
+        fetch('http://localhost:3001/enrolledCourse/enroll', {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-type' : 'application/json'},

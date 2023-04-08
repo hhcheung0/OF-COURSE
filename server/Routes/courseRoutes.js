@@ -71,23 +71,84 @@ router.put('/shoppingCart/remove', (req,res)=>{
 })
 
 router.put('/enrolledCourse/enroll', (req,res)=>{
-    //console.log(req.body);
-    const {courseID, username} = req.body;
+    const {courseID} = req.body;
+    const username = verifyToken(req.cookies.jwt)
 
     Course.findOne({courseID})
     .then(course => {
+        // find user enrolled course credit
         User.findOne({username})
         .then(user => {
-            console.log(user.shoppingCartCourse)
+            async function findCourseCredit(courseID){
+                const course = await Course.findOne({courseID: { $eq: courseID}})
+                return course.credit
+            }
+
+            async function calUserEnrolledCredit(array){
+                let enrolledCredit = 0;
+                for(i = 0; i < array.length; i++){
+                    //console.log(array[i].courseID)
+                    const credit = await findCourseCredit(array[i].courseID)
+                    //console.log(credit)
+                    enrolledCredit += credit;
+                }
+                console.log(enrolledCredit)
+                return enrolledCredit;
+            }
+
+            console.log(calUserEnrolledCredit(user.shoppingCartCourse));
+            /*
+            //console.log(course.enrolledID.length);
+            if(course.enrolledID.length == course.courseCapacity){ //check if course capacity is full
+                return res.status(400).send({success: false, error: "Course is full already"})
+            }else if(enrolledCredit == user.maxCredit){
+                return res.status(400).send({success: false, error: "User reached max credit already"})
+            }
+            */
         })
+        
+
+        /*
+        User.findOne({username})
+        .then(user => {
+            let occupiedTimeSlot = [];
+            for(i = 0; i < user.shoppingCartCourse.length; i++){
+                console.log(user.shoppingCartCourse[i].courseID)
+                
+    
+                Course.aggregate([
+                    {$match: {'courseID' : user.shoppingCartCourse[i].courseID}},
+                    {$project: {
+                        _id: 0,
+                        courseTime: 1,
+                        tutorial: {
+                            $filter: {
+                                input: '$tutorialInfo',
+                                as: 'tutorial',
+                                cond: { $eq: ['$$tutorial.tutorialID', user.shoppingCartCourse[i].tutorialID]}
+                            }
+                        }
+                    }}
+                ])
+                .then(course => {
+                    console.log(course[0].courseTime)
+                    console.log(course[0].tutorial[0].tutorialTime)
+                    let courseTimeSlot = course[0].courseTime.concat(course[0].tutorial[0].tutorialTime)
+                    occupiedTimeSlot = occupiedTimeSlot.concat(courseTimeSlot)
+                })
+            }
+            console.log(occupiedTimeSlot)
+        })
+        */
+
+        /*
+        console.log(course.enrolledID.length);
+        if(course.enrolledID.length == course.courseCapacity){ //check if course capacity is full
+            return res.status(400).send({success: false, error: "Course is full already"})
+        }else if()
+        */
     })
-    /*
-    User.findOne({username})
-    .then(user => {
-        res.send(user)
-    }
-    )
-    */
+    .catch(error => res.json({error}))
 })
 
 module.exports = router
