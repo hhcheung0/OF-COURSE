@@ -39,9 +39,9 @@ router.put('/shoppingCart/add', (req,res)=>{
             return res.status(400).send({success: false, error: "Course already added to shopping cart"})
         }else{
             User.updateOne({ username }, {$push: { shoppingCartCourse: {courseID, tutorialID}}})
-        .then(()=> {
-            res.send({success: true, error: 'Added to shopping cart'})
-        })
+            .then(()=> {
+                res.send({success: true, error: 'Added to shopping cart'})
+            })
         }
     })
     .catch(error => res.json({error}))
@@ -71,20 +71,44 @@ router.put('/shoppingCart/remove', (req,res)=>{
 })
 
 router.put('/enrolledCourse/enroll', (req,res)=>{
-    const {courseID} = req.body;
+    const {courseID, tutorialID} = req.body;
     const username = verifyToken(req.cookies.jwt)
 
-    Course.findOne({courseID})
-    .then(course => {
-        // find user enrolled course credit
-        User.findOne({username})
-        .then(user => {
+    // find user enrolled course credit
+    User.findOne({username})
+    .then(user => {
+        //console.log(user)
+        Course.aggregate([
+            {$match: {courseID}},
+            {$project: {
+                _id: 0,
+                courseID: 1,
+                courseName: 1,
+                courseTime: 1,
+                courseLocation: 1,
+                courseCapacity: 1,
+                enrolledID:1,
+                prerequisiteCourseID: 1,
+                forbiddenCourseID: 1,
+                tutorial: {
+                    $filter: {
+                        input: '$tutorialInfo',
+                        as: 'tutorial',
+                        cond: { $eq: ['$$tutorial.tutorialID', tutorialID]}
+                    }
+                }
+            }}
+        ])
+        .then(async goingToBeEnrolledCourse => {
+            //console.log(goingToBeEnrolledCourse)
+           
+            
             async function findCourseCredit(courseID){
                 const course = await Course.findOne({courseID: { $eq: courseID}})
                 return course.credit
             }
 
-            async function calUserEnrolledCredit(array){
+            async function getUserEnrolledCredit(array){
                 let enrolledCredit = 0;
                 for(i = 0; i < array.length; i++){
                     //console.log(array[i].courseID)
@@ -92,32 +116,12 @@ router.put('/enrolledCourse/enroll', (req,res)=>{
                     //console.log(credit)
                     enrolledCredit += credit;
                 }
-                console.log(enrolledCredit)
                 return enrolledCredit;
             }
 
-            console.log(calUserEnrolledCredit(user.shoppingCartCourse));
-            /*
-            //console.log(course.enrolledID.length);
-            if(course.enrolledID.length == course.courseCapacity){ //check if course capacity is full
-                return res.status(400).send({success: false, error: "Course is full already"})
-            }else if(enrolledCredit == user.maxCredit){
-                return res.status(400).send({success: false, error: "User reached max credit already"})
-            }
-            */
-        })
-        
-
-        /*
-        User.findOne({username})
-        .then(user => {
-            let occupiedTimeSlot = [];
-            for(i = 0; i < user.shoppingCartCourse.length; i++){
-                console.log(user.shoppingCartCourse[i].courseID)
-                
-    
-                Course.aggregate([
-                    {$match: {'courseID' : user.shoppingCartCourse[i].courseID}},
+            async function getCourseInfo(courseID){
+                const course = await Course.aggregate([
+                    {$match: {'courseID' : courseID}},
                     {$project: {
                         _id: 0,
                         courseTime: 1,
@@ -125,30 +129,109 @@ router.put('/enrolledCourse/enroll', (req,res)=>{
                             $filter: {
                                 input: '$tutorialInfo',
                                 as: 'tutorial',
-                                cond: { $eq: ['$$tutorial.tutorialID', user.shoppingCartCourse[i].tutorialID]}
+                                cond: { $eq: ['$$tutorial.tutorialID', user.enrolledCourse[i].tutorialID]}  //need to input user.enrolledCourse[i].tutorialID
                             }
                         }
                     }}
                 ])
-                .then(course => {
-                    console.log(course[0].courseTime)
-                    console.log(course[0].tutorial[0].tutorialTime)
+                return course
+            }
+    
+            async function checkTimeClash(array){
+                let occupiedTimeSlot = [];
+                let timeClashed = false;
+                for(i = 0; i < array.length; i++){
+                    const course = await getCourseInfo(array[i].courseID)
                     let courseTimeSlot = course[0].courseTime.concat(course[0].tutorial[0].tutorialTime)
                     occupiedTimeSlot = occupiedTimeSlot.concat(courseTimeSlot)
-                })
+                }
+                
+                for (i = 0; i < goingToBeEnrolledCourse[0].courseTime.length; i++){
+                    //console.log(goingToBeEnrolledCourse[0].courseTime[i])
+                    const Clashed = occupiedTimeSlot.some(el => el === goingToBeEnrolledCourse[0].courseTime[i])
+                    if (Clashed){
+                        timeClashed = true;
+                        break;
+                    }
+                }
+                
+                if(!timeClashed && goingToBeEnrolledCourse[0].tutorial.length != 0){
+                    //console.log(goingToBeEnrolledCourse[0].tutorial[0].tutorialTime[0])
+                    
+                    const Clashed = occupiedTimeSlot.some(el => el === goingToBeEnrolledCourse[0].tutorial[0].tutorialTime[0])
+                    if (Clashed){
+                        timeClashed = true;
+                    }
+                }
+                
+                return timeClashed;
             }
-            console.log(occupiedTimeSlot)
-        })
-        */
 
-        /*
-        console.log(course.enrolledID.length);
-        if(course.enrolledID.length == course.courseCapacity){ //check if course capacity is full
-            return res.status(400).send({success: false, error: "Course is full already"})
-        }else if()
-        */
+            function checkPrerequisiteAndForbidden(userCmpletedCourseArray){
+                let unfulfilled = false;
+                //console.log(userCmpletedCourseArray)
+                
+                if(goingToBeEnrolledCourse[0].forbiddenCourseID.length != 0){
+                    for (i = 0; i < goingToBeEnrolledCourse[0].forbiddenCourseID.length; i++){
+                        const forbidden = userCmpletedCourseArray.some(el => el.courseID === goingToBeEnrolledCourse[0].forbiddenCourseID[i])
+                        if (forbidden){
+                            unfulfilled = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(!unfulfilled && goingToBeEnrolledCourse[0].prerequisiteCourseID.length != 0){
+                    for (i = 0; i < goingToBeEnrolledCourse[0].prerequisiteCourseID.length; i++){
+                        //console.log(goingToBeEnrolledCourse[0].prerequisiteCourseID[i])
+                        const fulfilled = userCmpletedCourseArray.some(el => el.courseID === goingToBeEnrolledCourse[0].prerequisiteCourseID[i])
+                        //console.log("fulfilled: " + fulfilled)
+                        if (!fulfilled){
+                            unfulfilled = true;
+                            break;
+                        }
+                    }
+                }
+                
+               return unfulfilled;
+            }
+
+            let userEnrolledCredit = await getUserEnrolledCredit(user.enrolledCourse); //need to input user.enrolledCourse
+            //console.log(userEnrolledCredit);
+
+            let TimeClashed = await checkTimeClash(user.enrolledCourse); // need to input user.enrolledCourse
+            //console.log(TimeClashed)
+
+            let unfulfillRequirement = checkPrerequisiteAndForbidden(user.completedCourse)
+            //console.log(unfulfillRequirement);
+            
+            if(goingToBeEnrolledCourse[0].enrolledID.length == goingToBeEnrolledCourse[0].courseCapacity){ 
+                return res.status(400).send({success: false, error: "Course is full already"})
+            }else if(userEnrolledCredit == user.maxCredit){ 
+                return res.status(400).send({success: false, error: "User reached max credit already"})
+            }else if(TimeClashed){
+                return res.status(400).send({success: false, error: "The course has a time clash with your current timetable"})
+            }else if(unfulfillRequirement){
+                return res.status(400).send({success: false, error: "User either studied forbidden course or not fulfilled prerequisite course"})
+            }else{
+                User.updateOne({username},{$pull : {shoppingCartCourse : {courseID : courseID}}})
+                .then(() => {
+                    User.updateOne({username},{$push: {enrolledCourse: {courseID:courseID, tutorialID:tutorialID}}})
+                    .then(()=> {
+                        Course.updateOne({courseID : courseID},{$push: {enrolledID : user.userID}})
+                        .then(()=> {
+                            Course.updateOne({courseID : courseID, "tutorialInfo.tutorialID" : tutorialID},{$push: {"tutorialInfo.$.enrolledID" : user.userID}})
+                            .then(() => {
+                                res.send({success: true, error: 'Successful to enroll'})
+                            })
+                        })
+                    })
+                })
+                .catch(error => res.json(error))
+            }
+        })
     })
-    .catch(error => res.json({error}))
+    .catch(error => res.json({error}))    
 })
 
 module.exports = router

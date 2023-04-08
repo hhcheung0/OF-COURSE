@@ -6,7 +6,7 @@ const useEnroll = () => {
             headers: {'Content-type' : 'application/json'},
             body: JSON.stringify({
                 courseID: courseID,
-                tutorialID: tutorialID,
+                tutorialID: tutorialID
             })
         })
         .then(res => res.json())
@@ -26,13 +26,14 @@ const useEnroll = () => {
         .then(json => console.log(json));
     }
 
-    const enroll = (courseID) => {
+    const enroll = (courseID, tutorialID) => {
         fetch('http://localhost:3001/enrolledCourse/enroll', {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-type' : 'application/json'},
             body: JSON.stringify({
                 courseID: courseID,
+                tutorialID: tutorialID
             })
         })
         .then(res => res.json())
