@@ -273,7 +273,7 @@ const CourseForm = ({course}) => { // state
     const [ forbiddenCourseID, setForbiddenCourseID ] = useState([]);
     const [ credit, setCredit ] = useState();
     const [ outline, setOutline ] = useState({});
-    const [ tutorialInfo, setTutorialInfo ] = useState({});
+    const [ tutorialInfo, setTutorialInfo ] = useState([]);
 
     const [ comment, setComment ] = useState([]);
 
@@ -311,6 +311,7 @@ const CourseForm = ({course}) => { // state
     const handleTutorialCapacityChange = (e) => {console.log(e.target.id); setTutorialCapacity(e.target.value); }
 
     useEffect(() => {
+        setCourseID(course.courseID)
         setCourseName(course.courseName)
         setCourseTime(course.courseTime)
         setCourseLocation(course.courseLocation)
@@ -333,6 +334,14 @@ const CourseForm = ({course}) => { // state
     }, [tutorialFormNumber])
 
     useEffect(() => {
+        if (course.tutorialInfo === []) 
+        return
+        setTutorialID('')
+        setTutorialTime('')
+        setTutorialLocation('')
+        setTutor('')
+        setTutorialCapacity('')
+        
         if (!course.tutorialInfo || !course.tutorialInfo[Number(tutorialIndex)]) return
         setTutorialID(course.tutorialInfo[Number(tutorialIndex)].tutorialID)
         setTutorialTime(course.tutorialInfo[Number(tutorialIndex)].tutorialTime)
