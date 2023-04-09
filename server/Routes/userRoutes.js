@@ -45,7 +45,8 @@ router.put('/data/user/changeIcon', (req, res) => {
 
     User.updateOne({username},{$set: {"icon" : icon}})
     .then(result => {
-        console.log(result)
+        //console.log(result)
+        res.send({success: true, error: 'Successful to change profile picture.'})
     })
     .catch(error => res.json({error}))
 })
