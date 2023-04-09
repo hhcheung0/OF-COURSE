@@ -7,11 +7,11 @@
 const UserPanel = () => {
     return (
         <div id="admin-user">
-        <div class="row">
+        <div className="row">
 
 {/* Left side of the userPanel */}
 {/* admin-userLeft */}
-            <div class="column" id="admin-userLeft">
+            <div className="column" id="admin-userLeft">
                     <br></br>
 {/* userSearchbar */}
                     <h3 id="userSearchbar">Search  <input type="text"></input> </h3>
@@ -56,21 +56,21 @@ const UserPanel = () => {
                 <br></br>
                 <br></br>
 {/* userForm */}
-                <div class="container" id="userForm">
+                <div className="container" id="userForm">
                 <form method="post">
-                    <p><label for="username">Username</label>
+                    <p><label htmlFor="username">Username</label>
                     <input type="text" id="username" name="username"/></p>
                     <br/>
 
-                    <p><label for="password">Password</label>
+                    <p><label htmlfor="password">Password</label>
                     <input type="text" id="password" name="password"/></p>
                     <br/>
 
                     <div id='toggle-button-panel'>
                             <input type="radio" name="course-toggle" id="Student" value={true} />
-                            <label for="Student">Student</label>
+                            <label htmlFor="Student">Student</label>
                             <input type="radio" name="course-toggle" id="Admin" value={false} default />
-                            <label for="Admin">Admin</label>
+                            <label htmlFor="Admin">Admin</label>
                     </div>
                     <button>Add/Update</button>
                     {/* <input type="submit" value="Add/Update" /> */}
@@ -81,10 +81,10 @@ const UserPanel = () => {
 
 {/* Right-side of the userPanel */}
 {/* admin-userRight */}
-            <div class="column" id="admin-userRight">
+            <div className="column" id="admin-userRight">
                     <h3>Username: Mary</h3>
 {/* userCourseTable */}
-                    <div id="userCourseTable" class="container">
+                    <div id="userCourseTable" className="container">
                         <h3>Enrolled Courses</h3>
 {/* userCourseTable-enrolled */}
                         <table id='userCourseTable-enrolled'>
