@@ -11,9 +11,9 @@ import useUser from "../hooks/useUser";
 
 const CoursePanel = () => {
 
-    const { course, getCourse, setSearch } = useCourse();
+    const { getCourse, setSearch } = useCourse();
     const { parseTimecodeArray } = useTime();
-    
+    const [ course, setCourse ] = useState({});
 
     return (
         <div id="admin-course">
@@ -22,7 +22,7 @@ const CoursePanel = () => {
                 {/* <h3 id="courseSearchbar">Search <input type="text"></input></h3> */}
                 <div id='table-panel'>
                     <SearchBar controller={setSearch} />
-                    <CourseTable courseArray={getCourse()} />
+                    <CourseTable courseArray={getCourse()} controller={setCourse} /> 
                 </div>
             </div>
 
@@ -55,7 +55,7 @@ const CoursePanel = () => {
             <div class="row">
 {/* courseForm */}                    
                     <div class="container" id="courseForm">
-                        <CourseForm controller />
+                        <CourseForm course={course}/>
                         {/* <form method="post"> */}
 {/* Left side of the form - Lecture*/}
                         {/* <div class="column" id="left">
@@ -194,7 +194,7 @@ const SearchBar = (props) => {
 
     return (
         <div id='search-bar'>
-            <div>Search</div>
+            <h3>Search</h3>
             <input
                 type="text"
                 onChange={handleChange}
@@ -204,7 +204,7 @@ const SearchBar = (props) => {
     )
 }
 
-const CourseTable = ({courseArray}) => {
+const CourseTable = ({courseArray, controller}) => {
 
     return (
         <div class="row" id='table-container'>
@@ -222,7 +222,7 @@ const CourseTable = ({courseArray}) => {
 
                 <tbody>
                     {courseArray && courseArray.map((course, idx) => (
-                        <CourseTableRow course={course} key={idx} />
+                        <CourseTableRow course={course} key={idx} controller={controller} />
                     ))}
                 </tbody>
             </table>
@@ -230,20 +230,21 @@ const CourseTable = ({courseArray}) => {
     )
 }
 
-const CourseTableRow = ({course}) => {
+const CourseTableRow = ({course, controller}) => {
     const { parseTimecodeArray } = useTime()
+
 
     return (
         <>
         {course &&
             <tr>
                 <td>
-                    <div className='link' onClick={() => window.location.assign(`/course/${course.courseID}`)}>
+                    <div className='link' onClick={() => controller(course)}>
                         {course.courseID}
                     </div>
                 </td>
                 <td>
-                    <div className='link' onClick={() => window.location.assign(`/course/${course.courseID}`)}>
+                    <div className='link' onClick={() => controller(course)}>
                         {course.courseName}
                     </div>
                 </td>
@@ -259,9 +260,61 @@ const CourseTableRow = ({course}) => {
     )
 }
 
-const CourseForm = ({course}) => {
+// const retrieveData = (course) => {
+//     course.preventDefault();
+//     alert(course.courseID);
+//         fetch('http://localhost:3001/:courseID', {
+//             method: 'PUT',
+//             headers: {'Content-type' : 'application/json'},
+//             body: JSON.stringify({
+//                 courseID: course.courseID,
+//                 courseName: course.courseName,
+//                 courseTime: course.courseTime,
+//                 courseLocation: course.courseLocation,
+//                 department: course.department,
+//                 instructor: course.instructor,
+//                 courseCapacity: course.courseCapacity,
+//                 prerequisiteCourseID: course.prerequisiteCourseID,
+//                 forbiddenCourseID: course.forbiddenCourseID,
+//                 credit: course.credit,
+//                 tutorialInfo: course.tutorialInfo,
+//                 outline: course.outline,
+//                 comment: course.comment,
+//             })
+//         })
+//         .then(res => res.json())
+//         .then(json => console.log(json));
+//     }
+
+//     const handleSubmit= (e) =>{
+//         e.preventDefault();
+//         const formID = e.target.id;
+//         console.log(formID);
+//         if (formID === "course-info"){
+//             fetch('http://localhost:3001/data/addtocart', {
+//                 method: 'PUT',
+//                 credentials: 'include',
+//                 headers: {'Content-type' : 'application/json'},
+//                 body: JSON.stringify({
+//                     courseID: course.courseID,
+//                     tutorialID: tutorialID,
+//                     username: username, 
+//                 })
+//             })
+//             .then(res => res.json())
+//             .then(json => {
+
+//             })
+//             .catch(err => console.error(err));
+//         }
+//     };
+
+const CourseForm = ({course}) => { // state
     const { parseTimecodeArray } = useTime()
-    
+    const [ tutorial, setTutorial] = useState({}); // state, function to adjust the state
+    const [ courseName, setCourseName] = useState("");
+    console.log(course);
+    console.log(course.tutorialInfo);
 
     return(
         <>
@@ -275,11 +328,11 @@ const CourseForm = ({course}) => {
                             <br/>
 
                             <label for="courseName">Course Name</label>
-                            <input type="text" id="courseName" name="courseName" value={course.courseName}/>
+                            <input type="text" id="courseName" name="courseName" value={courseName}/>
                             <br/>
 
                             <label for="courseTime">Time</label>
-                            <input type="text" id="courseTime" name="courseTime" value={parseTimecodeArray(course.courseTime)}/> 
+                            <input type="text" id="courseTime" name="courseTime" value={parseTimecodeArray(course.courseTime).join(', ')}/> 
                             <br/>
                             
                             <label for="courseLocation">Location</label>
@@ -299,11 +352,11 @@ const CourseForm = ({course}) => {
                             <br/>
 
                             <label for="prerequisiteCourseID">Pre-requisite Course(s)</label>
-                            <input type="text" id="prerequisiteCourseID" name="prerequisiteCourseID" value={course.prerequisiteCourseID}/>
+                            <input type="text" id="prerequisiteCourseID" name="prerequisiteCourseID" value={changeSlash(course.prerequisiteCourseID)}/>
                             <br/>
 
                             <label for="forbiddenCourseID">Forbidden Course(s)</label>
-                            <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={course.forbiddenCourseID}/>
+                            <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={changeSlash(course.forbiddenCourseID)}/>
                             <br/>
 
                             <label for="credit">Credit</label>
@@ -355,6 +408,12 @@ const CourseForm = ({course}) => {
         {/* } */}
         </>
     )
+}
+
+const changeSlash = (courseArray) =>{
+    if (courseArray === "")
+        return "/";
+    return courseArray;
 }
 
 
