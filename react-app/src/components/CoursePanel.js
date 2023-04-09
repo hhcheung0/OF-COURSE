@@ -54,7 +54,7 @@ const CoursePanel = () => {
             
             <div className="row">
 {/* courseForm */}                    
-                    <div className="container" id="courseForm">
+                    <div className="grid-container" id="courseForm">
                         <CourseForm course={course}/>
                         {/* <form method="post"> */}
 {/* Left side of the form - Lecture*/}
@@ -183,7 +183,6 @@ const CoursePanel = () => {
 }
 
 
-
 const SearchBar = (props) => {
     const [search, setSearch] = useState('')
     
@@ -259,72 +258,71 @@ const CourseTableRow = ({course, controller}) => {
     )
 }
 
-// const retrieveData = (course) => {
-//     course.preventDefault();
-//     alert(course.courseID);
-//         fetch('http://localhost:3001/:courseID', {
-//             method: 'PUT',
-//             headers: {'Content-type' : 'application/json'},
-//             body: JSON.stringify({
-//                 courseID: course.courseID,
-//                 courseName: course.courseName,
-//                 courseTime: course.courseTime,
-//                 courseLocation: course.courseLocation,
-//                 department: course.department,
-//                 instructor: course.instructor,
-//                 courseCapacity: course.courseCapacity,
-//                 prerequisiteCourseID: course.prerequisiteCourseID,
-//                 forbiddenCourseID: course.forbiddenCourseID,
-//                 credit: course.credit,
-//                 tutorialInfo: course.tutorialInfo,
-//                 outline: course.outline,
-//                 comment: course.comment,
-//             })
-//         })
-//         .then(res => res.json())
-//         .then(json => console.log(json));
-//     }
-
-//     const handleSubmit= (e) =>{
-//         e.preventDefault();
-//         const formID = e.target.id;
-//         console.log(formID);
-//         if (formID === "course-info"){
-//             fetch('http://localhost:3001/data/addtocart', {
-//                 method: 'PUT',
-//                 credentials: 'include',
-//                 headers: {'Content-type' : 'application/json'},
-//                 body: JSON.stringify({
-//                     courseID: course.courseID,
-//                     tutorialID: tutorialID,
-//                     username: username, 
-//                 })
-//             })
-//             .then(res => res.json())
-//             .then(json => {
-
-//             })
-//             .catch(err => console.error(err));
-//         }
-//     };
-
 const CourseForm = ({course}) => { // state
     const { parseTimecodeArray } = useTime()
     const [ tutorial, setTutorial ] = useState({}); // state, function to adjust the state
+
+    const [ courseID, setCourseID ] = useState(''); // handleCourseIDChange?
     const [ courseName, setCourseName ] = useState('')
+    const [ courseTime, setCourseTime ] = useState([]);
+    const [ courseLocation, setCourseLocation ] = useState('');
+    const [ instructor, setInstructor ] = useState('');
+    const [ department, setDepartment ] = useState('');
+    const [ courseCapacity, setCourseCapacity ] = useState('');
+    const [ prerequisiteCourseID, setPrerequisiteCourseID ] = useState([]);
+    const [ forbiddenCourseID, setForbiddenCourseID ] = useState([]);
+    const [ credit, setCredit ] = useState();
+    const [ outline, setOutline ] = useState({});
+    const [ tutorialInfo, setTutorialInfo ] = useState({});
+
+    const [ comment, setComment ] = useState([]);
+
+    const [ tutorialID, setTutorialID ] = useState('');
+    const [ tutorialTime, setTutorialTime ] = useState('');
+    const [ tutorialLocation, setTutorialLocation ] = useState([]);
+    const [ tutor, setTutor ] = useState('');
+    const [ tutorialCapacity, setTutorialCapacity ] = useState();
+
     const [ tutorialIndex, setTutorialIndex ] = useState(null)
-    const [ tutorialID, setTutorialID ] = useState('')
-    const [ tutorialFormNumber, setTutorialFormNubmer ] = useState([])
-    console.log(course);
+    const [ tutorialFormNumber, setTutorialFormNubmer ] = useState([]);
+
+    // console.log(course);
     console.log(course.tutorialInfo);
 
-    const handleCourseNameChange = (e) => {
-        console.log(e.target.id)
-        setCourseName(e.target.value)
-    }
+    const handleCourseNameChange = (e) => { console.log(e.target.id); setCourseName(e.target.value); }
+    const handleCourseTimeChange = (e) => { console.log(e.target.id); setCourseTime(e.target.value);  }
+    const handleCourseLocationChange = (e) => {console.log(e.target.id); setCourseLocation(e.target.value); }
+    const handleInstructorChange = (e) => {console.log(e.target.id); setInstructor(e.target.value); }
+    const handleDepartmentChange = (e) => {console.log(e.target.id); setDepartment(e.target.value); }
+    const handleCourseCapacityChange = (e) => {console.log(e.target.id); setCourseCapacity(e.target.value); }
+    const handlePrerequisiteCourseIDChange = (e) => {console.log(e.target.id); setPrerequisiteCourseID(e.target.value); }
+    const handleForbidenCourseIDChange = (e) => {console.log(e.target.id); setForbiddenCourseID(e.target.value); }
+    const handleCreditChange = (e) => {console.log(e.target.id); setCredit(e.target.value); }
+    const handleOutlineChange = (e) => {console.log(e.target.id); setOutline(e.target.value); }
+    const handleTutorialInfoChange = (e) => {console.log(e.target.id); setTutorialInfo(e.target.value); }
+
+
+    const handleCommentChange = (e) => {console.log(e.target.id); setComment(e.target.value); }
+
+    const handleTutorialIDChange = (e) => {console.log(e.target.id); setTutorialID(e.target.value); }
+    const handleTutorialTimeChange = (e) => {console.log(e.target.id); setTutorialTime(e.target.value); }
+    const handleTutorialLocationChange = (e) => {console.log(e.target.id); setTutorialLocation(e.target.value); }
+    const handleTutorChange = (e) => {console.log(e.target.id); setTutor(e.target.value); }
+    const handleTutorialCapacityChange = (e) => {console.log(e.target.id); setTutorialCapacity(e.target.value); }
 
     useEffect(() => {
         setCourseName(course.courseName)
+        setCourseTime(course.courseTime)
+        setCourseLocation(course.courseLocation)
+        setInstructor(course.instructor)
+        setDepartment(course.department)
+        setCourseCapacity(course.courseCapacity)
+        setPrerequisiteCourseID(course.prerequisiteCourseID)
+        setForbiddenCourseID(course.forbiddenCourseID)
+        setCredit(course.credit)
+        setOutline(course.outline)
+        setComment(course.comment)
+        setTutorialInfo(course.tutorialInfo)
         if (!course.tutorialInfo) return
         setTutorialFormNubmer([...new Array(course.tutorialInfo.length).keys()])
     }, [course])
@@ -336,7 +334,11 @@ const CourseForm = ({course}) => { // state
     useEffect(() => {
         if (!course.tutorialInfo) return
         setTutorialID(course.tutorialInfo[Number(tutorialIndex)].tutorialID)
-    }, [tutorialIndex, setTutorialID])
+        setTutorialTime(course.tutorialInfo[Number(tutorialIndex)].tutorialTime)
+        setTutorialLocation(course.tutorialInfo[Number(tutorialIndex)].tutorialLocation)
+        setTutor(course.tutorialInfo[Number(tutorialIndex)].tutor)
+        setTutorialCapacity(course.tutorialInfo[Number(tutorialIndex)].tutorialCapacity)
+    }, [tutorialIndex, setTutorialID, setTutorialTime, setTutorialLocation, setTutor, setTutorialCapacity, course])
 
     const handleTutorialIndexChange = (e) => {
         setTutorialIndex(e.target.value)
@@ -350,7 +352,7 @@ const CourseForm = ({course}) => { // state
                         <div className="column" id="left">
                         <h3>Lecture</h3>
                             <label htmlFor="courseID">Course ID</label>
-                            <input type="text" id="courseID" name="courseID" value={course.courseID} disabled/>
+                            <input type="text" id="courseID" name="courseID" value={courseID} disabled/>
                             <br/>
 
                             <label htmlFor="courseName">Course Name</label>
@@ -358,39 +360,39 @@ const CourseForm = ({course}) => { // state
                             <br/>
 
                             <label htmlFor="courseTime">Time</label>
-                            <input type="text" id="courseTime" name="courseTime" value={course.courseTime}/> 
+                            <input type="text" id="courseTime" name="courseTime" value={courseTime} onChange={handleCourseTimeChange} /> 
                             <br/>
                             
                             <label htmlFor="courseLocation">Location</label>
-                            <input type="text" id="courseLocation" name="courseLocation" value={course.courseLocation}/>
+                            <input type="text" id="courseLocation" name="courseLocation" value={courseLocation} onChange={handleCourseLocationChange}/>
                             <br/>
 
                             <label htmlFor="instructor">Instructor</label>
-                            <input type="text" id="instructor" name="instructor" value={course.instructor}/>
+                            <input type="text" id="instructor" name="instructor" value={instructor} onChange={handleInstructorChange}/>
                             <br/>
 
                             <label htmlFor="department">Department</label>
-                            <input type="text" id="department" name="department" value={course.department}/>
+                            <input type="text" id="department" name="department" value={department} onChange={handleDepartmentChange}/>
                             <br/>
 
                             <label htmlFor="courseCapacity">Capacity</label>
-                            <input type="text" id="courseCapacity" name="courseCapacity" value={course.courseLocation}/>
+                            <input type="text" id="courseCapacity" name="courseCapacity" value={courseLocation} onChange={handleCourseCapacityChange}/>
                             <br/>
 
                             <label htmlFor="prerequisiteCourseID">Pre-requisite Course(s)</label>
-                            <input type="text" id="prerequisiteCourseID" name="prerequisiteCourseID" value={changeSlash(course.prerequisiteCourseID)}/>
+                            <input type="text" id="prerequisiteCourseID" name="prerequisiteCourseID" value={prerequisiteCourseID} onChange={handlePrerequisiteCourseIDChange}/>
                             <br/>
 
                             <label htmlFor="forbiddenCourseID">Forbidden Course(s)</label>
-                            <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={changeSlash(course.forbiddenCourseID)}/>
+                            <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={forbiddenCourseID} onChange ={handleForbidenCourseIDChange}/>
                             <br/>
 
                             <label htmlFor="credit">Credit</label>
-                            <input type="text" id="credit" name="credit" value={course.credit}/>
+                            <input type="text" id="credit" name="credit" value={credit} onChange={handleCreditChange}/>
                             <br/>
 
                             <label htmlFor="outline">Outline</label>
-                            <input type="text" id="outline" name="outline" value={course.outline}/>
+                            <input type="text" id="outline" name="outline" value={outline} onChange={handleOutlineChange}/>
                             <br/>
                         </div>
 {/* Right side of the form - Tutorial */}
@@ -398,31 +400,31 @@ const CourseForm = ({course}) => { // state
                         <h3>Tutorial 
                             <select name="tutNo" id="tutNo" onChange={handleTutorialIndexChange}>
                             {tutorialFormNumber && tutorialFormNumber.map((number, idx) => (
-                                <option value="" key={idx}>{number+1}</option>
+                                <option value="tutNo" key={idx}> {number+1} </option>
                             ))}
                             {/* <option value={0}>1</option>  
                             <option value={1}>2</option>
                             <option value={2}>3</option> */}
                             </select> 
                         </h3>
-                            <label htmlFor="tutid">Tutorial ID</label>
-                            <input type="text" id="tutid" name="tutid" value={tutorialID}/>
+                            <label htmlFor="tutorialID">Tutorial ID</label>
+                            <input type="text" id="tutorialID" name="tutorialID" value={tutorialID} onChange={handleTutorialIDChange}/>
                             <br/>
 
-                            <label htmlFor="tuttime">Time</label>
-                            <input type="text" id="tuttime" name="tuttime"/>
+                            <label htmlFor="tutorialTime">Time</label>
+                            <input type="text" id="tutorialTime" name="tutorialTime" value={tutorialTime} onChange={handleTutorialTimeChange}/>
                             <br/>
                             
-                            <label htmlFor="tutloc">Location</label>
-                            <input type="text" id="tutloc" name="tutloc"/>
+                            <label htmlFor="tutoriaLocation">Location</label>
+                            <input type="text" id="tutoriaLocation" name="tutoriaLocation" value={tutorialLocation} onChange={handleTutorialLocationChange}/>
                             <br/>
 
                             <label htmlFor="tutor">Tutor</label>
-                            <input type="text" id="tutor" name="tutor"/>
+                            <input type="text" id="tutor" name="tutor" value={tutor} onChange={handleTutorChange}/>
                             <br/>
 
-                            <label htmlFor="tutcap">Capacity</label>
-                            <input type="text" id="tutcap" name="tutcap"/>
+                            <label htmlFor="tutorialCapacity">Capacity</label>
+                            <input type="text" id="tutorialCapacity" name="tutorialCapacity" value={tutorialCapacity} onChange={handleTutorialCapacityChange}/>
                             <br/>
                         {/* <input type="submit" class="btn1" value="Add/Update" />
                         <input type="submit" class="btn2" value="Clear" /> */}
@@ -439,11 +441,41 @@ const CourseForm = ({course}) => { // state
     )
 }
 
-const changeSlash = (courseArray) =>{
-    if (courseArray === "")
-        return "/";
-    return courseArray;
-}
+// const changeSlash = (courseArray) =>{
+//     if (courseArray === "")
+//         return "/";
+//     return courseArray;
+// }
+
+const CommentTable = ({comment}) =>{
+    
+    return(
+               <tr>
+                   <td> {comment}</td>
+               </tr>  
+    )
+   }
+   const CommentSection = ({course}) =>{
+       return(
+           <div id="comment-section">
+               <h3> Comment</h3>
+               <div id="comment-table">
+                   <table>
+                       <tbody>
+                           <tr>
+                               <th> Comment</th>
+                           </tr>
+   
+                           {course.comment && course.comment.map((comment,idx)=>(
+                               <CommentTable comment={comment} key ={idx}/>
+                           ))}
+                       </tbody>
+                   </table>
+               </div>
+           </div>
+           
+       )
+   }
 
 
 export default CoursePanel

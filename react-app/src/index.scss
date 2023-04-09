@@ -949,7 +949,7 @@ table{
     }
     #table-container {
       flex: 1;
-      max-height: 70vh;
+      max-height: 50vh;
       overflow-y:scroll;
       #course-table {
         border: 2px solid #A7D094;
@@ -1015,16 +1015,21 @@ table{
   }
 
   #courseForm{
-    display: flex; // grid 
+    display: flex;
     height: 50%;
     width:100%;
     position: relative;
     form {
       display: flex;
+      flex-direction: row;
       width: 100%;
     }
     input {
-      width: 80%;
+      display: grid;
+      display: inline;
+      grid-template-columns: 20% 80%;
+      width: 100%;
+      // width: 80%;
     }
     .btn1{
       margin-left: 20px;
