@@ -135,7 +135,12 @@ const Icon = () => {
             })
         })
         .then(res => res.json())
-        .then(json => console.log(json));
+        .then(json => {
+            console.log(json)
+            if(json.success){
+                window.location.reload()
+            }
+        });
     };
     
     return (
