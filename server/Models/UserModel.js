@@ -8,7 +8,8 @@ const userSchema = mongoose.Schema({
     maxCredit: { type: Number },
     enrolledCourse: { type: Object },
     completedCourse: { type: Object }, //stores the completed course ID, 
-    shoppingCartCourse: { type: Object }
+    shoppingCartCourse: { type: Object },
+    icon: { type: Number }
 });
 
 const User = mongoose.model('User', userSchema);
