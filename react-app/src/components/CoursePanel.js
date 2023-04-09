@@ -324,6 +324,7 @@ const CourseForm = ({course}) => { // state
         setComment(course.comment)
         setTutorialInfo(course.tutorialInfo)
         if (!course.tutorialInfo) return
+        setTutorialIndex(course.tutorialInfo.length? 0: null)
         setTutorialFormNubmer([...new Array(course.tutorialInfo.length).keys()])
     }, [course])
 
@@ -332,7 +333,7 @@ const CourseForm = ({course}) => { // state
     }, [tutorialFormNumber])
 
     useEffect(() => {
-        if (!course.tutorialInfo) return
+        if (!course.tutorialInfo || !course.tutorialInfo[Number(tutorialIndex)]) return
         setTutorialID(course.tutorialInfo[Number(tutorialIndex)].tutorialID)
         setTutorialTime(course.tutorialInfo[Number(tutorialIndex)].tutorialTime)
         setTutorialLocation(course.tutorialInfo[Number(tutorialIndex)].tutorialLocation)
@@ -398,9 +399,9 @@ const CourseForm = ({course}) => { // state
 {/* Right side of the form - Tutorial */}
                         <div className="column" id="right">
                         <h3>Tutorial 
-                            <select name="tutNo" id="tutNo" onChange={handleTutorialIndexChange}>
+                            <select name="tutNo" id="tutNo" onChange={handleTutorialIndexChange} value={String(tutorialIndex)} >
                             {tutorialFormNumber && tutorialFormNumber.map((number, idx) => (
-                                <option value="tutNo" key={idx}> {number+1} </option>
+                                <option value={number} key={idx}> {number+1} </option>
                             ))}
                             {/* <option value={0}>1</option>  
                             <option value={1}>2</option>
