@@ -56,7 +56,8 @@ router.post('/signup', (req, res) => {
                     maxCredit: 18,
                     enrolledCourse: [],
                     completedCourse: [],
-                    shoppingCartCourse: []
+                    shoppingCartCourse: [],
+                    icon: 1
                 })
                 .then(() => {
                     res.cookie('jwt', createToken(username))
