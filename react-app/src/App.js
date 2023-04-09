@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <div>empty</div>
+        element: <Homepage />
       },
       {
         path: '/course',
@@ -31,10 +31,6 @@ const router = createBrowserRouter([
       {
         path: '/course/:courseID',
         element: <CourseInfo />
-      },
-      {
-        path: '/homepage',
-        element: <Homepage />
       },
       {
         path: '/profile',
