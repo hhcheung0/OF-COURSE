@@ -935,6 +935,7 @@ table{
       flex-direction: row;
       align-items: center;
       justify-content: center;
+      width: 100%;
       div {
         font-size: 1.4em;
         margin: 0 1vw;
@@ -1014,7 +1015,7 @@ table{
   }
 
   #courseForm{
-    display: flex;
+    display: flex; // grid 
     height: 50%;
     width:100%;
     position: relative;
