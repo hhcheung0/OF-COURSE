@@ -15,7 +15,8 @@ const Admin = () => {
 //     // const [user, setUser] = useState("");    // const [enrolledCourseID] = useState("");
 //     // // const [shoppingCartCourseID] = useState("");
 //     // // const [passedCourseID] = useState(""); // Completed Courses
-    const [activeTab, setActiveTab] = useState("userPanelTab");
+    // const [activeTab, setActiveTab] = useState("userPanelTab");
+    const [activeTab, setActiveTab] = useState("coursePanelTab");
     
     return (
     <div id="full-page-tab">
