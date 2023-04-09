@@ -39,4 +39,15 @@ router.get('/data/user/:userID', (req, res) => {
     .catch(error => res.json({error}))
 })
 
+router.put('/data/user/changeIcon', (req, res) => {
+    const username = verifyToken(req.cookies.jwt)
+    const {icon} = req.body;
+
+    User.updateOne({username},{$set: {"icon" : icon}})
+    .then(result => {
+        console.log(result)
+    })
+    .catch(error => res.json({error}))
+})
+
 module.exports = router

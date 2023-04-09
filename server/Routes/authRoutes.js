@@ -81,4 +81,37 @@ router.post('/logout', (req, res) => {
     res.json({success: true})
 })
 
+router.put('/changePW', (req, res) => {
+    const { username, currentPW, newPW } = req.body;
+
+    User.findOne({ username })
+    .then(user => {
+        if(!user){
+            return res.status(400).send({success: false, error: 'User does not exist!' })
+        }
+        bcrypt.compare(currentPW, user.password, (err, result) => {
+            if (err) res.send(err);
+            else {
+                if (result) {
+                    bcrypt.hash(newPW, 10)
+                    .then(hashedPassword => {
+                        User.updateOne({username},{"password" : hashedPassword})
+                        .then(result => {
+                            //console.log(result)
+                            return res.status(200).send({success: true, error: "Your password has been changed."}) 
+                        })
+                        .catch(error => res.json({error}))
+                    })
+                }else {
+                    return res.status(401).send({success: false, error: "Your current password is not matched with what you typed."}) 
+                }
+            }
+        })
+    })
+    .catch(error => {
+        console.error(error);
+        res.send({success: false, error: 'Error login' });
+    })
+})
+
 module.exports = router

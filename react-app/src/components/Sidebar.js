@@ -8,6 +8,7 @@ import useUser from '../hooks/useUser'
 const Sidebar = () => {
     const [isHidden, setIsHidden] = useState(true)
     const [accessRight, setAccessRight] = useState(false)
+    const [iconFileName, setIconFileName] = useState('')
     const [username, setUsername] = useState('')
     const { getUserByToken } = useUser()
 
@@ -26,9 +27,31 @@ const Sidebar = () => {
     }
 
     useEffect(() => {
-        const { accessRight, username } = getUserByToken()
+        const { accessRight, username, icon } = getUserByToken()
         setAccessRight(accessRight)
         setUsername(username)
+        switch(icon){
+            case 1: setIconFileName("/nekko.jpg")
+            break;
+            case 2: setIconFileName("/bibi.jpg")
+            break;
+            case 3: setIconFileName("/man.jpg")
+            break;
+            case 4: setIconFileName("/mario.jpg")
+            break;
+            case 5: setIconFileName("/kenji.jpg")
+            break;
+            case 6: setIconFileName("/dragon.jpg")
+            break;
+            case 7: setIconFileName("/ghost.jpg")
+            break;
+            case 8: setIconFileName("/mushroom.jpg")
+            break;
+            case 9: setIconFileName("/turtle.jpg")
+            break;
+            case 10: setIconFileName("/kingkong.jpg")
+            break;
+        }
     }, [getUserByToken])
 
     return (
@@ -37,8 +60,8 @@ const Sidebar = () => {
                 {isHidden? <HiOutlineMenu />: <HiOutlineArrowNarrowLeft />}
             </button>
             <div id="sidebar-content" style={{display: isHidden? 'none': 'flex'}}>
-                <div id="profile-section">
-                    <img id="icon" src="/nekko.jpg" alt="" />
+                <div id="profile-section" onClick={() => window.location.assign('/profile')}>
+                    <img id="icon" src={iconFileName} alt="" />
                     <div>{username}</div>
                 </div>
                 <div id="nav-section">
