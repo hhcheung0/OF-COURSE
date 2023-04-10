@@ -71,19 +71,19 @@ const Password = () => {
             <form onSubmit={changePassword}>
                     <label name="currentPW">Current Password:</label>
                     <br />
-                    <input type="text" name="currentPW" value={currentPW} onChange={(e) => setCurrentPW(e.target.value)} required />
+                    <input type="password" name="currentPW" value={currentPW} onChange={(e) => setCurrentPW(e.target.value)} required />
                     
                     <br /><br />
 
                     <label name="newPW">New Password:</label>
                     <br />
-                    <input type="text" name="newPW" value={newPW} onChange={(e) => setNewPW(e.target.value)} required />
+                    <input type="password" name="newPW" value={newPW} onChange={(e) => setNewPW(e.target.value)} required />
 
                     <br /><br />
 
                     <label name="confirmPW">Confirm Password:</label>
                     <br />
-                    <input type="text" name="confirmPW" value={confirmPW} onChange={(e) => setConfirmPW(e.target.value)} required />
+                    <input type="password" name="confirmPW" value={confirmPW} onChange={(e) => setConfirmPW(e.target.value)} required />
 
                     <br /><br />
                     
