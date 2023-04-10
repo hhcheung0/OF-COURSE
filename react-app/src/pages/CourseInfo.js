@@ -5,45 +5,34 @@ import { Link, useNavigate } from "react-router-dom";
 import useCourse from "../hooks/useCourse";
 import useTime from "../hooks/useTime";
 import useUser from "../hooks/useUser";
-
+import useEnroll from "../hooks/useEnroll";
 
 const CourseInfo = () => {
     const [comment, setComment] = useState("");
     const [tutorialID, setTutorialID] = useState("");
-    const [errorMessage, setErrorMessage] = useState('');
     const [username, setUsername] = useState(' ');
+    const {addToCart} = useEnroll();
     const navigate = useNavigate();
 
     //get course info from database
     const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
     const { getUserByToken } = useUser()
 
-    //console.log(course);
-    useEffect(() => {
-        const { username } = getUserByToken()
-        setUsername(username)
-    }, [getUserByToken])
 
-    const handleSubmit= (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();
         const formID = e.target.id;
         console.log(formID);
         if (formID === "course-info"){
-            fetch('http://localhost:3001/data/addtocart', {
-                method: 'PUT',
-                credentials: 'include',
-                headers: {'Content-type' : 'application/json'},
-                body: JSON.stringify({
-                    courseID: course.courseID,
-                    tutorialID: tutorialID,
-                    username: username, 
-                })
-            })
-            .then(res => res.json())
-            .then(json => {
+            if((tutorialID === "") && (course.tutorialInfo.length === 0)){
+                alert("Please select a valid tutorial");
+                return;
+            }
+            await addToCart(course.courseID, tutorialID)
+            .then(response => {
 
             })
-            .catch(err => console.error(err));
+
         }
         else if (formID === "comment-info"){
 
@@ -119,7 +108,7 @@ const CourseInfo = () => {
     
         return(
             <div id = "button-placement" style={{marginTop : "145px"}}>
-            <input type="radio" id={tutorial.tutorialID} name="tutorial" value={tutorialID} onChange={(e) => setTutorialID(e.target.value)}/>
+            <input type="radio" id={tutorial.tutorialID} name="tutorial" value={tutorialID} onChange={(e) => setTutorialID(e.target.value)} checked/>
             </div>
             
         )
