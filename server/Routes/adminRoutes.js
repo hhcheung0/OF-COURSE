@@ -5,17 +5,19 @@ const router = Router();
 const Course = require('../Models/CourseModel')
 const User = require('../Models/UserModel')
 
+// require tools
+const { adminCheck } = require('../Tools/authTools')
 
 // USER
 
 // get an array of all users
-router.get('/admin/user', (req, res) => {
+router.get('/admin/user', adminCheck, (req, res) => {
     User.find().sort('userID')
     .then(userArray => {
-        if (!userArray) return res.json({error: 'User array is empty'})
-        return res.json(userArray)
+        if (!userArray) return res.json({success: false, error: 'User array is empty'})
+        return res.json({success: true, userArray})
     })
-    .catch(error => res.json(error))
+    .catch(error => res.json({error}))
 });
 // get a specific user
 router.get('/admin/user/:userID', (req, res) => {
