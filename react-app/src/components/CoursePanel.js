@@ -147,7 +147,10 @@ const CoursePanel = () => {
             <div className="row">
                 <div className="column">
 {/* courseComment */}
-                    <table id="courseComment">
+                    <div id="courseCommentSection">
+                    <CourseCommentSection course={course} />
+                    </div>
+                    {/* <table id="courseComment">
                         <thead>
                             <tr>
                                 <th></th>
@@ -168,7 +171,7 @@ const CoursePanel = () => {
                                 <td><button id="deleteUser">🗑Delete</button></td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> */}
                 </div>
 {/* courseCommentAdd */}
                 <div className="column" id="courseCommentAdd">
@@ -275,7 +278,7 @@ const CourseForm = ({course}) => { // state
     const [ outline, setOutline ] = useState({});
     const [ tutorialInfo, setTutorialInfo ] = useState([]);
 
-    const [ comment, setComment ] = useState([]);
+    // const [ comment, setComment ] = useState([]);
 
     const [ tutorialID, setTutorialID ] = useState('');
     const [ tutorialTime, setTutorialTime ] = useState('');
@@ -302,13 +305,35 @@ const CourseForm = ({course}) => { // state
     const handleTutorialInfoChange = (e) => {console.log(e.target.id); setTutorialInfo(e.target.value); }
 
 
-    const handleCommentChange = (e) => {console.log(e.target.id); setComment(e.target.value); }
+    // const handleCommentChange = (e) => {console.log(e.target.id); setComment(e.target.value); }
 
     const handleTutorialIDChange = (e) => {console.log(e.target.id); setTutorialID(e.target.value); }
     const handleTutorialTimeChange = (e) => {console.log(e.target.id); setTutorialTime(e.target.value); }
     const handleTutorialLocationChange = (e) => {console.log(e.target.id); setTutorialLocation(e.target.value); }
     const handleTutorChange = (e) => {console.log(e.target.id); setTutor(e.target.value); }
     const handleTutorialCapacityChange = (e) => {console.log(e.target.id); setTutorialCapacity(e.target.value); }
+
+    const handleClear = (e) => {
+        e.preventDefault()
+
+        setCourseID('')
+        setCourseName('')
+        setCourseTime([])
+        setCourseLocation('')
+        setInstructor('')
+        setDepartment('')
+        setCourseCapacity('')
+        setPrerequisiteCourseID([])
+        setForbiddenCourseID([])
+        setCredit('')
+        setOutline('')
+        setTutorialID('')
+        setTutorialTime('')
+        setTutorialLocation('')
+        setTutor('')
+        setTutorialCapacity('')
+        console.log(outline)
+    }
 
     useEffect(() => {
         setCourseID(course.courseID)
@@ -322,7 +347,7 @@ const CourseForm = ({course}) => { // state
         setForbiddenCourseID(course.forbiddenCourseID)
         setCredit(course.credit)
         setOutline(course.outline)
-        setComment(course.comment)
+        // setComment(course.comment)
         setTutorialInfo(course.tutorialInfo)
         if (!course.tutorialInfo) return
         setTutorialIndex(course.tutorialInfo.length? 0: null)
@@ -357,7 +382,7 @@ const CourseForm = ({course}) => { // state
     return(
         <>
         {/* {course && */}
-                    <form method="post">
+                    <form>
 {/* Left side of the form - Lecture*/}
                         <div className="column" id="left">
                         <h3>Lecture</h3>
@@ -386,7 +411,7 @@ const CourseForm = ({course}) => { // state
                             <br/>
 
                             <label htmlFor="courseCapacity">Capacity</label>
-                            <input type="text" id="courseCapacity" name="courseCapacity" value={courseLocation} onChange={handleCourseCapacityChange}/>
+                            <input type="text" id="courseCapacity" name="courseCapacity" value={courseCapacity} onChange={handleCourseCapacityChange}/>
                             <br/>
 
                             <label htmlFor="prerequisiteCourseID">Pre-requisite Course(s)</label>
@@ -438,8 +463,10 @@ const CourseForm = ({course}) => { // state
                             <br/>
                         {/* <input type="submit" class="btn1" value="Add/Update" />
                         <input type="submit" class="btn2" value="Clear" /> */}
-                        <button className="btn1">Add/Update</button>
-                        <button className="btn2">Clear</button>
+                        
+                        <button className="btn1"> Add/Update</button>
+                        {/* <p>    </p> */}
+                        <button className="btn2" onClick={handleClear}>Clear</button>
 
                         </div>
                         <br/>
@@ -450,42 +477,49 @@ const CourseForm = ({course}) => { // state
         </>
     )
 }
-
 // const changeSlash = (courseArray) =>{
 //     if (courseArray === "")
 //         return "/";
 //     return courseArray;
 // }
-
-const CommentTable = ({comment}) =>{
+const CourseCommentTable = ({comment}) =>{
     
     return(
                <tr>
-                   <td> {comment}</td>
-               </tr>  
+                    <td>{comment}</td>
+                    <td><button id="deleteUser">🗑Delete</button></td>
+               </tr>
     )
    }
-   const CommentSection = ({course}) =>{
-       return(
-           <div id="comment-section">
-               <h3> Comment</h3>
-               <div id="comment-table">
-                   <table>
-                       <tbody>
-                           <tr>
-                               <th> Comment</th>
-                           </tr>
-   
-                           {course.comment && course.comment.map((comment,idx)=>(
-                               <CommentTable comment={comment} key ={idx}/>
-                           ))}
-                       </tbody>
-                   </table>
-               </div>
-           </div>
-           
-       )
-   }
+const CourseCommentSection = ({course}) =>{
+    const [ comment, setComment ] = useState(['']);
+    const handleCommentChange = (e) => {console.log(e.target.id); setComment(e.target.value); }
 
+    useEffect(() => {
+        setComment(course.comment)
+    }, [course])
+
+    // <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={forbiddenCourseID} onChange ={handleForbidenCourseIDChange}/>
+
+    return(
+        <div id="courseCommentSection">
+            <table id="courseComment">
+                <thead>
+                    <tr>
+                        <th>Comment</th>
+                        <th></th>
+                    </tr>
+
+                    {course.comment && course.comment.map((comment,idx)=>(
+                        <CourseCommentTable comment={comment} key ={idx}/>
+                    ))}
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    )
+}
 
 export default CoursePanel

@@ -1,10 +1,16 @@
 // ADMIN PAGE
+import React, { useState, useEffect} from "react";
+import { BrowserRouter, Route, Routes, Link, useLocation, useNavigate } from "react-router-dom";
 
-// import { useState, useEffect } from 'react'
-// import { BrowserRouter, Route, Routes, Link, useLocation, useNavigate} from "react-router-dom";
+// import custom hooks
+import useCourse from '../hooks/useCourse'
+import useTime from '../hooks/useTime'
+import useConstant from '../hooks/useConstant'
+import useUser from "../hooks/useUser";
 
 
 const UserPanel = () => {
+
     return (
         <div id="admin-user">
         <div className="row">
@@ -82,12 +88,13 @@ const UserPanel = () => {
 {/* Right-side of the userPanel */}
 {/* admin-userRight */}
             <div className="column" id="admin-userRight">
-                    <h3>Username: Mary</h3>
+                    <User />
 {/* userCourseTable */}
                     <div id="userCourseTable" className="container">
-                        <h3>Enrolled Courses</h3>
+                        <UserCourseTable />
+                        {/* <h3>Enrolled Courses</h3> */}
 {/* userCourseTable-enrolled */}
-                        <table id='userCourseTable-enrolled'>
+                        {/* <table id='userCourseTable-enrolled'>
                             <thead>
                                 <tr>
                                     <th>Course ID</th>
@@ -113,9 +120,9 @@ const UserPanel = () => {
                         </table>
                         <br></br>
 
-                        <h3>Shopping Cart</h3>
+                        <h3>Shopping Cart</h3> */}
 {/* userCourseTable-shoppingCart */}
-                        <table id='userCourseTable-shoppingCart'>
+                        {/* <table id='userCourseTable-shoppingCart'>
                             <thead>
                                 <tr>
                                     <th>Course ID</th>
@@ -139,12 +146,12 @@ const UserPanel = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <br></br>
+                        <br></br> */}
 
 
-                        <h3>Completed Courses</h3>
+                        {/* <h3>Completed Courses</h3> */}
 {/* userCourseTable-completed */}
-                        <table id='userCourseTable-completed'>
+                        {/* <table id='userCourseTable-completed'>
                             <thead>
                                 <tr>
                                     <th>Course ID</th>
@@ -173,7 +180,7 @@ const UserPanel = () => {
                                     <td><button id="deleteCourse">🗑Delete</button></td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table> */}
                         <br></br>
 
 {/* addCourseCategory */}
@@ -218,6 +225,129 @@ const UserPanel = () => {
         </div>
         </div>
     );
+}
+
+const User = () => {
+    const [username, setUsername] = useState('')
+    const { getUserByToken } = useUser()
+
+    useEffect(() => {
+        const { username } = getUserByToken()
+        setUsername(username)
+    }, [getUserByToken])
+
+    return(
+        <h3>Username: {username}</h3>   
+    )
+}
+
+const UserCourseTable = () => {
+    const [ enrolledCourse, setEnrolledCourse ] = useState([])
+    const [ completedCourse, setCompletedCourse ] = useState([])
+    const [ shoppingCartCourse, setShoppingCartCourse] = useState([])
+    const { getUserByToken } = useUser()
+
+    // const [ courseName, setCourseName ] = useState('');
+    // const [ credit, setCredit ] = useState();
+
+    const handleEnrolledCourseChange = (e) => { console.log(e.target.id); setEnrolledCourse(e.target.value); }
+    const handleCompletedCourse = (e) => { console.log(e.target.id); setCompletedCourse(e.target.value); }
+    const handleShoppingCartCoure = (e) => { console.log(e.target.id); setShoppingCartCourse(e.target.value); }
+
+    // const handleCourseNameChange = (e) => { console.log(e.target.id); setCourseName(e.target.value); }
+    // const handleCreditChange = (e) => {console.log(e.target.id); setCredit(e.target.value); }
+
+    useEffect(() => {
+        const { enrolledCourse, completedCourse, shoppingCartCourse } = getUserByToken()
+        setEnrolledCourse(enrolledCourse)
+        setCompletedCourse(completedCourse)
+        setShoppingCartCourse(shoppingCartCourse)
+    }, [getUserByToken])
+    
+    return(
+        <>
+            <h3>Enrolled Courses</h3>
+{/* userCourseTable-enrolled */}
+                <table id='userCourseTable-enrolled'>
+                    <thead>
+                        <tr>
+                            <th>Course ID</th>
+                            <th>Course Name</th>
+                            <th>Credit</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {/* {enrolledCourse.map((enrolledCourseInfo, idx) =>(
+                            <>
+                            <tr>
+                            <td>{enrolledCourseInfo.courseID}</td>
+                            <td>Applications of Biology</td>
+                            <td>3</td>
+                            <td><button id="deleteCourse">🗑Delete</button></td>
+                            </tr>
+                            </>
+                            ))} */}
+                    </tbody>
+                </table>
+                <br></br>
+
+                <h3>Shopping Cart</h3>
+{/* userCourseTable-shoppingCart */}
+                <table id='userCourseTable-shoppingCart'>
+                    <thead>
+                        <tr>
+                            <th>Course ID</th>
+                            <th>Course Name</th>
+                            <th>Credit</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {/* {shoppingCartCourse.map((shoppingCartCourseInfo, idx) =>(
+                            <>
+                            <tr>
+                            <td>{shoppingCartCourseInfo.courseID}</td>
+                            <td>Applications of Biology</td>
+                            <td>3</td>
+                            <td><button id="deleteCourse">🗑Delete</button></td>
+                            </tr>
+                            </>
+                            ))} */}
+                    </tbody>
+                </table>
+                <br></br>
+
+
+                <h3>Completed Courses</h3>
+{/* userCourseTable-completed */}
+                <table id='userCourseTable-completed'>
+                    <thead>
+                        <tr>
+                            <th>Course ID</th>
+                            <th>Course Name</th>
+                            <th>Credit</th>
+                            <th>Grade</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {/* {completedCourse.map((completedCourseInfo, idx) =>(
+                            <>
+                            <tr>
+                            <td>{completedCourseInfo.courseID}</td>
+                            <td>Applications of Biology</td>
+                            <td>3</td>
+                            <td>{completedCourseInfo.grade}</td>
+                            <td><button id="deleteCourse">🗑Delete</button></td>
+                            </tr>
+                            </>
+                            ))} */}
+                    </tbody>
+                </table>
+        </>
+    )
+    
 }
 
 export default UserPanel

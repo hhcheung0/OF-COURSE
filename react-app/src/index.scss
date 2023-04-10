@@ -924,6 +924,11 @@ table{
       color: white;
     }
   }
+  // #courseCommentTable{
+  //   td {
+  //     color: black;
+  //   }
+  // }
 
   #table-panel {
     flex: 1;
@@ -982,7 +987,7 @@ table{
         }
       }
     }
-
+  }
     
   // table {
   //   border: 2px solid #A7D094;
@@ -1010,10 +1015,14 @@ table{
   //       }
   //     }
   //   }
-
-
+  #courseCommentSection{
+    table{
+      td{
+        color: black;
+      }
+    }
   }
-
+  
   #courseForm{
     display: flex;
     height: 50%;
