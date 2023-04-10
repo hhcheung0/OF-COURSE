@@ -97,10 +97,10 @@ const UserPanel = () => {
 {/* Right-side of the userPanel */}
 {/* admin-userRight */}
             <div className="column" id="admin-userRight">
-                    <User />
+                    <User user={user}/>
 {/* userCourseTable */}
                     <div id="userCourseTable" className="container">
-                        <UserCourseTable />
+                        <UserCourseTable user={user}/>
                         {/* <h3>Enrolled Courses</h3> */}
 {/* userCourseTable-enrolled */}
                         {/* <table id='userCourseTable-enrolled'>
@@ -279,14 +279,12 @@ const UserTableRow = ({user, controller}) => {
 }
 
 
-const User = () => {
+const User = ({user}) => {
     const [username, setUsername] = useState('')
-    const { getUserByToken } = useUser()
 
     useEffect(() => {
-        const { username } = getUserByToken()
-        setUsername(username)
-    }, [getUserByToken])
+        setUsername(user.username)
+    }, [username, user])
 
     return(
         <h3>Username: {username}</h3>   
