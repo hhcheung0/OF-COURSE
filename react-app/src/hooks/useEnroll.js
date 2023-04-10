@@ -108,12 +108,26 @@ const useEnroll = () => {
         })
     }
 
+    const removeFromCompletedCourse = (courseID) => {
+        fetch('http://localhost:3001/completedCourse/remove', {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify({
+                courseID: courseID,
+            })
+        })
+        .then(res => res.json())
+        .then(json => console.log(json));
+    }
+
     return {
         addToCart,
         removeFromCart,
         enroll,
         drop,
-        swap
+        swap,
+        removeFromCompletedCourse
     }
 }
 

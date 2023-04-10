@@ -51,4 +51,27 @@ router.put('/data/user/changeIcon', (req, res) => {
     .catch(error => res.json({error}))
 })
 
+router.put('/completedCourse/remove', (req,res)=>{
+    const {courseID} = req.body;
+    const username = verifyToken(req.cookies.jwt)
+
+    User.findOne({username})
+    .then(user => {
+        const found = user.completedCourse.some(el => el.courseID === courseID)
+        if(!found){
+            return res.status(400).send({success: false, error: "Course not found in your completedCourse"})
+        }else{
+            User.updateOne(
+                {username},
+                {$pull : {completedCourse : {courseID : courseID}}}
+            )
+            .then(() => {
+                res.send({success: true, error: 'Course removed from completed Course'})
+            })
+            .catch(error => res.json(error))
+        }
+    })
+    .catch(error => res.json({error}))
+})
+
 module.exports = router

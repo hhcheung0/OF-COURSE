@@ -1,12 +1,14 @@
 // ADMIN PAGE
 import React, { useState, useEffect} from "react";
 import { BrowserRouter, Route, Routes, Link, useLocation, useNavigate } from "react-router-dom";
+import { BsTrash3} from 'react-icons/bs';
 
 // import custom hooks
 import useCourse from '../hooks/useCourse'
 import useTime from '../hooks/useTime'
 import useConstant from '../hooks/useConstant'
 import useUser from "../hooks/useUser";
+import useEnroll from "../hooks/useEnroll";
 
 
 const UserPanel = () => {
@@ -278,16 +280,9 @@ const UserCourseTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                            {/* {enrolledCourse.map((enrolledCourseInfo, idx) =>(
-                            <>
-                            <tr>
-                            <td>{enrolledCourseInfo.courseID}</td>
-                            <td>Applications of Biology</td>
-                            <td>3</td>
-                            <td><button id="deleteCourse">🗑Delete</button></td>
-                            </tr>
-                            </>
-                            ))} */}
+                    {enrolledCourse && enrolledCourse.map((enrolled, idx) => (
+                        <EnrolledTableRow enrolledCourse={enrolled.courseID} enrolledTutorial={enrolled.tutorialID} key={idx}/>
+                    ))}
                     </tbody>
                 </table>
                 <br></br>
@@ -304,16 +299,13 @@ const UserCourseTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                            {/* {shoppingCartCourse.map((shoppingCartCourseInfo, idx) =>(
-                            <>
-                            <tr>
-                            <td>{shoppingCartCourseInfo.courseID}</td>
-                            <td>Applications of Biology</td>
-                            <td>3</td>
-                            <td><button id="deleteCourse">🗑Delete</button></td>
-                            </tr>
-                            </>
-                            ))} */}
+                    {shoppingCartCourse && shoppingCartCourse.map((shoppingCart, idx) => (
+                        <ShoppingCartTableRow 
+                            shoppingCartCourse={shoppingCart.courseID} 
+                            shoppingCartTutorial={shoppingCart.tutorialID} 
+                            key={idx}
+                        />
+                    ))}
                     </tbody>
                 </table>
                 <br></br>
@@ -332,22 +324,89 @@ const UserCourseTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                            {/* {completedCourse.map((completedCourseInfo, idx) =>(
-                            <>
-                            <tr>
-                            <td>{completedCourseInfo.courseID}</td>
-                            <td>Applications of Biology</td>
-                            <td>3</td>
-                            <td>{completedCourseInfo.grade}</td>
-                            <td><button id="deleteCourse">🗑Delete</button></td>
-                            </tr>
-                            </>
-                            ))} */}
+                    {completedCourse && completedCourse.map((completed, idx) => (
+                        <CompletedTableRow completedCourse={completed.courseID} completedGrade={completed.grade} key={idx}/>
+                    ))}
                     </tbody>
                 </table>
         </>
     )
     
+}
+
+const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
+    const { course } = useCourse(enrolledCourse);
+    const { drop } = useEnroll()
+    const [dropTutorial, setDropTutorial] = useState('')
+
+    useEffect(() => { 
+        setDropTutorial(enrolledTutorial); 
+    }, [enrolledTutorial]); 
+
+    return(
+        <>
+            {course && 
+                <tr>
+                    <td>{course.courseID}</td>
+                    <td>{course.courseName}</td>
+                    <td>{course.credit}</td>
+                    <td><button onClick={() => {drop(course.courseID, dropTutorial); window.location.reload()}}><BsTrash3 /> Drop</button></td>
+                </tr>
+            }
+        </>
+    )
+}
+
+const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
+    const { parseTimecodeArray } = useTime()
+    const { course } = useCourse(shoppingCartCourse);
+    const { removeFromCart } = useEnroll()
+    //console.log(course)
+    //console.log(shoppingCartTutorial)
+
+    return(
+        <>
+            {course && 
+                <tr>
+                    <td>{course.courseID}</td>
+                    <td>{course.courseName}</td>
+                    <td>{course.credit}</td>
+                    <td><button onClick={() => {removeFromCart(course.courseID); window.location.reload()}}><BsTrash3 /> Delete</button></td>
+                </tr>
+            }
+        </>
+    )
+}
+
+const gpaToGrade = {
+    4.3: 'A+', 4.0: 'A', 3.7: 'A-',
+    3.3: 'B+', 3.0: 'B', 2.7: 'B-',
+    2.3: 'C+', 2.0: 'C', 1.7: 'C-', 
+    1.0: 'D', 0.0: 'F'
+};
+
+const CompletedTableRow = ({completedCourse, completedGrade}) => {
+    const { course } = useCourse(completedCourse)
+    const { removeFromCompletedCourse } = useEnroll()
+    //console.log(course)
+
+    const calculateGrade = (gpa) => {
+        return gpaToGrade[gpa] || '';
+    }
+
+    return(
+        <>
+            {course && 
+                <tr>
+                    <td>{course.courseID}</td>
+                    <td>{course.courseName}</td>
+                    <td>{course.credit}</td>
+                    <td>{calculateGrade(completedGrade)}</td>
+                    <td><button onClick={() => {removeFromCompletedCourse(course.courseID); window.location.reload()}}><BsTrash3 /> Delete</button></td>
+                </tr>
+            }
+        </>
+    )
 }
 
 export default UserPanel
