@@ -12,6 +12,9 @@ import useEnroll from "../hooks/useEnroll";
 
 
 const UserPanel = () => {
+    const { getCourse, setSearch } = useCourse();
+    const { parseTimecodeArray } = useTime();
+    const [ course, setCourse ] = useState({});
 
     return (
         <div id="admin-user">
@@ -71,7 +74,7 @@ const UserPanel = () => {
                     <br/>
 
                     <p><label htmlfor="password">Password</label>
-                    <input type="text" id="password" name="password"/></p>
+                    <input type="password" id="password" name="password"/></p>
                     <br/>
 
                     <div id='toggle-button-panel'>
@@ -112,12 +115,6 @@ const UserPanel = () => {
                                     <td>2</td>
                                     <td><button id="deleteCourse">🗑Delete</button></td>
                                 </tr>
-                                <tr>
-                                    <td>BIOL2410</td>
-                                    <td>Applications of Biology</td>
-                                    <td>3</td>
-                                    <td><button id="deleteCourse">🗑Delete</button></td>
-                                </tr>
                             </tbody>
                         </table>
                         <br></br>
@@ -140,12 +137,6 @@ const UserPanel = () => {
                                     <td>3</td>
                                     <td><button id="deleteCourse">🗑Delete</button></td>
                                 </tr>
-                                <tr>
-                                    <td>ARCH2110</td>
-                                    <td>Advanced Architectural studies</td>
-                                    <td>3</td>
-                                    <td><button id="deleteCourse">🗑Delete</button></td>
-                                </tr>
                             </tbody>
                         </table>
                         <br></br> */}
@@ -158,7 +149,6 @@ const UserPanel = () => {
                                 <tr>
                                     <th>Course ID</th>
                                     <th>Course Name</th>
-                                    <th>Semester</th>
                                     <th>Credit</th>
                                     <th>Grade</th>
                                     <th></th>
@@ -168,15 +158,6 @@ const UserPanel = () => {
                                 <tr>
                                     <td>GEOG2350</td>
                                     <td>Recent History of Geography</td>
-                                    <td>2021-2022 Sem 1</td>
-                                    <td>3</td>
-                                    <td>A</td>
-                                    <td><button id="deleteCourse">🗑Delete</button></td>
-                                </tr>
-                                <tr>
-                                    <td>CHEM3860</td>
-                                    <td>Recent History of Chemistry</td>
-                                    <td>2021-2022 Sem 1</td>
                                     <td>3</td>
                                     <td>A</td>
                                     <td><button id="deleteCourse">🗑Delete</button></td>
@@ -187,19 +168,25 @@ const UserPanel = () => {
 
 {/* addCourseCategory */}
                         <div id="addCourseCategory">
-                            <h3>Add Courses</h3>
-                            <select name="addCourseCategory">
-                            <option value="enrolledCourses">Enrolled Courses</option>  
-                            <option value="shoppingCart">Shopping Cart</option>
-                            <option value="passedCourses">Completed Courses</option>
-                            </select> 
-                            <input type="text"></input>
+                            {/* <div> */}
+                                <h3>Add Courses</h3>
+                                    <SearchBar controller={setSearch} />
+                                <select name="addCourseCategory">
+                                    <option value="enrolledCourses">Enrolled Courses</option>  
+                                    <option value="shoppingCart">Shopping Cart</option>
+                                    <option value="passedCourses">Completed Courses</option>
+                                </select> 
+                            {/* </div> */}
+                            <div>
+                                <h5>Completed Course Grade:
+                                    <br></br>
+                                <input type="text"></input></h5>
+                            </div>
                         </div>
-                            <h5>Completed Course Grade:
-                            <input type="text"></input></h5>
                         
 {/* userCourseTable-add */}
-                        <table id='userCourseTable-add'>
+                        <CourseAddTable courseArray={getCourse()} controller={setCourse} /> 
+                        {/* <table id='userCourseTable-add'>
                             <thead>
                                 <tr>
                                     <th>Course ID</th>
@@ -219,8 +206,8 @@ const UserPanel = () => {
                                     <td>20</td>
                                 </tr>
                             </tbody>
-                        </table>
-                        <button id="add-button">Add</button>
+                        </table> */}
+                        {/* <button id="add-button">Add</button> */}
                         {/* <input type="submit" id="submit-button" value="Add" style={{float: "right"}}/> */}
                     </div>  
             </div>
@@ -405,6 +392,76 @@ const CompletedTableRow = ({completedCourse, completedGrade}) => {
                     <td><button onClick={() => {removeFromCompletedCourse(course.courseID); window.location.reload()}}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
+        </>
+    )
+}
+
+
+const SearchBar = (props) => {
+    const [search, setSearch] = useState('')
+    
+    const handleChange = (e) => {
+        props.controller(e.target.value)
+        setSearch(e.target.value)
+    }
+
+    return (
+        <div id='search-bar'>
+            <input
+                type="text"
+                onChange={handleChange}
+                value={search}
+            />
+        </div>
+    )
+}
+
+const CourseAddTable = ({courseArray, controller}) => {
+
+    return (
+        <div className="row" id='table-container'>
+            <table id='userCourseTable-add'>
+                <thead>
+                    <tr>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Capacity</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {courseArray && courseArray.map((course, idx) => (
+                        <CourseAddTableRow course={course} key={idx} controller={controller} />
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+const CourseAddTableRow = ({course, controller}) => {
+    const { parseTimecodeArray } = useTime()
+
+    return (
+        <>
+        {course &&
+            <tr>
+                <td>
+                    {course.courseID}
+                </td>
+                <td>
+                    {course.courseName}
+                </td>
+                <td>{parseTimecodeArray(course.courseTime).map((str, idx) => (
+                    <div key={idx}>{str}</div>))}
+                </td>
+                <td>{course.courseLocation}</td>
+                <td>{course.courseCapacity}</td>
+                <td><button id="addCourse">Add</button></td>
+            </tr>
+        }
         </>
     )
 }

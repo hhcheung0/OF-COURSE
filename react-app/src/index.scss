@@ -839,23 +839,60 @@ table{
   display: flex;
   flex-direction: row;
   div{
-  h3{
-    display:inline;
+    h3{
+      display:inline;
+    }
   }
-  }
-}
-#userCourseTable-add{
-  button{
-    color: white;
-    text-align: center;
-    // display: inline-block;
-    cursor: pointer;
-    justify-content: right;
-    align-items: right;
-    padding: 16px 32px;
-    margin: 4px 2px;
+  #search-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 }
+#table-container {
+    flex: 1;
+    max-height: 30vh;
+    overflow-y:scroll;
+    #userCourseTable-add {
+      border: 2px solid #A7D094;
+      width: 100%;
+      thead {
+        position: sticky;
+        top: 0;
+        th {
+          padding: 0.5em 1em;
+          text-align: center;
+          border: 2px 0 solid #A7D094;
+          background-clip: padding-box;
+        }
+      }
+      tbody {
+        color: black;
+        tr {
+          border: 2px solid #A7D094;
+          text-align: center;
+          td {
+            padding: 0 10px;
+          }
+        }
+      }
+    }
+}
+
+// #userCourseTable-add{
+//   button{
+//     color: white;
+//     text-align: center;
+//     // display: inline-block;
+//     cursor: pointer;
+//     justify-content: right;
+//     align-items: right;
+//     padding: 16px 32px;
+//     margin: 4px 2px;
+//   }
+// }
 #userCourseTable {
   display: flex;
   flex-direction: column;
