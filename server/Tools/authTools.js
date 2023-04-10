@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken')
-
 const jwtSecret = 'csci3100'
+
+// require models
+const User = require('../Models/UserModel')
 
 // accept a string and return a encoded token
 // username should be passed and the encoded token should be store as cookie
@@ -27,4 +29,21 @@ const verifyToken = (token) => {
     }
 }
 
-module.exports = { createToken, verifyToken }
+// middleware for checking admin access right
+const adminCheck = (req, res, next) => {
+    try {
+        const username = verifyToken(req.cookies.jwt)
+        User.findOne({username})
+        .then(user => {
+            if (user.accessRight) next()
+            else {
+                res.send({success: false, error: 'not admin'})
+            }
+        })
+    }
+    catch (error) {
+        return res.json({error})
+    }
+}
+
+module.exports = { createToken, verifyToken, adminCheck }
