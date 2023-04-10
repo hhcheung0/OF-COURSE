@@ -24,16 +24,18 @@ const CourseInfo = () => {
         const formID = e.target.id;
         console.log(formID);
         if (formID === "course-info"){
-            if((tutorialID === "") && (course.tutorialInfo.length === 0)){
+            if((tutorialID === "") && (course.tutorialInfo.length !== 0)){
                 alert("Please select a valid tutorial");
                 return;
             }
             await addToCart(course.courseID, tutorialID)
-            .then(response => {
-
+            .then(response =>{
+                alert(response.error);
             })
-
+            .catch(err => console.log(err))
+                
         }
+
         else if (formID === "comment-info"){
 
         }
@@ -159,10 +161,14 @@ const CourseInfo = () => {
                             <input type="submit" value="Add to Cart"/>
                         </div>
                     </div>
-                    {course.tutorialInfo && course.tutorialInfo.map((tutorial, idx) =>(
-                        <TutorialTable tutorial={tutorial} key ={idx}/>
-                    ))}
-    
+                    {course.tutorialInfo && course.tutorialInfo.length > 0 ? (course.tutorialInfo.map((tutorial, idx) => (
+                        <TutorialTable tutorial={tutorial} key={idx} />
+                    ))) : (
+                    <div>
+                        No tutorial available for this course
+                    </div>
+                    )}
+        
                 
                 </div>
             </>

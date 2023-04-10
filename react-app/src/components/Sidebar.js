@@ -62,7 +62,7 @@ const Sidebar = () => {
             <div id="sidebar-content" style={{display: isHidden? 'none': 'flex'}}>
                 <div id="profile-section" onClick={() => window.location.assign('/profile')}>
                     <img id="icon" src={iconFileName} alt="" />
-                    <div>{username}</div>
+                    <div id="icon">{username}</div>
                 </div>
                 <div id="nav-section">
                     <Link to={'/profile'}>Profile Page</Link>

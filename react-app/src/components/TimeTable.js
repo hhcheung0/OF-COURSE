@@ -36,6 +36,7 @@ const Timetable = ({courseArray}) => {
             })
 
             // write the tutorial time
+            if (tutorialID === null) return
             const tutorial = course.tutorialInfo.find(tutorial => tutorial.tutorialID === tutorialID)
             tutorial.tutorialTime.forEach((timecode) => {
                 // j is the row to change and i is the column to change
