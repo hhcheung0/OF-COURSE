@@ -108,7 +108,7 @@ const CourseInfo = () => {
     
         return(
             <div id = "button-placement" style={{marginTop : "145px"}}>
-            <input type="radio" id={tutorial.tutorialID} name="tutorial" value={tutorialID} onChange={(e) => setTutorialID(e.target.value)} checked/>
+            <input type="radio" id={tutorial.tutorialID} name="tutorial" checked={tutorialID === tutorial.tutorialID} onChange={(e) => setTutorialID(e.target.id)} />
             </div>
             
         )
