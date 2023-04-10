@@ -16,14 +16,31 @@ const useAdmin = () => {
         })
     }, [])
 
+    // returning a searched user array
     const getUserArray = useCallback(() => {
         if (!searchString.length) return userArray
         else return userArray.filter(user => (String(user.userID) === searchString || user.username.toLowerCase().includes(searchString.toLowerCase())))
     }, [userArray, searchString])
 
+    // create an user user: {username: String, password: String, accessRight: Boolean}
+    const createUser = useCallback((user) => {
+        fetch('http://localhost:3001/admin/user', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (!json.success) alert('Unknown error! Please Try again.')
+            else alert('Successfully created user.')
+        })
+    }, [])
+
     return {
         setSearchString,
-        getUserArray
+        getUserArray,
+        createUser
     }
 }
 

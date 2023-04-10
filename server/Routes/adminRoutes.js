@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const bcrypt = require('bcrypt')
 const router = Router();
 
 // require models
@@ -29,37 +30,34 @@ router.get('/admin/user/:userID', (req, res) => {
     .catch(error => res.json({error}))
 });
 
-// userID, username, password, accessRight, maxCredit, 
-// enrolledCourse, completedCourse, shoppingCartCourse
-
 // create an user
 // ???
 // DEFAULT VALUE FOR MAXCREDIT ??? (LINE 52)
-router.post('/admin/user/create', (req, res) => {
-    if (req.body['username'] == null) {
-        res.send("Username cannot be empty.");
-    }
-    else if (req.body['password'] == null) {
-        res.send("Password cannot be empty.");
-    }
-    User.find({username: req.body['username']})
+router.post('/admin/user', adminCheck, async (req, res) => {
+    const hashedPassword = await bcrypt.hash(req.body['password'], 10)
+    User.find({username: req.body.username})
     .then(existUser => {
-        if (existUser) {
-            res.send("User already exists.")
+        if (existUser.length) {
+            return res.json({success: false, error: "User already exists."})
         }
-        User.create({
-                username: req.body['username'],
-// ???
-                password: bcrypt.hashSync(req.body['password'], 10) // hashing?
-// ???
-                //, accessRight ???
-                //, maxCredit: 18
-        })
-        .then(() => {
-            res.send("User created successfully.");
-        })
+        User.countDocuments()
+        .then(count => {
+            User.create({
+                userID: count + 1, //existUser.userID + 1
+                username: req.body.username,
+                password: hashedPassword,
+                accessRight: req.body.accessRight,
+                maxCredit: 18,
+                enrolledCourse: [],
+                completedCourse: [],
+                shoppingCartCourse: [],
+                icon: 1
+            })
+            .then(() => {
+                return res.json({success: true, message: 'Signup successfully'});
+            })
+        }) 
     })
-    .catch(error => res.json({error}))
 });
 
 // update an user (username & password only)
