@@ -1,3 +1,5 @@
+import { useRef } from "react"
+
 const useConstant = () => {
 
     const departmentList = [
@@ -28,18 +30,43 @@ const useConstant = () => {
         '16:30-17:15',
         '17:30-18:15'
     ]
-    const weekdayList = [
+    const {current: weekdayList} = useRef([
         ['M', 'Monday'],
         ['T', 'Tuesday'],
         ['W', 'Wednesday'],
         ['H', 'Thursday'],
         ['F', 'Friday']
-    ]
+    ])
+
+    // credit: hangkhun
+    const {current: TimetableColorList} = useRef([
+        '#ffd5d5', 
+        '#ffe7d5', 
+        '#fff8d5', 
+        '#f0ffd5', 
+        '#d9ffd5', 
+        '#d5ffee', 
+        '#d5feff', 
+        '#d5eeff', 
+        '#d5d6ff', 
+        '#eed5ff', 
+        '#fdd5ff', 
+        '#ffd5f2', 
+        '#f78686', 
+        '#f7c086', 
+        '#f7f586', 
+        '#86f78b', 
+        '#86f7e6', 
+        '#86bef7', 
+        '#a686f7', 
+        '#f786df'  
+      ]);
 
     return {
         departmentList,
         classTimeList,
-        weekdayList
+        weekdayList,
+        TimetableColorList
     }
 }
 
