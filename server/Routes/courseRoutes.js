@@ -74,7 +74,6 @@ router.put('/enrolledCourse/enroll', (req,res)=>{
     const {courseID, tutorialID} = req.body;
     const username = verifyToken(req.cookies.jwt)
 
-    // find user enrolled course credit
     User.findOne({username})
     .then(user => {
         //console.log(user)
@@ -102,7 +101,6 @@ router.put('/enrolledCourse/enroll', (req,res)=>{
         .then(async goingToBeEnrolledCourse => {
             //console.log(goingToBeEnrolledCourse)
            
-            
             async function findCourseCredit(courseID){
                 const course = await Course.findOne({courseID: { $eq: courseID}})
                 return course.credit
@@ -142,7 +140,12 @@ router.put('/enrolledCourse/enroll', (req,res)=>{
                 let timeClashed = false;
                 for(i = 0; i < array.length; i++){
                     const course = await getCourseInfo(array[i].courseID)
-                    let courseTimeSlot = course[0].courseTime.concat(course[0].tutorial[0].tutorialTime)
+                    let courseTimeSlot = []
+                    if(course[0].tutorial.length == 0){
+                        courseTimeSlot = course[0].courseTime
+                    }else{
+                        courseTimeSlot = course[0].courseTime.concat(course[0].tutorial[0].tutorialTime)
+                    }
                     occupiedTimeSlot = occupiedTimeSlot.concat(courseTimeSlot)
                 }
                 
