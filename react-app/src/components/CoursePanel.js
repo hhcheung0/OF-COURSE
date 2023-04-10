@@ -522,33 +522,4 @@ const CourseCommentSection = ({course}) =>{
     )
 }
 
-// const clearForm = () => {
-//     const { parseTimecodeArray } = useTime()
-//     const [ tutorial, setTutorial ] = useState({}); // state, function to adjust the state
-
-//     const [ courseID, setCourseID ] = useState(''); // handleCourseIDChange?
-//     const [ courseName, setCourseName ] = useState('')
-//     const [ courseTime, setCourseTime ] = useState([]);
-//     const [ courseLocation, setCourseLocation ] = useState('');
-//     const [ instructor, setInstructor ] = useState('');
-//     const [ department, setDepartment ] = useState('');
-//     const [ courseCapacity, setCourseCapacity ] = useState('');
-//     const [ prerequisiteCourseID, setPrerequisiteCourseID ] = useState([]);
-//     const [ forbiddenCourseID, setForbiddenCourseID ] = useState([]);
-//     const [ credit, setCredit ] = useState();
-//     const [ outline, setOutline ] = useState({});
-//     const [ tutorialInfo, setTutorialInfo ] = useState([]);
-
-//     // const [ comment, setComment ] = useState([]);
-
-//     const [ tutorialID, setTutorialID ] = useState('');
-//     const [ tutorialTime, setTutorialTime ] = useState('');
-//     const [ tutorialLocation, setTutorialLocation ] = useState([]);
-//     const [ tutor, setTutor ] = useState('');
-//     const [ tutorialCapacity, setTutorialCapacity ] = useState();
-
-//     const [ tutorialIndex, setTutorialIndex ] = useState(null)
-//     const [ tutorialFormNumber, setTutorialFormNubmer ] = useState([]);
-// }
-
 export default CoursePanel
