@@ -1,3 +1,5 @@
+import { json } from "react-router-dom"
+
 const useEnroll = () => {
     const addToCart = (courseID, tutorialID) => {
         fetch('http://localhost:3001/shoppingCart/add', {
@@ -10,7 +12,10 @@ const useEnroll = () => {
             })
         })
         .then(res => res.json())
-        .then(json => console.log(json));
+        .then(json => {
+            console.log(json)
+            return json
+        });
     }
 
     const removeFromCart = (courseID) => {
