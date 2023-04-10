@@ -103,7 +103,6 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
             {course.tutorialInfo && 
                 course.tutorialInfo.map((tutorial, idx) => (
                     tutorial.tutorialID === enrolledTutorial &&
-                    setDropTutorial(tutorial.tutorialID) &&
                     <tr key={idx}>
                         <td></td>
                         <td></td>
