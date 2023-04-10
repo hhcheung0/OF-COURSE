@@ -8,13 +8,16 @@ import useCourse from '../hooks/useCourse'
 import useTime from '../hooks/useTime'
 import useConstant from '../hooks/useConstant'
 import useUser from "../hooks/useUser";
-import useEnroll from "../hooks/useEnroll";
+import useEnroll from "../hooks/useEnroll"
+import useAdmin from "../hooks/useAdmin";
 
 
 const UserPanel = () => {
     const { getCourse, setSearch } = useCourse();
     const { parseTimecodeArray } = useTime();
     const [ course, setCourse ] = useState({});
+    const { getUserArray, setSearchString } = useAdmin();
+    const [ user, setUser ] = useState({});
 
     return (
         <div id="admin-user">
@@ -25,9 +28,10 @@ const UserPanel = () => {
             <div className="column" id="admin-userLeft">
                     <br></br>
 {/* userSearchbar */}
-                    <h3 id="userSearchbar">Search  <input type="text"></input> </h3>
+                <UserSearchBar controller={setSearchString} />
 {/* userTable */}
-                    <table id='userTable'>
+                <UserTable userArray={getUserArray()} controller={setUser} /> 
+                    {/* <table id='userTable'>
                         <thead>
                             <tr>
                                 <th>User ID</th>
@@ -63,7 +67,7 @@ const UserPanel = () => {
                                 <td><button id="deleteUser">🗑Delete</button></td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table> */}
                 <br></br>
                 <br></br>
 {/* userForm */}
@@ -216,6 +220,65 @@ const UserPanel = () => {
     );
 }
 
+const UserSearchBar = (props) => {
+    const [searchString, setSearchString] = useState('')
+    
+    const handleChange = (e) => {
+        props.controller(e.target.value)
+        setSearchString(e.target.value)
+    }
+
+    return (
+        <div id='search-bar'>
+            <h3 id="userSearchbar">Search  
+            <input
+                type="text"
+                onChange={handleChange}
+                value={searchString}
+            />
+            </h3>
+        </div>
+    )
+}
+
+const UserTable = ({userArray, controller}) => {
+
+    return (
+            <table id='userTable'>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {userArray && userArray.map((user, idx) => (
+                        <UserTableRow user={user} key={idx} controller={controller} />
+                    ))}
+                </tbody>
+            </table>
+    )
+}
+const UserTableRow = ({user, controller}) => {
+
+    return (
+        <>
+        {user &&
+            <tr>
+                <td> {user.userID} </td>
+                <td> {user.username} </td>
+                <td><button id="showUser" onClick={() => controller(user)}>Show</button></td>
+                <td><button id="deleteUser">🗑Delete</button></td>
+            </tr>
+        }
+        </>
+    )
+}
+
+
 const User = () => {
     const [username, setUsername] = useState('')
     const { getUserByToken } = useUser()
@@ -230,28 +293,59 @@ const User = () => {
     )
 }
 
-const UserCourseTable = () => {
-    const [ enrolledCourse, setEnrolledCourse ] = useState([])
-    const [ completedCourse, setCompletedCourse ] = useState([])
-    const [ shoppingCartCourse, setShoppingCartCourse] = useState([])
-    const { getUserByToken } = useUser()
-
-    // const [ courseName, setCourseName ] = useState('');
-    // const [ credit, setCredit ] = useState();
+const UserCourseTable = ({user}) => {
+    const [ enrolledCourse, setEnrolledCourse ] = useState({})
+    const [ completedCourse, setCompletedCourse ] = useState({})
+    const [ shoppingCartCourse, setShoppingCartCourse] = useState({})
+    // const [ enrolledCourseID, setEnrolledCourseID ] = useState('')
+    // const [ enrolledTutorialID, setEnrolledTutorialID ] = useState('')
+    // const [ shoppingCartCourseID, setShoppingCartCourseID ] = useState('')
+    // const [ shoppingCartTutorialID, setShoppingCartTutorialID ] = useState('')
+    // const [ completedCourseID, setCompletedCourseID ] = useState('')
+    // const [ grade, setGrade] = useState()
+    const [ enrolledCourseIndex, setEnrolledCourseIndex ] = useState(null)
+    const [ shoppingCartIndex, setShoppingCartCourseIndex ] = useState(null)
+    const [ completedCourseIndex, setCompletedCourseIndex ] = useState(null)
 
     const handleEnrolledCourseChange = (e) => { console.log(e.target.id); setEnrolledCourse(e.target.value); }
     const handleCompletedCourse = (e) => { console.log(e.target.id); setCompletedCourse(e.target.value); }
-    const handleShoppingCartCoure = (e) => { console.log(e.target.id); setShoppingCartCourse(e.target.value); }
+    const handleShoppingCartCourse = (e) => { console.log(e.target.id); setShoppingCartCourse(e.target.value); }
+    // const handleEnrolledCourseIDChange = (e) => { console.log(e.target.id); setEnrolledCourseID(e.target.value); }
+    // const handlenrolledTutorialIDChange = (e) => { console.log(e.target.id); setEnrolledTutorialID(e.target.value); }
+    // const handleShopingCartCourseIDChange = (e) => { console.log(e.target.id); setShoppingCartCourseID(e.target.value); }
+    // const handleShoppingCartTutorialIDChange = (e) => { console.log(e.target.id); setShoppingCartTutorialID(e.target.value); }
+    // const handleCompletedCourseIDChange = (e) => { console.log(e.target.id); setCompletedCourseID(e.target.value); }
+    // const handleGradeChange = (e) => { console.log(e.target.id); setGrade(e.target.value); }
 
-    // const handleCourseNameChange = (e) => { console.log(e.target.id); setCourseName(e.target.value); }
-    // const handleCreditChange = (e) => {console.log(e.target.id); setCredit(e.target.value); }
+    // useEffect(() => {
+    //     return
+    //     setEnrolledCourse({})
+    //     setCompletedCourse({})
+    //     setShoppingCartCourse({})
+    // }, [enrolledCourse, completedCourse, shoppingCartCourse, user])
 
     useEffect(() => {
-        const { enrolledCourse, completedCourse, shoppingCartCourse } = getUserByToken()
-        setEnrolledCourse(enrolledCourse)
-        setCompletedCourse(completedCourse)
-        setShoppingCartCourse(shoppingCartCourse)
-    }, [getUserByToken])
+        // const { enrolledCourse, completedCourse, shoppingCartCourse } = getUserByToken()
+        setEnrolledCourse(user.enrolledCourse)
+        setCompletedCourse(user.completedCourse)
+        setShoppingCartCourse(user.shoppingCartCourse)
+        if (!user.enrolledCourse) return
+        setEnrolledCourseIndex(user.enrolledCourse.length? 0: null)
+        if (!user.completedCourse) return
+        setCompletedCourseIndex(user.completedCourse.length? 0: null)
+        if (!user.shoppingCartCourse) return
+        setShoppingCartCourseIndex(user.shoppingCartCourse.length? 0: null)
+    }, [user])
+
+    // useEffect(() => {
+    // //     if (user === {})
+    // //     return
+    // //     setEnrolledCourse([])
+    // //     setCompletedCourse([])
+    // //     setShoppingCartCourse([])
+    // if (!user.enrolledCourse || !user.completedCourse || !user.shoppingCartCourse) return
+    // set
+    // }, [enrolledCourse, completedCourse, shoppingCartCourse, user])
     
     return(
         <>
@@ -267,7 +361,7 @@ const UserCourseTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {enrolledCourse && enrolledCourse.map((enrolled, idx) => (
+                    {user.enrolledCourse && user.enrolledCourse.map((enrolled, idx) => (
                         <EnrolledTableRow enrolledCourse={enrolled.courseID} enrolledTutorial={enrolled.tutorialID} key={idx}/>
                     ))}
                     </tbody>
@@ -286,7 +380,7 @@ const UserCourseTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {shoppingCartCourse && shoppingCartCourse.map((shoppingCart, idx) => (
+                    {user.shoppingCartCourse && user.shoppingCartCourse.map((shoppingCart, idx) => (
                         <ShoppingCartTableRow 
                             shoppingCartCourse={shoppingCart.courseID} 
                             shoppingCartTutorial={shoppingCart.tutorialID} 
@@ -311,14 +405,13 @@ const UserCourseTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {completedCourse && completedCourse.map((completed, idx) => (
+                    {user.completedCourse && user.completedCourse.map((completed, idx) => (
                         <CompletedTableRow completedCourse={completed.courseID} completedGrade={completed.grade} key={idx}/>
                     ))}
                     </tbody>
                 </table>
         </>
     )
-    
 }
 
 const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
