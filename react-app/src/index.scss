@@ -100,11 +100,11 @@ table{
     b {
       padding: 10px;
     }
-  
+    
     #current-icon {
       height: 100px;
       width: 100px;
-
+      
       border-radius: 50%;
     }
 
@@ -116,8 +116,40 @@ table{
   
         border-radius: 50%;
       }
+      cursor: pointer;
+    }
+    #icon-1:hover{
+      transform: scale(1.5);
+    }
+    #icon-2:hover{
+      transform: scale(1.5);
+    }
+    #icon-3:hover{
+      transform: scale(1.5);
+    }
+    #icon-4:hover{
+      transform: scale(1.5);
+    }
+    #icon-5:hover{
+      transform: scale(1.5);
+    }
+    #icon-6:hover{
+      transform: scale(1.5);
+    }
+    #icon-7:hover{
+      transform: scale(1.5);
+    }
+    #icon-8:hover{
+      transform: scale(1.5);
+    }
+    #icon-9:hover{
+      transform: scale(1.5);
+    }
+    #icon-10:hover{
+      transform: scale(1.5);
     }
   }
+ 
 
   #change-pw {
     b {
@@ -171,13 +203,15 @@ table{
         min-width: 100px;
         height: 180px;
         width: 180px;
-  
+        cursor: pointer;
+        
         border-radius: 50%;
       }
       div {
         text-align: center;
         font-size: 125%;
         margin: 10px 0;
+        cursor: pointer;
       }
     }
     #nav-section {
