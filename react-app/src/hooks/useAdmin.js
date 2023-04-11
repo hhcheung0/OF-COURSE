@@ -25,6 +25,7 @@ const useAdmin = () => {
     }, [userArray, searchString])
 
     // create an user, user: {username: String, password: String, accessRight: Boolean}
+    // createUser({username: "admin", password:"admin", accessRight: true})
     const createUser = useCallback((user) => {
         fetch('http://localhost:3001/admin/user', {
             method: 'POST',
@@ -43,6 +44,7 @@ const useAdmin = () => {
     }, [navigate])
 
     // delete an user, username: String
+    // deleteUser("admin")
     const deleteUser = useCallback((username) => {
         fetch('http://localhost:3001/admin/user', {
             method: 'DELETE',
