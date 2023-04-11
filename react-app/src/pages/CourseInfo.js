@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef} from "react";
 
-
 // import custom hooks
 import useCourse from "../hooks/useCourse";
 import useTime from "../hooks/useTime";
@@ -21,12 +20,14 @@ const CourseInfo = () => {
         e.preventDefault();
         const formID = e.target.id;
         console.log(formID);
+        //handle addToCart button
         if (formID === "course-info"){
+            //if there is tutorial but user didn't select, alert error message
             if((tutorialID === "") && (course.tutorialInfo.length !== 0)){
                 alert("Please select a valid tutorial");
                 return;
             }
-
+            //if no error, try addToCart
             addToCart(course.courseID, tutorialID)
                 .then((response) => {
                     alert(response.error); // Display the success/error message
@@ -36,15 +37,19 @@ const CourseInfo = () => {
                     alert(error.error); // Display the error message
                 });
             }
-
+        //handle addComment button
         else if (formID === "comment-info"){
+            //if comment is empty, alert error message
             if(comment === ""){
                 alert("Comment cannot be empty!")
                 return;
             }
+            //if no error, try addComment
             addComment(course.courseID, comment)
             .then((response) => {
                 alert(response.error); // Display the success/error message
+                
+                //if successfully add comment, reload page for comment to appear
                 if(response.success)
                     window.location.reload();
             })
