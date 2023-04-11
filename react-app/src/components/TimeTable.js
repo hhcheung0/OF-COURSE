@@ -56,12 +56,14 @@ const Timetable = ({courseArray}) => {
         })
     }, [weekdayList, courses])
 
+
     // This variable stores a 2D array of <td> elements
     const elementArray = useMemo(() => {
         // for checking whether consecutive timeslot is from the same course
         const isEqual = (course1, course2) => {
             return course1.courseID === course2.courseID && course1.type === course2.type
         }
+        console.log(timetableArray);
         const result = []
         for (const j in timetableArray) {
             const tableRow = []
@@ -94,6 +96,40 @@ const Timetable = ({courseArray}) => {
         }
         return result
     }, [timetableArray, TimetableColorList])
+
+    const timetableDistance = () =>{
+        //outputs the distance criterion of a given timetableArray
+        //smaller value means courses more tightly packed (compact mode)
+        //larger value means courses more loosely packed (relax mode)
+        let totalDistance = 0
+
+        for(let day = 0; day < 5; day++){
+            for(let hour = 0; hour < 10; hour++){
+                const currentCourse = timetableArray[hour][day]
+                let currentDistance=10;
+                // If the current cell is empty, skip it
+                if (Object.keys(currentCourse).length === 0) continue;
+
+                //If the class is lecture, skip it
+                if (currentCourse.type === "LEC") continue;
+                
+                //consider tutorials, see the closest distance with another course
+                for (let nexthour = 0; nexthour < 10; nexthour++){
+                    
+                    //only consider times different from itself
+                    if(nexthour === hour) continue;
+                    //if the other cell is empty skip it
+                    const nextCourse = timetableArray[nexthour][day]
+                    if (Object.keys(nextCourse).length === 0) continue;
+                    
+                    currentDistance = Math.min(currentDistance,Math.abs(nexthour-hour))
+                }
+                totalDistance += currentDistance
+            }
+        }
+        return totalDistance
+    }
+
 
     // fetch the courses array manually, I can't solve the infinite re-rendering
     useEffect(() => {
