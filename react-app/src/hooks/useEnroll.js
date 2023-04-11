@@ -40,7 +40,7 @@ const useEnroll = () => {
             })
         })
         .then(res => res.json())
-        .then(json => console.log(json));
+        .then(json => {console.log(json)});
     }
 
     const drop = (courseID, tutorialID) => {
@@ -94,6 +94,7 @@ const useEnroll = () => {
                         })
                     })
                     .then(()=> {console.log("Successful to swap")})
+                    .then(window.location.reload())
                 }else{
                     fetch('http://localhost:3001/enrolledCourse/enroll', {
                         method: 'PUT',

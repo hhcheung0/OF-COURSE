@@ -79,7 +79,7 @@ const useCourse = (courseID) => {
         if (Object.values(filter).some(array => array.length)) return searchArray(filteredCourseArray).filter(course => isEligible(course))
         else return searchArray(courseArray).filter(course => isEligible(course))
     }
-    
+
     return {
         setFilter,
         setSearch,
