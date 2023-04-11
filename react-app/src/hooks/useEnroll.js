@@ -17,7 +17,7 @@ const useEnroll = () => {
     }
 
     const removeFromCart = (courseID) => {
-        fetch('http://localhost:3001/shoppingCart/remove', {
+        return fetch('http://localhost:3001/shoppingCart/remove', {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-type' : 'application/json'},
@@ -26,7 +26,10 @@ const useEnroll = () => {
             })
         })
         .then(res => res.json())
-        .then(json => console.log(json));
+        .then(json => {
+            console.log(json)
+            return json
+        });
     }
 
     const enroll = (courseID, tutorialID) => {
@@ -40,11 +43,14 @@ const useEnroll = () => {
             })
         })
         .then(res => res.json())
-        .then(json => {console.log(json)});
+        .then(json => {
+            console.log(json)
+            return json
+        });
     }
 
     const drop = (courseID, tutorialID) => {
-        fetch('http://localhost:3001/enrolledCourse/drop', {
+        return fetch('http://localhost:3001/enrolledCourse/drop', {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-type' : 'application/json'},
@@ -54,7 +60,10 @@ const useEnroll = () => {
             })
         })
         .then(res => res.json())
-        .then(json => console.log(json));
+        .then(json => {
+            console.log(json)
+            return json
+        });
     }
 
     const swap = (enrolledCourseID, enrolledTutorialID, cartCourseID, cartTutorialID) => {
@@ -93,7 +102,10 @@ const useEnroll = () => {
                             tutorialID: enrolledTutorialID
                         })
                     })
-                    .then(()=> {console.log("Successful to swap")})
+                    .then(()=> {
+                        console.log("Swap successful")
+                        return json
+                    })
                     .then(window.location.reload())
                 }else{
                     fetch('http://localhost:3001/enrolledCourse/enroll', {
@@ -105,7 +117,10 @@ const useEnroll = () => {
                             tutorialID: enrolledTutorialID
                         })
                     })
-                    .then(()=> {console.log("Failed to swap")})
+                    .then(()=> {
+                        console.log("Swap failed")
+                        return json
+                    })
                 }
                 
             });
@@ -113,7 +128,7 @@ const useEnroll = () => {
     }
 
     const removeFromCompletedCourse = (courseID) => {
-        fetch('http://localhost:3001/completedCourse/remove', {
+        return fetch('http://localhost:3001/completedCourse/remove', {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-type' : 'application/json'},
@@ -122,7 +137,10 @@ const useEnroll = () => {
             })
         })
         .then(res => res.json())
-        .then(json => console.log(json));
+        .then(json => {
+            console.log(json)
+            return json
+        });
     }
 
     return {

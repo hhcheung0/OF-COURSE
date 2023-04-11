@@ -20,6 +20,7 @@ router.get('/admin/user', adminCheck, (req, res) => {
     })
     .catch(error => res.json({error}))
 });
+
 // get a specific user
 router.get('/admin/user/:userID', (req, res) => {
     User.findOne(req.params)
@@ -31,8 +32,6 @@ router.get('/admin/user/:userID', (req, res) => {
 });
 
 // create an user
-// ???
-// DEFAULT VALUE FOR MAXCREDIT ??? (LINE 52)
 router.post('/admin/user', adminCheck, async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body['password'], 10)
     User.find({username: req.body.username})
@@ -54,11 +53,23 @@ router.post('/admin/user', adminCheck, async (req, res) => {
                 icon: 1
             })
             .then(() => {
-                return res.json({success: true, message: 'Signup successfully'});
+                return res.json({success: true, message: 'User successfully created'});
             })
         }) 
     })
 });
+
+// delete an user by username
+router.delete('/admin/user', adminCheck, (req, res) => {
+    User.deleteOne({username: req.body.username})
+    .then((result) => {
+        // delete request can not be recognized
+        if (!result.acknowledged) return res.json({success: false, message: "unknown error"})
+        // if nothing is deleted
+        else if (!result.deletedCount) return res.json({success: false, message: "No user is found"})
+        else return res.json({success: true, message: 'Successfully deleted user'})
+    })
+})
 
 // update an user (username & password only)
 router.post('/admin/user/updateUser', (req, res) => {
@@ -99,16 +110,6 @@ router.post('/admin/user/update/deleteCourse', (req, res) => {
     })
     .catch(error => res.json({error}))
 });
-
-// delete an user
-router.post('/admin/user/delete', (req, res) => {
-    User.findOneAndDelete({username})
-    .then(() => {
-        res.send("Deleted user: " + username);
-    })
-    .catch(error => res.json({error}))
-});
-
 
 // COURSE
 
