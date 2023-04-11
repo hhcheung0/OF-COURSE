@@ -16,7 +16,7 @@ const UserPanel = () => {
     const { getCourse, setSearch } = useCourse();
     const { parseTimecodeArray } = useTime();
     const [ course, setCourse ] = useState({});
-    const { getUserArray, setSearchString } = useAdmin();
+    const { getUserArray, setSearchString, createUser, deleteUser } = useAdmin();
     const [ user, setUser ] = useState({});
 
     return (
@@ -71,36 +71,16 @@ const UserPanel = () => {
                 <br></br>
                 <br></br>
 {/* userForm */}
-                <div className="container" id="userForm">
-                <form method="post">
-                    <p><label htmlFor="username">Username</label>
-                    <input type="text" id="username" name="username"/></p>
-                    <br/>
-
-                    <p><label htmlfor="password">Password</label>
-                    <input type="password" id="password" name="password"/></p>
-                    <br/>
-
-                    <div id='toggle-button-panel'>
-                            <input type="radio" name="course-toggle" id="Student" value={true} />
-                            <label htmlFor="Student">Student</label>
-                            <input type="radio" name="course-toggle" id="Admin" value={false} default />
-                            <label htmlFor="Admin">Admin</label>
-                    </div>
-                    <button>Add/Update</button>
-                    {/* <input type="submit" value="Add/Update" /> */}
-                    <br/>
-                </form>
-                </div>
+                <UserForm />
             </div>
 
 {/* Right-side of the userPanel */}
 {/* admin-userRight */}
             <div className="column" id="admin-userRight">
-                    <User user={user}/>
+                    <User user={user} />
 {/* userCourseTable */}
                     <div id="userCourseTable" className="container">
-                        <UserCourseTable user={user}/>
+                        <UserCourseTable user={user} />
                         {/* <h3>Enrolled Courses</h3> */}
 {/* userCourseTable-enrolled */}
                         {/* <table id='userCourseTable-enrolled'>
@@ -220,6 +200,7 @@ const UserPanel = () => {
     );
 }
 
+// left side of the page
 const UserSearchBar = (props) => {
     const [searchString, setSearchString] = useState('')
     
@@ -263,6 +244,12 @@ const UserTable = ({userArray, controller}) => {
     )
 }
 const UserTableRow = ({user, controller}) => {
+    const { deleteUser } = useAdmin();
+    const [ username, setUsername ] = useState('')
+
+    useEffect(() => {
+        setUsername(user.username)
+    }, [username, user])
 
     return (
         <>
@@ -271,14 +258,64 @@ const UserTableRow = ({user, controller}) => {
                 <td> {user.userID} </td>
                 <td> {user.username} </td>
                 <td><button id="showUser" onClick={() => controller(user)}>Show</button></td>
-                <td><button id="deleteUser">🗑Delete</button></td>
+                <td><button id="deleteUser" onClick={() => deleteUser(username)}>🗑Delete</button></td>
             </tr>
         }
         </>
     )
 }
 
+const UserForm = () => {
+    const { createUser } = useAdmin()
 
+    const [ username, setUsername ] = useState('')
+    const [ password, setPassword ] = useState('')
+    const [ accessRight, setAccessRight ] = useState()
+
+    const handleUsernameChange = (e) => {console.log(e.target.id); setUsername(e.target.value); }
+    const handlePasswordChange = (e) => {console.log(e.target.id); setPassword(e.target.value); }
+    const handleAccessRightChange = (e) => {console.log(e.target.id); setAccessRight(e.target.value); }
+
+    useEffect(() => {
+        setUsername(username)
+        setPassword(password)
+        setAccessRight(accessRight)
+    }, [username, password, accessRight])
+
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+    }
+
+    return(
+        <>
+            <div className="container" id="userForm">
+                <form onSubmit={handleSubmit}>
+                    <p><label htmlFor="username">Username</label>
+                    <input type="text" id="username" name="username" onChange={handleUsernameChange} /></p>
+                    <br/>
+
+                    <p><label htmlfor="password">Password</label>
+                    <input type="password" id="password" name="password" onChange={handlePasswordChange}/></p>
+                    <br/>
+
+                    <div id='toggle-button-panel'>
+                            <input type="radio" name="accessRight" id="Student" value={true} onChange={handleAccessRightChange} />
+                            <label htmlFor="Student">Student</label>
+                            <input type="radio" name="accessRight" id="Admin" value={false} onChange={handleAccessRightChange} default />
+                            <label htmlFor="Admin">Admin</label>
+                    </div>
+                    <button onClick={() => createUser({username: username, password: password, accessRight: accessRight})}>Add</button>
+                    {/* // createUser({username: "admin", password:"admin", accessRight: true}) */}
+                    {/* <input type="submit" value="Add/Update" /> */}
+                    <br/>
+                </form>
+                </div>
+        </>
+    )
+}
+
+
+// right side of the page
 const User = ({user}) => {
     const [username, setUsername] = useState('')
 
