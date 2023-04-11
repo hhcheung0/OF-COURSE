@@ -263,4 +263,39 @@ router.put('/enrolledCourse/drop', (req,res)=> {
     .catch(error => res.json(error))
 })
 
+router.put('/comment/add', (req,res)=>{
+    const {courseID, comment} = req.body;
+
+    Course.updateOne({courseID}, {$push: {comment: comment}})
+    .then(()=>{
+            res.send({success: true, error: 'Comment added successfully'})
+        })
+    .catch(error => res.json({error}))
+})
+
+// router.put('/comment/remove', (req,res)=>{
+//     const {courseID} = req.body;
+//     const username = verifyToken(req.cookies.jwt)
+
+//     User.findOne({username})
+//     .then(user => {
+//         const found = user.shoppingCartCourse.some(el => el.courseID === courseID)
+//         if(!found){
+//             return res.status(400).send({success: false, error: "Course not found in your shopping cart"})
+//         }else{
+//             User.updateOne(
+//                 {username},
+//                 {$pull : {shoppingCartCourse : {courseID : courseID}}}
+//             )
+//             .then(() => {
+//                 res.send({success: true, error: 'Course removed from shopping cart'})
+//             })
+//             .catch(error => res.json(error))
+//         }
+//     })
+//     .catch(error => res.json({error}))
+// })
+
+
+
 module.exports = router
