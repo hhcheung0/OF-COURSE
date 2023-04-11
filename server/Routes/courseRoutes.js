@@ -11,7 +11,7 @@ const { verifyToken } = require('../Tools/authTools')
 router.get('/data/course', (req, res) => {
     Course.find().sort('courseID')
     .then(courseArray => {
-        if (!courseArray) return res.json({error: 'course array is empty'})
+        if (!courseArray) return res.json({error: 'Course array is empty'})
         return res.json(courseArray)
     })
     .catch(error => res.json(error))
@@ -21,7 +21,7 @@ router.get('/data/course', (req, res) => {
 router.get('/data/course/:courseID', (req, res) => {
     Course.findOne(req.params)
     .then(course => {
-        if (!course) return res.json({error: 'course is not found'})
+        if (!course) return res.json({error: 'Course is not found'})
         return res.json(course)
     })
     .catch(error => res.json({error}))
@@ -211,11 +211,11 @@ router.put('/enrolledCourse/enroll', (req,res)=>{
             if(goingToBeEnrolledCourse[0].enrolledID.length == goingToBeEnrolledCourse[0].courseCapacity){ 
                 return res.status(400).send({success: false, error: "Course is full already"})
             }else if(userEnrolledCredit == user.maxCredit){ 
-                return res.status(400).send({success: false, error: "User reached max credit already"})
+                return res.status(400).send({success: false, error: "You have reached max credit"})
             }else if(TimeClashed){
                 return res.status(400).send({success: false, error: "The course has a time clash with your current timetable"})
             }else if(unfulfillRequirement){
-                return res.status(400).send({success: false, error: "User either studied forbidden course or not fulfilled prerequisite course"})
+                return res.status(400).send({success: false, error: "You have either studied forbidden course or has not yet fulfilled prerequisite course"})
             }else{
                 User.updateOne({username},{$pull : {shoppingCartCourse : {courseID : courseID}}})
                 .then(() => {
@@ -225,7 +225,7 @@ router.put('/enrolledCourse/enroll', (req,res)=>{
                         .then(()=> {
                             Course.updateOne({courseID : courseID, "tutorialInfo.tutorialID" : tutorialID},{$push: {"tutorialInfo.$.enrolledID" : user.userID}})
                             .then(() => {
-                                res.send({success: true, error: 'Successful to enroll'})
+                                res.send({success: true, error: 'Enroll successful'})
                             })
                         })
                     })
@@ -252,7 +252,7 @@ router.put('/enrolledCourse/drop', (req,res)=> {
             .then(()=> {
                 Course.updateOne({courseID : courseID, "tutorialInfo.tutorialID" : tutorialID},{$pull: {"tutorialInfo.$.enrolledID" : user.userID}})
                 .then(() => {
-                    res.send({success: true, error: 'Successful to drop'})
+                    res.send({success: true, error: 'Drop successful'})
                 })
                 .catch(error => res.json(error))
             })
@@ -268,7 +268,7 @@ router.put('/comment/add', (req,res)=>{
 
     Course.updateOne({courseID}, {$push: {comment: comment}})
     .then(()=>{
-            res.send({success: true, error: 'Comment added successfully'})
+            res.send({success: true, error: 'Comment added'})
         })
     .catch(error => res.json({error}))
 })
