@@ -7,6 +7,7 @@ import useCourse from '../hooks/useCourse'
 import useTime from '../hooks/useTime'
 import useConstant from '../hooks/useConstant'
 import useUser from "../hooks/useUser";
+import useComment from "../hooks/useComment";
 
 
 const CoursePanel = () => {
@@ -14,6 +15,7 @@ const CoursePanel = () => {
     const { getCourse, setSearch } = useCourse();
     const { parseTimecodeArray } = useTime();
     const [ course, setCourse ] = useState({});
+    const { removeComment } = useComment();
 
     return (
         <div id="admin-course">
@@ -482,22 +484,27 @@ const CourseForm = ({course}) => { // state
 //         return "/";
 //     return courseArray;
 // }
-const CourseCommentTable = ({comment}) =>{
+const CourseCommentTable = ({courseID, comment}) =>{
+    const { removeComment} = useComment();
+    const [activeTab, setActiveTab] = useState("coursePanelTab");
     
     return(
                <tr>
                     <td>{comment}</td>
-                    <td><button id="deleteUser">🗑Delete</button></td>
+                    <td><button id="deleteComment" onClick={() => {removeComment(courseID,comment); window.location.reload()}}>🗑Delete</button></td>
                </tr>
     )
    }
 const CourseCommentSection = ({course}) =>{
     const [ comment, setComment ] = useState(['']);
+    const [ courseID, setCourseID ] = useState('');
     const handleCommentChange = (e) => {console.log(e.target.id); setComment(e.target.value); }
+    const handleCourseIDChange = (e) => {console.log(e.target.id); setCourseID(e.target.value); }
 
     useEffect(() => {
         setComment(course.comment)
-    }, [course])
+        setCourseID(course.courseID)
+    }, [comment, courseID, course])
 
     // <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={forbiddenCourseID} onChange ={handleForbidenCourseIDChange}/>
 
@@ -511,7 +518,7 @@ const CourseCommentSection = ({course}) =>{
                     </tr>
 
                     {course.comment && course.comment.map((comment,idx)=>(
-                        <CourseCommentTable comment={comment} key ={idx}/>
+                        <CourseCommentTable comment={comment} courseID={courseID} key ={idx}/>
                     ))}
                 </thead>
                 <tbody>

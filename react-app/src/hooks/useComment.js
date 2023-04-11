@@ -1,4 +1,8 @@
+// import { useNavigate } from 'react-router'
+
 const useComment = () => {
+    // const navigate = useNavigate()
+
     const addComment = (courseID, comment) => {
         return fetch('http://localhost:3001/comment/add', {
             method: 'PUT',
@@ -27,6 +31,7 @@ const useComment = () => {
         })
         .then(res => res.json())
         .then(json => {
+            // navigate(0)
             console.log(json)
             return json
         });
