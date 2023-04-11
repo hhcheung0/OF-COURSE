@@ -1,22 +1,20 @@
-import React, { useState, useEffect} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef} from "react";
+
 
 // import custom hooks
 import useCourse from "../hooks/useCourse";
 import useTime from "../hooks/useTime";
-import useUser from "../hooks/useUser";
 import useEnroll from "../hooks/useEnroll";
+import useComment from "../hooks/useComment";
 
 const CourseInfo = () => {
     const [comment, setComment] = useState("");
     const [tutorialID, setTutorialID] = useState("");
-    const [username, setUsername] = useState(' ');
     const {addToCart} = useEnroll();
-    const navigate = useNavigate();
+    const {addComment} = useComment();
 
     //get course info from database
     const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
-    const { getUserByToken } = useUser()
 
 
     const handleSubmit = async (e) =>{
@@ -40,12 +38,22 @@ const CourseInfo = () => {
             }
 
         else if (formID === "comment-info"){
-
+            if(comment===""){
+                alert("Comment cannot be empty!")
+                return;
+            }
+            addComment(course.courseID, comment)
+            .then((response) => {
+                alert(response.error); // Display the success/error message
+                if(response.success)
+                    window.location.reload();
+            })
+            .catch((error) => {
+                console.error('Error adding comment:', error);
+                alert(error.error); // Display the error message
+            });
+            
         }
-
-
-
-
     };
     const CourseSection =({course}) =>{
         //const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);
@@ -208,20 +216,31 @@ const CourseInfo = () => {
     }
     
     const CommentInput = () =>{
-        return(
+        const textareaRef = useRef();
+
+        useEffect(() => {
+            if (textareaRef.current) {
+            const textarea = textareaRef.current;
+            textarea.focus();
+            const cursorPosition = textarea.value.length;
+            textarea.selectionStart = cursorPosition;
+            textarea.selectionEnd = cursorPosition;
+        }});
+        return (
             <div id="comment-input">
-                <h3> Add Comment</h3>
-                    <textarea id="text-box" value={comment} onChange={(e) => setComment(e.target.value)}/>
-                    <input type="submit" id="submit-button" value="Add" style={{float: "right"}}/>
-        </div>
-        )
+            <h3> Add Comment</h3>
+            <textarea ref={textareaRef} id="text-box" value={comment} onChange={(e) => setComment(e.target.value)} />
+            <input type="submit" id="submit-button" value="Add" style={{ float: 'right' }} />
+            </div>
+                )
     }
     
     const changeSlash = (courseArray) =>{
-        if (courseArray=="")
+        if (courseArray==="")
             return "/";
         return courseArray;
     }
+    
     return(
         <>
             <h2>Course Information</h2>
