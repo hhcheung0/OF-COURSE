@@ -38,7 +38,7 @@ const CourseInfo = () => {
             }
 
         else if (formID === "comment-info"){
-            if(comment===""){
+            if(comment === ""){
                 alert("Comment cannot be empty!")
                 return;
             }
@@ -220,19 +220,20 @@ const CourseInfo = () => {
 
         useEffect(() => {
             if (textareaRef.current) {
-            const textarea = textareaRef.current;
-            textarea.focus();
-            const cursorPosition = textarea.value.length;
-            textarea.selectionStart = cursorPosition;
-            textarea.selectionEnd = cursorPosition;
+                const textarea = textareaRef.current;
+                textarea.focus();
+                const cursorPosition = textarea.value.length;
+                textarea.selectionStart = cursorPosition;
+                textarea.selectionEnd = cursorPosition;
         }});
+
         return (
             <div id="comment-input">
             <h3> Add Comment</h3>
             <textarea ref={textareaRef} id="text-box" value={comment} onChange={(e) => setComment(e.target.value)} />
             <input type="submit" id="submit-button" value="Add" style={{ float: 'right' }} />
             </div>
-                )
+        )
     }
     
     const changeSlash = (courseArray) =>{
@@ -253,6 +254,7 @@ const CourseInfo = () => {
                 <div id="tutorial-button"> </div> 
                 <CommentInput /> 
             </form>
+            
         </>    
       
         

@@ -273,28 +273,27 @@ router.put('/comment/add', (req,res)=>{
     .catch(error => res.json({error}))
 })
 
-// router.put('/comment/remove', (req,res)=>{
-//     const {courseID} = req.body;
-//     const username = verifyToken(req.cookies.jwt)
+router.put('/comment/remove', (req,res)=>{
+    const {courseID,comment} = req.body;
 
-//     User.findOne({username})
-//     .then(user => {
-//         const found = user.shoppingCartCourse.some(el => el.courseID === courseID)
-//         if(!found){
-//             return res.status(400).send({success: false, error: "Course not found in your shopping cart"})
-//         }else{
-//             User.updateOne(
-//                 {username},
-//                 {$pull : {shoppingCartCourse : {courseID : courseID}}}
-//             )
-//             .then(() => {
-//                 res.send({success: true, error: 'Course removed from shopping cart'})
-//             })
-//             .catch(error => res.json(error))
-//         }
-//     })
-//     .catch(error => res.json({error}))
-// })
+    Course.findOne({courseID})
+    .then(course => {
+        const found = course.comment.some(el =>  el === comment)
+        if(!found){
+            return res.status(400).send({success: false, error: "Comment not found"})
+        }else{
+            Course.updateOne(
+                {courseID},
+                {$pull : {comment : comment}}
+            )
+            .then(() => {
+                res.send({success: true, error: 'Comment removed from course'})
+            })
+            .catch(error => res.json(error))
+        }
+    })
+    .catch(error => res.json({error}))
+})
 
 
 

@@ -1,8 +1,9 @@
 import useEnroll from '../hooks/useEnroll';
+import useComment from '../hooks/useComment';
 
 const Osborn = () => {
     const { addToCart, removeFromCart, enroll,drop, swap} = useEnroll()
-
+    const { removeComment} = useComment();
     return(
         <div id="login">
             <div className="container">
@@ -11,6 +12,7 @@ const Osborn = () => {
                 <button onClick={() => enroll("ARCH2180","T01")}>Enroll</button>
                 <button onClick={() => drop("MGNT3690", "T01")}>Drop</button>
                 <button onClick={() => swap("ARCH2180", "T02", "MUSC2340")}>Swap</button>
+                <button onClick={() => removeComment("HIST1890","Testing")}>Remove Comment</button>
             </div>
         </div>
     )
