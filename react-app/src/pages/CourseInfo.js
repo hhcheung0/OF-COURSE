@@ -28,13 +28,16 @@ const CourseInfo = () => {
                 alert("Please select a valid tutorial");
                 return;
             }
-            await addToCart(course.courseID, tutorialID)
-            .then(response =>{
-                alert(response.error);
-            })
-            .catch(err => console.log(err))
-                
-        }
+
+            addToCart(course.courseID, tutorialID)
+                .then((response) => {
+                    alert(response.error); // Display the success/error message
+                })
+                .catch((error) => {
+                    console.error('Error adding to cart:', error);
+                    alert(error.error); // Display the error message
+                });
+            }
 
         else if (formID === "comment-info"){
 

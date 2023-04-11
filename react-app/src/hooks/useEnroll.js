@@ -2,14 +2,14 @@ import { json } from "react-router-dom"
 
 const useEnroll = () => {
     const addToCart = (courseID, tutorialID) => {
-        fetch('http://localhost:3001/shoppingCart/add', {
+        return fetch('http://localhost:3001/shoppingCart/add', {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-type' : 'application/json'},
             body: JSON.stringify({
                 courseID: courseID,
                 tutorialID: tutorialID
-            })
+            }),
         })
         .then(res => res.json())
         .then(json => {
