@@ -17,9 +17,10 @@ const CourseTab = () => {
     const [enrolledCourse, setEnrolledCourse] = useState('')
     const [shoppingCartCourse, setShoppingCartCourse] = useState('')
     const [completedCourse, setCompletedCourse] = useState('')
+    const [enrolledCredit, setEnrolledCredit] = useState('')
     const { getUserByToken } = useUser()
+    const { getEnrolledCredit } = useEnroll()
     
- 
     useEffect(() => {
         const { maxCredit, enrolledCourse, shoppingCartCourse, completedCourse } = getUserByToken()
         setMaxCredit(maxCredit)
@@ -27,6 +28,9 @@ const CourseTab = () => {
         setShoppingCartCourse(shoppingCartCourse)
         setCompletedCourse(completedCourse)
     }, [getUserByToken])
+
+    getEnrolledCredit()
+    .then(res => setEnrolledCredit(res));
 
     
     return (
@@ -38,7 +42,10 @@ const CourseTab = () => {
                 </div>
                 
                 <div id ="homepage-course-upperright">
-                    <CreditTable maxCredit={maxCredit}/>
+                    <div id = "homepage-course-text">
+                        <p>total credits currently enrolled: {enrolledCredit}</p>
+                        <p>maximum credit limit: {maxCredit}</p>
+                    </div>
                     <SwapCourse enrolledCourse={enrolledCourse} shoppingCartCourse={shoppingCartCourse}/>
                 </div>
             </div>
@@ -221,6 +228,21 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
         }
     };
 
+    const handleOnClick = (courseID) => {
+        if (courseID !== null) {
+            removeFromCart(course.courseID)
+                .then((response) => {
+                    const confirmed = window.alert(response.error, [
+                        {text: 'OK', onPress: window.location.reload()},
+                    ]); // Display the success/error message
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert(error.error); // Display the error message
+                });
+        }
+    };
+
     return(
         <>
             {course && 
@@ -232,7 +254,7 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
                     <td>{parseTimecodeArray(course.courseTime).join(', ')}</td>
                     <td>{course.courseLocation}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => {removeFromCart(course.courseID); window.location.reload()}}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => handleOnClick(course.courseID)}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
             {course.tutorialInfo && 
@@ -252,6 +274,7 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
         </>
     )
 }
+
 
 //missing average gpa
 const CompletedTable = ({completedCourse}) => {

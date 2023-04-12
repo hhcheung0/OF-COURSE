@@ -295,6 +295,70 @@ router.put('/comment/remove', (req,res)=>{
     .catch(error => res.json({error}))
 })
 
+router.get('/data/user/getEnrolledCredit', (req,res) => {
+    const username = verifyToken(req.cookies.jwt)
+    //console.log(username)
+    
+    User.findOne({username})
+    .then(async user => {
+        //console.log(user)
+        async function findCourseCredit(courseID){
+            const course = await Course.findOne({courseID: { $eq: courseID}})
+            return course.credit
+        }
 
+        async function getUserEnrolledCredit(array){
+            let enrolledCredit = 0;
+            for(i = 0; i < array.length; i++){
+                //console.log(array[i].courseID)
+                const credit = await findCourseCredit(array[i].courseID)
+                //console.log(credit)
+                enrolledCredit += credit;
+            }
+            return enrolledCredit;
+        }
+
+        let userEnrolledCredit = await getUserEnrolledCredit(user.enrolledCourse); //need to input user.enrolledCourse
+        return userEnrolledCredit
+    })
+    .then(credit => {
+        //console.log(credit)
+        res.send({credit: credit})
+    })
+    .catch(error => res.json({error}))
+})
+
+router.get('/data/user/getCompletedCredit', (req,res) => {
+    const username = verifyToken(req.cookies.jwt)
+    //console.log(username)
+    
+    User.findOne({username})
+    .then(async user => {
+        //console.log(user)
+        async function findCourseCredit(courseID){
+            const course = await Course.findOne({courseID: { $eq: courseID}})
+            return course.credit
+        }
+
+        async function getUserCompletedCredit(array){
+            let completedCredit = 0;
+            for(i = 0; i < array.length; i++){
+                //console.log(array[i].courseID)
+                const credit = await findCourseCredit(array[i].courseID)
+                //console.log(credit)
+                completedCredit += credit;
+            }
+            return completedCredit;
+        }
+
+        let userCompletedCredit = await getUserCompletedCredit(user.completedCourse); //need to input user.enrolledCourse
+        return userCompletedCredit
+    })
+    .then(credit => {
+        //console.log(credit)
+        res.send({credit: credit})
+    })
+    .catch(error => res.json({error}))
+})
 
 module.exports = router

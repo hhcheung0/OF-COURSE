@@ -143,13 +143,33 @@ const useEnroll = () => {
         });
     }
 
+    const getEnrolledCredit = () => {
+        return fetch('http://localhost:3001/data/user/getEnrolledCredit', {credentials: 'include'})
+        .then(res => res.json())
+        .then(json => {
+            console.log(json)
+            return json.credit
+        });
+    }
+
+    const getCompletedCredit = () => {
+        fetch('http://localhost:3001/data/user/getCompletedCredit', {credentials: 'include'})
+        .then(res => res.json())
+        .then(json => {
+            console.log(json)
+            return json.credit
+        });
+    }
+
     return {
         addToCart,
         removeFromCart,
         enroll,
         drop,
         swap,
-        removeFromCompletedCourse
+        removeFromCompletedCourse,
+        getEnrolledCredit,
+        getCompletedCredit
     }
 }
 
