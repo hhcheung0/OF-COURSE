@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { BsArrowDown, BsArrowUp, BsTrash3} from 'react-icons/bs';
 
 // import hooks
@@ -8,9 +8,8 @@ import useTime from "../hooks/useTime";
 import useEnroll from "../hooks/useEnroll";
 
 var selected = []
-var credit = 0
 var creditCourse = []
-//missing total credits
+
 const CourseTab = () => {
 
     const [maxCredit, setMaxCredit] = useState('')
@@ -21,6 +20,7 @@ const CourseTab = () => {
     const { getUserByToken } = useUser()
     const { getEnrolledCredit } = useEnroll()
     
+    
     useEffect(() => {
         const { maxCredit, enrolledCourse, shoppingCartCourse, completedCourse } = getUserByToken()
         setMaxCredit(maxCredit)
@@ -29,10 +29,9 @@ const CourseTab = () => {
         setCompletedCourse(completedCourse)
     }, [getUserByToken])
 
-    getEnrolledCredit()
-    .then(res => setEnrolledCredit(res));
+    //get total enrolled courses credit
+    getEnrolledCredit().then(res => setEnrolledCredit(res));
 
-    
     return (
         <div id="homepage-course-tab">
             <div id="homepage-course-up">
@@ -55,18 +54,6 @@ const CourseTab = () => {
         </div>
     );
 };
-
-//incomplete credits currently enrolled
-const CreditTable = ({maxCredit}) => {
-    
-    return(
-        <div id = "homepage-course-text">
-            <p>total credits currently enrolled: 5</p>
-            <p>maximum credit limit: {maxCredit}</p>
-        </div>
-    )
-}
-//<p>total credits currently enrolled: {credit}</p>
 
 const EnrolledTable = ({enrolledCourse}) => {
 
@@ -109,19 +96,6 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
         setDropTutorial(enrolledTutorial); 
     }, [enrolledTutorial]); 
 
-    const creditclass = (courseID, courseCredit) => {
-        //console.log("%d", courseCredit)
-        //console.log(courseID)
-        
-        if(courseCredit > 0){
-            if (!creditCourse.includes(courseID)){
-                creditCourse.push(courseID)
-                credit = credit + courseCredit
-                //console.log(credit)
-            } 
-        }
-        
-    }
 
     return(
         <>
@@ -132,7 +106,7 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
                     <td>LEC</td>
                     <td>{parseTimecodeArray(course.courseTime).join(', ')}</td>
                     <td>{course.courseLocation}</td>
-                    <td className={creditclass(course.courseID, course.credit)}>{course.credit}</td>
+                    <td>{course.credit}</td>
                     <td><button onClick={() => {drop(course.courseID, dropTutorial); window.location.reload()}}><BsTrash3 /> Drop</button></td>
                 </tr>
             }
@@ -275,17 +249,18 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
     )
 }
 
-
-//missing average gpa
 const CompletedTable = ({completedCourse}) => {
-    var totalCredits = 0;
-    var totalGPA = 0;
+
+    const { getGpa } = useEnroll()
+    const [gpa, setGpa] = useState('')
     
+    getGpa().then(res => setGpa(res.toFixed(2)));
+
     return(
     <>
         <div id='CompletedTable'> 
             <h2>Completed Courses </h2> 
-            <p>GPA {totalGPA / totalCredits}/4.30</p> 
+            <p>GPA {gpa}/4.30</p> 
         </div>
         <table id ="homepage-table">
         <thead>
@@ -297,9 +272,13 @@ const CompletedTable = ({completedCourse}) => {
             </tr>
         </thead>
         <tbody>
-                {completedCourse && completedCourse.map((completed, idx) => (
-                    <CompletedTableRow completedCourse={completed.courseID} completedGrade={completed.grade} key={idx}/>
-                ))}
+            {completedCourse && completedCourse.map((completed, idx) => (
+                <CompletedTableRow 
+                    completedCourse={completed.courseID} 
+                    completedGrade={completed.grade} 
+                    key={idx}
+                />
+            ))}
         </tbody>
         </table>
     </>
@@ -319,8 +298,8 @@ const CompletedTableRow = ({completedCourse, completedGrade}) => {
     //console.log(course)
 
     const calculateGrade = (gpa) => {
-        return gpaToGrade[gpa] || '';
-    }
+        return gpaToGrade[gpa] || "";
+    };
 
     return(
         <>
