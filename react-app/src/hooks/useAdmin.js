@@ -64,13 +64,28 @@ const useAdmin = () => {
 
     // add a course into user's array
     // if add to complete course array: addCourseToUser(userID, completedCourse, courseID, grade)
-    // if others: addCourseToUser(userID, completedCourse, courseID)
-    const addCourseToUser = useCallback((userID, arrayName, courseID, ...grade) => {
+    // if others: addCourseToUser(userID, completedCourse, courseID, tutorialID)
+    const addCourseToUser = useCallback((userID, arrayName, courseID, residual) => {
         fetch('http://localhost:3001/admin/user/addCourse', {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-type' : 'application/json'},
-            body: JSON.stringify({userID, arrayName, courseID, ...grade})
+            body: JSON.stringify({userID, arrayName, courseID, residual})
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) navigate(0)
+            alert(json.message)
+        })
+    }, [navigate])
+
+    // remove a course from user's array
+    const removeCourseFromUser = useCallback((userID, arrayName, courseID) => {
+        fetch('http://localhost:3001/admin/user/removeCourse', {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify({userID, arrayName, courseID})
         })
         .then(res => res.json())
         .then(json => {
@@ -141,6 +156,7 @@ const useAdmin = () => {
         createUser,
         deleteUser,
         addCourseToUser,
+        removeCourseFromUser,
         createCourse,
         deleteCourse
     }

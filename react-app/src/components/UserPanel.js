@@ -1,5 +1,5 @@
 // ADMIN PAGE
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useCallback} from "react";
 import { BrowserRouter, Route, Routes, Link, useLocation, useNavigate } from "react-router-dom";
 import { BsTrash3} from 'react-icons/bs';
 
@@ -16,8 +16,16 @@ const UserPanel = () => {
     const { getCourse, setSearch } = useCourse();
     const { parseTimecodeArray } = useTime();
     const [ course, setCourse ] = useState({});
-    const { getUserArray, setSearchString, createUser, deleteUser } = useAdmin();
+    const { getUserArray, setSearchString, removeCourseFromUser } = useAdmin();
     const [ user, setUser ] = useState({});
+    // This state is for controlling which array when adding course for user
+    const [targetArrayName, setTargetArrayName] = useState('enrolledCourse')
+    // For storing input grade
+    const [grade, setGrade] = useState('')
+
+    const handleSelect = useCallback((e) => {
+        setTargetArrayName(e.target.value)
+    }, [])
 
     return (
         <div id="admin-user">
@@ -80,7 +88,7 @@ const UserPanel = () => {
                     <User user={user} />
 {/* userCourseTable */}
                     <div id="userCourseTable" className="container">
-                        <UserCourseTable user={user} />
+                        <UserCourseTable user={user} remover={removeCourseFromUser} />
                         {/* <h3>Enrolled Courses</h3> */}
 {/* userCourseTable-enrolled */}
                         {/* <table id='userCourseTable-enrolled'>
@@ -155,21 +163,21 @@ const UserPanel = () => {
                             {/* <div> */}
                                 <h3>Add Courses</h3>
                                     <SearchBar controller={setSearch} />
-                                <select name="addCourseCategory">
-                                    <option value="enrolledCourses">Enrolled Courses</option>  
-                                    <option value="shoppingCart">Shopping Cart</option>
-                                    <option value="passedCourses">Completed Courses</option>
+                                <select name="addCourseCategory" value={targetArrayName} onChange={handleSelect}>
+                                    <option value="enrolledCourse">Enrolled Courses</option>  
+                                    <option value="shoppingCartCourse">Shopping Cart</option>
+                                    <option value="completedCourse">Completed Courses</option>
                                 </select> 
                             {/* </div> */}
                             <div>
                                 <h5>Completed Course Grade:
                                     <br></br>
-                                <input type="text"></input></h5>
+                                <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)}></input></h5>
                             </div>
                         </div>
                         
 {/* userCourseTable-add */}
-                        <CourseAddTable courseArray={getCourse()} controller={setCourse} /> 
+                        <CourseAddTable courseArray={getCourse()} arrayName={targetArrayName} grade={grade} user={user}  /> 
                         {/* <table id='userCourseTable-add'>
                             <thead>
                                 <tr>
@@ -330,7 +338,7 @@ const User = ({user}) => {
     )
 }
 
-const UserCourseTable = ({user}) => {
+const UserCourseTable = ({user, remover}) => {
     const [ enrolledCourse, setEnrolledCourse ] = useState({})
     const [ completedCourse, setCompletedCourse ] = useState({})
     const [ shoppingCartCourse, setShoppingCartCourse] = useState({})
@@ -360,6 +368,10 @@ const UserCourseTable = ({user}) => {
     //     setCompletedCourse({})
     //     setShoppingCartCourse({})
     // }, [enrolledCourse, completedCourse, shoppingCartCourse, user])
+
+    const handleRemove = useCallback((arrayName, courseID) => {
+        remover(user.userID, arrayName, courseID)
+    }, [remover, user])
 
     useEffect(() => {
         // const { enrolledCourse, completedCourse, shoppingCartCourse } = getUserByToken()
@@ -400,7 +412,7 @@ const UserCourseTable = ({user}) => {
                     </thead>
                     <tbody>
                     {user.enrolledCourse && user.enrolledCourse.map((enrolled, idx) => (
-                        <EnrolledTableRow enrolledCourse={enrolled.courseID} enrolledTutorial={enrolled.tutorialID} key={idx}/>
+                        <EnrolledTableRow enrolledCourse={enrolled.courseID} key={idx} remover={handleRemove}/>
                     ))}
                     </tbody>
                 </table>
@@ -422,8 +434,8 @@ const UserCourseTable = ({user}) => {
                     {user.shoppingCartCourse && user.shoppingCartCourse.map((shoppingCart, idx) => (
                         <ShoppingCartTableRow 
                             shoppingCartCourse={shoppingCart.courseID} 
-                            shoppingCartTutorial={shoppingCart.tutorialID} 
                             key={idx}
+                            remover={handleRemove}
                         />
                     ))}
                     </tbody>
@@ -446,7 +458,7 @@ const UserCourseTable = ({user}) => {
                     </thead>
                     <tbody>
                     {user.completedCourse && user.completedCourse.map((completed, idx) => (
-                        <CompletedTableRow completedCourse={completed.courseID} completedGrade={completed.grade} key={idx}/>
+                        <CompletedTableRow completedCourse={completed.courseID} completedGrade={completed.grade} key={idx} remover={handleRemove}/>
                     ))}
                     </tbody>
                 </table>
@@ -455,14 +467,8 @@ const UserCourseTable = ({user}) => {
     )
 }
 
-const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
+const EnrolledTableRow = ({enrolledCourse, remover}) => {
     const { course } = useCourse(enrolledCourse);
-    const { drop } = useEnroll()
-    const [dropTutorial, setDropTutorial] = useState('')
-
-    useEffect(() => { 
-        setDropTutorial(enrolledTutorial); 
-    }, [enrolledTutorial]); 
 
     return(
         <>
@@ -471,19 +477,15 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => {drop(course.courseID, dropTutorial); window.location.reload()}}><BsTrash3 /> Drop</button></td>
+                    <td><button onClick={() => {remover('enrolledCourse', course.courseID)}}><BsTrash3 /> Drop</button></td>
                 </tr>
             }
         </>
     )
 }
 
-const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
-    const { parseTimecodeArray } = useTime()
+const ShoppingCartTableRow = ({shoppingCartCourse, remover}) => {
     const { course } = useCourse(shoppingCartCourse);
-    const { removeFromCart } = useEnroll()
-    //console.log(course)
-    //console.log(shoppingCartTutorial)
 
     return(
         <>
@@ -492,7 +494,7 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => {removeFromCart(course.courseID); window.location.reload()}}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => {remover('shoppingCartCourse', course.courseID)}}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
         </>
@@ -506,10 +508,8 @@ const gpaToGrade = {
     1.0: 'D', 0.0: 'F'
 };
 
-const CompletedTableRow = ({completedCourse, completedGrade}) => {
+const CompletedTableRow = ({completedCourse, completedGrade, remover}) => {
     const { course } = useCourse(completedCourse)
-    const { removeFromCompletedCourse } = useEnroll()
-    //console.log(course)
 
     const calculateGrade = (gpa) => {
         return gpaToGrade[gpa] || '';
@@ -523,7 +523,7 @@ const CompletedTableRow = ({completedCourse, completedGrade}) => {
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
                     <td>{calculateGrade(completedGrade)}</td>
-                    <td><button onClick={() => {removeFromCompletedCourse(course.courseID); window.location.reload()}}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => {remover('completedCourse', course.courseID)}}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
         </>
@@ -550,7 +550,7 @@ const SearchBar = (props) => {
     )
 }
 
-const CourseAddTable = ({courseArray, controller}) => {
+const CourseAddTable = ({courseArray, arrayName, grade, user}) => {
 
     return (
         <div className="row" id='table-container'>
@@ -562,21 +562,38 @@ const CourseAddTable = ({courseArray, controller}) => {
                         <th>Time</th>
                         <th>Location</th>
                         <th>Capacity</th>
+                        <th>Tutorial</th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {courseArray && courseArray.map((course, idx) => (
-                        <CourseAddTableRow course={course} key={idx} controller={controller} />
+                        <CourseAddTableRow course={course} key={idx} arrayName={arrayName} grade={grade} user={user} />
                     ))}
                 </tbody>
             </table>
         </div>
     )
 }
-const CourseAddTableRow = ({course, controller}) => {
+const CourseAddTableRow = ({course, arrayName, grade, user}) => {
+    // For storing selected tutorial
+    const [tutorialID, setTutorialID] = useState(course.tutorialInfo.length? 'T01': '')
     const { parseTimecodeArray } = useTime()
+    const { addCourseToUser } = useAdmin()
+
+    const handleSelect = useCallback((e) => {
+        setTutorialID(e.target.value)
+    }, [])
+
+    const handleAddToUser = useCallback((e) => {
+        // return if no user selected
+        if (!Object.keys(user).length) return alert('No user is selected!')
+        // return if add to completed course array but no grade provided
+        if (arrayName === 'completedCourse' && !grade.length) return alert('Please add grade for this function!')
+        if (grade.length) addCourseToUser(user.userID, arrayName, course.courseID, Number(grade))
+        else addCourseToUser(user.userID, arrayName, course.courseID, tutorialID)
+    }, [user, arrayName, course, grade, addCourseToUser, tutorialID])
 
     return (
         <>
@@ -593,7 +610,14 @@ const CourseAddTableRow = ({course, controller}) => {
                 </td>
                 <td>{course.courseLocation}</td>
                 <td>{course.courseCapacity}</td>
-                <td><button id="addCourse">Add</button></td>
+                <td>
+                    <select name="tutorialID" value={tutorialID} onChange={handleSelect}>
+                        {course.tutorialInfo && course.tutorialInfo.map((tutorial, idx) => (
+                            <option key={idx} value={tutorial.tutorialID}>{tutorial.tutorialID}</option>
+                        ))}
+                    </select>
+                </td>
+                <td><button id="addCourse" onClick={handleAddToUser}>Add</button></td>
             </tr>
         }
         </>
