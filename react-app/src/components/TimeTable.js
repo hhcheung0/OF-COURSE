@@ -98,7 +98,6 @@ const Timetable = ({courseArray}) => {
         return result
     }, [timetableArray, TimetableColorList])
 
-
     // fetch the courses array manually, I can't solve the infinite re-rendering
     useEffect(() => {
         fetch(`http://localhost:3001/data/course/`)
