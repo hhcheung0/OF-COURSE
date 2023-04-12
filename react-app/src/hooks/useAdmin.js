@@ -139,7 +139,7 @@ const useAdmin = () => {
             method: 'DELETE',
             credentials: 'include',
             headers: {'Content-type' : 'application/json'},
-            body: JSON.stringify(courseID)
+            body: JSON.stringify({courseID})
         })
         .then(res => res.json())
         .then(json => {
