@@ -162,14 +162,15 @@ const useEnroll = () => {
         });
     }
 
-    const getGpa = () => {
-        return fetch('http://localhost:3001/data/user/getGpa', {credentials: 'include'})
-        .then(res => res.json())
-        .then(json => {
-            //console.log(json)
-            return json.gpa
-        });
-    }
+    const getGpa = async () => {
+        try {
+            const res = await fetch('http://localhost:3001/data/user/getGpa', { credentials: 'include' });
+            const json = await res.json();
+            return json.gpa;
+        } catch (error) {
+            console.error("Error fetching GPA:", error);
+        }
+    };
 
     return {
         addToCart,
