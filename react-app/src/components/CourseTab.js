@@ -16,7 +16,7 @@ const CourseTab = () => {
     const [enrolledCourse, setEnrolledCourse] = useState('')
     const [shoppingCartCourse, setShoppingCartCourse] = useState('')
     const [completedCourse, setCompletedCourse] = useState('')
-    const [enrolledCredit, setEnrolledCredit] = useState('')
+    const [enrolledCredit, setEnrolledCredit] = useState(0)
     const { getUserByToken } = useUser()
     const { getEnrolledCredit } = useEnroll()
     
@@ -27,10 +27,13 @@ const CourseTab = () => {
         setEnrolledCourse(enrolledCourse)
         setShoppingCartCourse(shoppingCartCourse)
         setCompletedCourse(completedCourse)
+
+        //get total enrolled courses credit
+        getEnrolledCredit().then(res => setEnrolledCredit(res));
+
     }, [getUserByToken])
 
-    //get total enrolled courses credit
-    getEnrolledCredit().then(res => setEnrolledCredit(res));
+    
 
     return (
         <div id="homepage-course-tab">
@@ -96,6 +99,21 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
         setDropTutorial(enrolledTutorial); 
     }, [enrolledTutorial]); 
 
+    const handleOnDrop = (courseID, tutorialID) => {
+        if (courseID !== null) {
+            drop(courseID, tutorialID)
+                .then((response) => {
+                    const confirmed = window.alert(response.error, [
+                        {text: 'OK', onPress: window.location.reload()},
+                    ]); // Display the success/error message
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert(error.error); // Display the error message
+                });
+        }
+    };
+
 
     return(
         <>
@@ -107,7 +125,7 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
                     <td>{parseTimecodeArray(course.courseTime).join(', ')}</td>
                     <td>{course.courseLocation}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => {drop(course.courseID, dropTutorial); window.location.reload()}}><BsTrash3 /> Drop</button></td>
+                    <td><button onClick={() => handleOnDrop(course.courseID, dropTutorial)}><BsTrash3 /> Drop</button></td>
                 </tr>
             }
             {course.tutorialInfo && 
@@ -133,7 +151,7 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
     //const [selectedCourses, setSelectedCourses] = useState([]);
     const { enroll } = useEnroll()
 
-    const toEnroll = () => {
+    const handleOnEnroll = () => {
         if(selected.length === 0){
             alert("Please select course in shopping cart!")
         }else{
@@ -142,18 +160,25 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
                 tutorialID = shoppingCartCourse.find(c => c.courseID === selected[i]).tutorialID;
                 console.log(tutorialID)
                 enroll(selected[i], tutorialID)
-                //alert message
+                .then((response) => {
+                    const confirmed = window.alert(response.error, [
+                        {text: 'OK', onPress: window.location.reload()},
+                    ]); // Display the success/error message
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert(error.error); // Display the error message
+                });
             }
 
         }
-        window.location.reload()
     }
 
     return(
         <>
             <div id="ShoppingCart">
                 <h2>Shopping Cart</h2>
-                <button onClick={toEnroll}>Enroll</button>
+                <button onClick={handleOnEnroll}>Select</button>
             </div>
             <table id ="homepage-table">
             <thead>
@@ -202,9 +227,9 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
         }
     };
 
-    const handleOnClick = (courseID) => {
+    const handleOnDelete = (courseID) => {
         if (courseID !== null) {
-            removeFromCart(course.courseID)
+            removeFromCart(courseID)
                 .then((response) => {
                     const confirmed = window.alert(response.error, [
                         {text: 'OK', onPress: window.location.reload()},
@@ -228,7 +253,7 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
                     <td>{parseTimecodeArray(course.courseTime).join(', ')}</td>
                     <td>{course.courseLocation}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => handleOnClick(course.courseID)}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => handleOnDelete(course.courseID)}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
             {course.tutorialInfo && 
@@ -253,9 +278,11 @@ const CompletedTable = ({completedCourse}) => {
 
     const { getGpa } = useEnroll()
     const [gpa, setGpa] = useState('')
-    
-    getGpa().then(res => setGpa(res.toFixed(2)));
 
+    useEffect(() => {
+        getGpa().then(res => setGpa(res.toFixed(2)));
+    }, [])
+    
     return(
     <>
         <div id='CompletedTable'> 
