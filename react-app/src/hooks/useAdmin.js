@@ -62,11 +62,50 @@ const useAdmin = () => {
         })
     }, [navigate])
 
+    // create a course, course: {
+    //     courseID: String,
+    //     courseName: String,
+    //     courseTime: [String],
+    //     courseLocation: String,
+    //     instructor: String,
+    //     courseCapacity: Number,
+    //     enrolledID: [String],
+    //     prerequisiteCourseID: [String],
+    //     forbiddenCourseID: [String],
+    //     credit: Number,
+    //     tutorialInfo: [Object: {
+        //     tutorialID: String,
+        //     tutorialTime: [String],
+        //     tutorialLocation: String,
+        //     tutor: String,
+        //     tutorialCapacity: Number,
+        //     enrolledID: [String]
+        // }],
+    //     outline: String,
+    //     comment: [String]
+    // }
+    const createCourse = useCallback((course) => {
+        fetch('http://localhost:3001/admin/course', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify(course)
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (!json.success) alert(json.message)
+            else {
+                navigate(0)
+                alert(json.message)
+            }
+        })
+    }, [navigate])
     return {
         setSearchString,
         getUserArray,
         createUser,
-        deleteUser
+        deleteUser,
+        createCourse
     }
 }
 

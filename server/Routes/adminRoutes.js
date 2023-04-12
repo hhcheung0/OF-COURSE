@@ -137,34 +137,20 @@ router.get('/admin/course/:courseID', (req, res) => {
 // enrolledID, prerequisiteCourseID, forbiddenCourseID, credit, tutorialInfo, outline, comment
 
 // create a course
-router.post('/admin/course/create', (req, res) => {
+router.post('/admin/course', adminCheck, (req, res) => {
+    console.log(req.body)
     Course.findOne({courseID: req.body['courseID']})
     .then(existCourse => {
         if (existCourse) {
-            res.send("User already exists.");
+            return res.json({success: true, message: "course already exists."});
         }
-        Course.create({
-            courseID: req.body['courseID'],
-            courseName: req.body['courseName'],
-// ???
-            courseTime: [req.body['courseTime']], // how to store into an array?
-            courseLocation: req.body['courseLocation'],
-            instructor: req.body['instructor'],
-            department: req.body['department'],
-            courseCapacity: req.body['courseCapacity'],
-            prerequisiteCourseID: [req.body['prerequisiteCourseID']], // an array
-            forbiddenCourseID: [req.body['forbiddenCourseID']], // an array
-            credit: req.body['credit'],
-            outline: req.body['outline'],
-// ???
-            tutorialInfo: [req.body['tutid'], req.body['tuttime'], req.body['tutloc'], req.body['tutor'], req.body['tutcap']] 
-            // Tutorial form info. into one object arr??ay
+        Course.create(req.body)
+        .then((course) => {
+            if (!course) return res.json({success: false, message: 'unknown error'})
+            else return res.json({success: true, message: "Course created successfully."});
         })
-        .then(() => {
-            res.send("Course created successfully.");
-        })
+        .catch(message => res.json({success:false, message}))
     })
-    .catch(error => res.json({error}))
 });
 
 // update a course
