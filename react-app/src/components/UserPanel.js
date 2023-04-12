@@ -16,7 +16,7 @@ const UserPanel = () => {
     const { getCourse, setSearch } = useCourse();
     const { parseTimecodeArray } = useTime();
     const [ course, setCourse ] = useState({});
-    const { getUserArray, setSearchString } = useAdmin();
+    const { getUserArray, setSearchString, removeCourseFromUser } = useAdmin();
     const [ user, setUser ] = useState({});
     // This state is for controlling which array when adding course for user
     const [targetArrayName, setTargetArrayName] = useState('enrolledCourse')
@@ -88,7 +88,7 @@ const UserPanel = () => {
                     <User user={user} />
 {/* userCourseTable */}
                     <div id="userCourseTable" className="container">
-                        <UserCourseTable user={user} />
+                        <UserCourseTable user={user} remover={removeCourseFromUser} />
                         {/* <h3>Enrolled Courses</h3> */}
 {/* userCourseTable-enrolled */}
                         {/* <table id='userCourseTable-enrolled'>
@@ -338,7 +338,7 @@ const User = ({user}) => {
     )
 }
 
-const UserCourseTable = ({user}) => {
+const UserCourseTable = ({user, remover}) => {
     const [ enrolledCourse, setEnrolledCourse ] = useState({})
     const [ completedCourse, setCompletedCourse ] = useState({})
     const [ shoppingCartCourse, setShoppingCartCourse] = useState({})
@@ -368,6 +368,10 @@ const UserCourseTable = ({user}) => {
     //     setCompletedCourse({})
     //     setShoppingCartCourse({})
     // }, [enrolledCourse, completedCourse, shoppingCartCourse, user])
+
+    const handleRemove = useCallback((arrayName, courseID) => {
+        remover(user.userID, arrayName, courseID)
+    }, [remover, user])
 
     useEffect(() => {
         // const { enrolledCourse, completedCourse, shoppingCartCourse } = getUserByToken()
@@ -408,7 +412,7 @@ const UserCourseTable = ({user}) => {
                     </thead>
                     <tbody>
                     {user.enrolledCourse && user.enrolledCourse.map((enrolled, idx) => (
-                        <EnrolledTableRow enrolledCourse={enrolled.courseID} enrolledTutorial={enrolled.tutorialID} key={idx}/>
+                        <EnrolledTableRow enrolledCourse={enrolled.courseID} key={idx} remover={handleRemove}/>
                     ))}
                     </tbody>
                 </table>
@@ -430,8 +434,8 @@ const UserCourseTable = ({user}) => {
                     {user.shoppingCartCourse && user.shoppingCartCourse.map((shoppingCart, idx) => (
                         <ShoppingCartTableRow 
                             shoppingCartCourse={shoppingCart.courseID} 
-                            shoppingCartTutorial={shoppingCart.tutorialID} 
                             key={idx}
+                            remover={handleRemove}
                         />
                     ))}
                     </tbody>
@@ -454,7 +458,7 @@ const UserCourseTable = ({user}) => {
                     </thead>
                     <tbody>
                     {user.completedCourse && user.completedCourse.map((completed, idx) => (
-                        <CompletedTableRow completedCourse={completed.courseID} completedGrade={completed.grade} key={idx}/>
+                        <CompletedTableRow completedCourse={completed.courseID} completedGrade={completed.grade} key={idx} remover={handleRemove}/>
                     ))}
                     </tbody>
                 </table>
@@ -463,14 +467,8 @@ const UserCourseTable = ({user}) => {
     )
 }
 
-const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
+const EnrolledTableRow = ({enrolledCourse, remover}) => {
     const { course } = useCourse(enrolledCourse);
-    const { drop } = useEnroll()
-    const [dropTutorial, setDropTutorial] = useState('')
-
-    useEffect(() => { 
-        setDropTutorial(enrolledTutorial); 
-    }, [enrolledTutorial]); 
 
     return(
         <>
@@ -479,19 +477,15 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => {drop(course.courseID, dropTutorial); window.location.reload()}}><BsTrash3 /> Drop</button></td>
+                    <td><button onClick={() => {remover('enrolledCourse', course.courseID)}}><BsTrash3 /> Drop</button></td>
                 </tr>
             }
         </>
     )
 }
 
-const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
-    const { parseTimecodeArray } = useTime()
+const ShoppingCartTableRow = ({shoppingCartCourse, remover}) => {
     const { course } = useCourse(shoppingCartCourse);
-    const { removeFromCart } = useEnroll()
-    //console.log(course)
-    //console.log(shoppingCartTutorial)
 
     return(
         <>
@@ -500,7 +494,7 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => {removeFromCart(course.courseID); window.location.reload()}}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => {remover('shoppingCartCourse', course.courseID)}}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
         </>
@@ -514,10 +508,8 @@ const gpaToGrade = {
     1.0: 'D', 0.0: 'F'
 };
 
-const CompletedTableRow = ({completedCourse, completedGrade}) => {
+const CompletedTableRow = ({completedCourse, completedGrade, remover}) => {
     const { course } = useCourse(completedCourse)
-    const { removeFromCompletedCourse } = useEnroll()
-    //console.log(course)
 
     const calculateGrade = (gpa) => {
         return gpaToGrade[gpa] || '';
@@ -531,7 +523,7 @@ const CompletedTableRow = ({completedCourse, completedGrade}) => {
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
                     <td>{calculateGrade(completedGrade)}</td>
-                    <td><button onClick={() => {removeFromCompletedCourse(course.courseID); window.location.reload()}}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => {remover('completedCourse', course.courseID)}}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
         </>
@@ -597,6 +589,7 @@ const CourseAddTableRow = ({course, arrayName, grade, user}) => {
     const handleAddToUser = useCallback((e) => {
         // return if no user selected
         if (!Object.keys(user).length) return alert('No user is selected!')
+        // return if add to completed course array but no grade provided
         if (arrayName === 'completedCourse' && !grade.length) return alert('Please add grade for this function!')
         if (grade.length) addCourseToUser(user.userID, arrayName, course.courseID, Number(grade))
         else addCourseToUser(user.userID, arrayName, course.courseID, tutorialID)

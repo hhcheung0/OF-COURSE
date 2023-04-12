@@ -79,6 +79,21 @@ const useAdmin = () => {
         })
     }, [navigate])
 
+    // remove a course from user's array
+    const removeCourseFromUser = useCallback((userID, arrayName, courseID) => {
+        fetch('http://localhost:3001/admin/user/removeCourse', {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify({userID, arrayName, courseID})
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) navigate(0)
+            alert(json.message)
+        })
+    }, [navigate])
+
     // create a course, course: {
     //     courseID: String,
     //     courseName: String,
@@ -141,6 +156,7 @@ const useAdmin = () => {
         createUser,
         deleteUser,
         addCourseToUser,
+        removeCourseFromUser,
         createCourse,
         deleteCourse
     }
