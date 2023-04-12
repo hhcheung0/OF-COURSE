@@ -1118,6 +1118,8 @@ overflow-y:scroll;
   //     }
   //   }
   #courseCommentSection{
+    max-height: 15vh;
+    overflow-y:scroll;
     table{
       td{
         color: black;

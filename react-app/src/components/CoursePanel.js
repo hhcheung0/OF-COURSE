@@ -149,9 +149,9 @@ const CoursePanel = () => {
             <div className="row">
                 <div className="column">
 {/* courseComment */}
-                    <div id="courseCommentSection">
+                    
                     <CourseCommentSection course={course} />
-                    </div>
+                    
                     {/* <table id="courseComment">
                         <thead>
                             <tr>
@@ -516,13 +516,11 @@ const CourseCommentSection = ({course}) =>{
                         <th>Comment</th>
                         <th></th>
                     </tr>
-
+                </thead>
+                <tbody>
                     {course.comment && course.comment.map((comment,idx)=>(
                         <CourseCommentTable comment={comment} courseID={courseID} key ={idx}/>
                     ))}
-                </thead>
-                <tbody>
-
                 </tbody>
             </table>
         </div>
