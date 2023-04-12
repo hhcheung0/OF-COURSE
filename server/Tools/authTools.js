@@ -37,13 +37,29 @@ const adminCheck = (req, res, next) => {
         .then(user => {
             if (user.accessRight) next()
             else {
-                res.send({success: false, error: 'not admin'})
+                // res.redirect('/')
             }
         })
     }
     catch (error) {
-        return res.json({error})
+        // return res.redirect('/login')
     }
 }
 
-module.exports = { createToken, verifyToken, adminCheck }
+const userCheck = (req, res, next) => {
+    try {
+        const username = verifyToken(req.cookies.jwt)
+        User.findOne({username})
+        .then(user => {
+            if (user) next()
+            else {
+                // res.redirect('/login')
+            }
+        })
+    }
+    catch(error) {
+        // return res.redirect('/login')
+    }
+}
+
+module.exports = { createToken, verifyToken, adminCheck, userCheck }
