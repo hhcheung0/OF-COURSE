@@ -33,7 +33,7 @@ const useEnroll = () => {
     }
 
     const enroll = (courseID, tutorialID) => {
-        fetch('http://localhost:3001/enrolledCourse/enroll', {
+        return fetch('http://localhost:3001/enrolledCourse/enroll', {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-type' : 'application/json'},
@@ -102,11 +102,16 @@ const useEnroll = () => {
                             tutorialID: enrolledTutorialID
                         })
                     })
-                    .then(()=> {
-                        console.log("Swap successful")
-                        return json
+                    .then((response) => {
+                        const confirmed = window.alert("Swap successful", [
+                            {text: 'OK', onPress: window.location.reload()},
+                        ]); // Display the success/error message
                     })
-                    .then(window.location.reload())
+                    .catch((error) => {
+                        console.error(error);
+                        alert(error.error); // Display the error message
+                    });
+                    //.then(window.location.reload())
                 }else{
                     fetch('http://localhost:3001/enrolledCourse/enroll', {
                         method: 'PUT',
@@ -117,10 +122,15 @@ const useEnroll = () => {
                             tutorialID: enrolledTutorialID
                         })
                     })
-                    .then(()=> {
-                        console.log("Swap failed")
-                        return json
+                    .then((response) => {
+                        const confirmed = window.alert("Swap failed", [
+                            {text: 'OK', onPress: window.location.reload()},
+                        ]); // Display the success/error message
                     })
+                    .catch((error) => {
+                        console.error(error);
+                        alert(error.error); // Display the error message
+                    });
                 }
                 
             });
@@ -144,22 +154,23 @@ const useEnroll = () => {
     }
 
     const getEnrolledCredit = () => {
-        fetch('http://localhost:3001/data/user/getEnrolledCredit', {credentials: 'include'})
+        return fetch('http://localhost:3001/data/user/getEnrolledCredit', {credentials: 'include'})
         .then(res => res.json())
         .then(json => {
-            console.log(json)
+            //console.log(json)
             return json.credit
         });
     }
 
-    const getCompletedCredit = () => {
-        fetch('http://localhost:3001/data/user/getCompletedCredit', {credentials: 'include'})
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            return json.credit
-        });
-    }
+    const getGpa = async () => {
+        try {
+            const res = await fetch('http://localhost:3001/data/user/getGpa', { credentials: 'include' });
+            const json = await res.json();
+            return json.gpa;
+        } catch (error) {
+            console.error("Error fetching GPA:", error);
+        }
+    };
 
     return {
         addToCart,
@@ -169,7 +180,7 @@ const useEnroll = () => {
         swap,
         removeFromCompletedCourse,
         getEnrolledCredit,
-        getCompletedCredit
+        getGpa
     }
 }
 

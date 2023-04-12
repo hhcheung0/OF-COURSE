@@ -137,35 +137,31 @@ router.get('/admin/course/:courseID', (req, res) => {
 // enrolledID, prerequisiteCourseID, forbiddenCourseID, credit, tutorialInfo, outline, comment
 
 // create a course
-router.post('/admin/course/create', (req, res) => {
+router.post('/admin/course', adminCheck, (req, res) => {
     Course.findOne({courseID: req.body['courseID']})
     .then(existCourse => {
         if (existCourse) {
-            res.send("User already exists.");
+            return res.json({success: true, message: "course already exists."});
         }
-        Course.create({
-            courseID: req.body['courseID'],
-            courseName: req.body['courseName'],
-// ???
-            courseTime: [req.body['courseTime']], // how to store into an array?
-            courseLocation: req.body['courseLocation'],
-            instructor: req.body['instructor'],
-            department: req.body['department'],
-            courseCapacity: req.body['courseCapacity'],
-            prerequisiteCourseID: [req.body['prerequisiteCourseID']], // an array
-            forbiddenCourseID: [req.body['forbiddenCourseID']], // an array
-            credit: req.body['credit'],
-            outline: req.body['outline'],
-// ???
-            tutorialInfo: [req.body['tutid'], req.body['tuttime'], req.body['tutloc'], req.body['tutor'], req.body['tutcap']] 
-            // Tutorial form info. into one object arr??ay
+        Course.create(req.body)
+        .then((course) => {
+            if (!course) return res.json({success: false, message: 'unknown error'})
+            else return res.json({success: true, message: "Course created successfully."});
         })
-        .then(() => {
-            res.send("Course created successfully.");
-        })
+        .catch(message => res.json({success:false, message}))
     })
-    .catch(error => res.json({error}))
 });
+
+router.delete('/admin/course', adminCheck, (req, res) => {
+    Course.deleteOne({courseID: req.body.courseID})
+    .then((result) => {
+        // delete request can not be recognized
+        if (!result.acknowledged) return res.json({success: false, message: "unknown error"})
+        // if nothing is deleted
+        else if (!result.deletedCount) return res.json({success: false, message: "No course is found"})
+        else return res.json({success: true, message: 'Successfully deleted course'})
+    })
+})
 
 // update a course
 router.post('/admin/course/update', (req, res) => {
@@ -191,16 +187,5 @@ router.post('/admin/course/update', (req, res) => {
     })
     .catch(error => res.json({error}))
 });
-
-// delete a course
-router.post('/admin/course/delete', (req, res) => {
-    Course.findOneAndDelete({courseID: req.body['courseID']})
-    .then(course => {
-        if (!course) return res.send("Course not found.")
-        res.send("Delete course: " + courseName)
-    })
-    .catch(error => res.json({error}))
-});
-
 
 module.exports = router

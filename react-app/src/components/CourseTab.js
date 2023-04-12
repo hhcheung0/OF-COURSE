@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { BsArrowDown, BsArrowUp, BsTrash3} from 'react-icons/bs';
 
 // import hooks
@@ -8,27 +8,33 @@ import useTime from "../hooks/useTime";
 import useEnroll from "../hooks/useEnroll";
 
 var selected = []
-var credit = 0
 var creditCourse = []
-//missing total credits
+
 const CourseTab = () => {
 
     const [maxCredit, setMaxCredit] = useState('')
     const [enrolledCourse, setEnrolledCourse] = useState('')
     const [shoppingCartCourse, setShoppingCartCourse] = useState('')
     const [completedCourse, setCompletedCourse] = useState('')
+    const [enrolledCredit, setEnrolledCredit] = useState(0)
     const { getUserByToken } = useUser()
+    const { getEnrolledCredit } = useEnroll()
     
- 
+    
     useEffect(() => {
         const { maxCredit, enrolledCourse, shoppingCartCourse, completedCourse } = getUserByToken()
         setMaxCredit(maxCredit)
         setEnrolledCourse(enrolledCourse)
         setShoppingCartCourse(shoppingCartCourse)
         setCompletedCourse(completedCourse)
+
+        //get total enrolled courses credit
+        getEnrolledCredit().then(res => setEnrolledCredit(res));
+
     }, [getUserByToken])
 
     
+
     return (
         <div id="homepage-course-tab">
             <div id="homepage-course-up">
@@ -38,7 +44,10 @@ const CourseTab = () => {
                 </div>
                 
                 <div id ="homepage-course-upperright">
-                    <CreditTable maxCredit={maxCredit}/>
+                    <div id = "homepage-course-text">
+                        <p>total credits currently enrolled: {enrolledCredit}</p>
+                        <p>maximum credit limit: {maxCredit}</p>
+                    </div>
                     <SwapCourse enrolledCourse={enrolledCourse} shoppingCartCourse={shoppingCartCourse}/>
                 </div>
             </div>
@@ -48,18 +57,6 @@ const CourseTab = () => {
         </div>
     );
 };
-
-//incomplete credits currently enrolled
-const CreditTable = ({maxCredit}) => {
-    
-    return(
-        <div id = "homepage-course-text">
-            <p>total credits currently enrolled: 5</p>
-            <p>maximum credit limit: {maxCredit}</p>
-        </div>
-    )
-}
-//<p>total credits currently enrolled: {credit}</p>
 
 const EnrolledTable = ({enrolledCourse}) => {
 
@@ -102,19 +99,21 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
         setDropTutorial(enrolledTutorial); 
     }, [enrolledTutorial]); 
 
-    const creditclass = (courseID, courseCredit) => {
-        //console.log("%d", courseCredit)
-        //console.log(courseID)
-        
-        if(courseCredit > 0){
-            if (!creditCourse.includes(courseID)){
-                creditCourse.push(courseID)
-                credit = credit + courseCredit
-                //console.log(credit)
-            } 
+    const handleOnDrop = (courseID, tutorialID) => {
+        if (courseID !== null) {
+            drop(courseID, tutorialID)
+                .then((response) => {
+                    const confirmed = window.alert(response.error, [
+                        {text: 'OK', onPress: window.location.reload()},
+                    ]); // Display the success/error message
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert(error.error); // Display the error message
+                });
         }
-        
-    }
+    };
+
 
     return(
         <>
@@ -125,8 +124,8 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
                     <td>LEC</td>
                     <td>{parseTimecodeArray(course.courseTime).join(', ')}</td>
                     <td>{course.courseLocation}</td>
-                    <td className={creditclass(course.courseID, course.credit)}>{course.credit}</td>
-                    <td><button onClick={() => {drop(course.courseID, dropTutorial); window.location.reload()}}><BsTrash3 /> Drop</button></td>
+                    <td>{course.credit}</td>
+                    <td><button onClick={() => handleOnDrop(course.courseID, dropTutorial)}><BsTrash3 /> Drop</button></td>
                 </tr>
             }
             {course.tutorialInfo && 
@@ -152,7 +151,7 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
     //const [selectedCourses, setSelectedCourses] = useState([]);
     const { enroll } = useEnroll()
 
-    const toEnroll = () => {
+    const handleOnEnroll = () => {
         if(selected.length === 0){
             alert("Please select course in shopping cart!")
         }else{
@@ -161,18 +160,25 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
                 tutorialID = shoppingCartCourse.find(c => c.courseID === selected[i]).tutorialID;
                 console.log(tutorialID)
                 enroll(selected[i], tutorialID)
-                //alert message
+                .then((response) => {
+                    const confirmed = window.alert(response.error, [
+                        {text: 'OK', onPress: window.location.reload()},
+                    ]); // Display the success/error message
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert(error.error); // Display the error message
+                });
             }
 
         }
-        window.location.reload()
     }
 
     return(
         <>
             <div id="ShoppingCart">
                 <h2>Shopping Cart</h2>
-                <button onClick={toEnroll}>Enroll</button>
+                <button onClick={handleOnEnroll}>Select</button>
             </div>
             <table id ="homepage-table">
             <thead>
@@ -221,6 +227,21 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
         }
     };
 
+    const handleOnDelete = (courseID) => {
+        if (courseID !== null) {
+            removeFromCart(courseID)
+                .then((response) => {
+                    const confirmed = window.alert(response.error, [
+                        {text: 'OK', onPress: window.location.reload()},
+                    ]); // Display the success/error message
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert(error.error); // Display the error message
+                });
+        }
+    };
+
     return(
         <>
             {course && 
@@ -232,7 +253,7 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
                     <td>{parseTimecodeArray(course.courseTime).join(', ')}</td>
                     <td>{course.courseLocation}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => {removeFromCart(course.courseID); window.location.reload()}}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => handleOnDelete(course.courseID)}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
             {course.tutorialInfo && 
@@ -253,16 +274,20 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
     )
 }
 
-//missing average gpa
 const CompletedTable = ({completedCourse}) => {
-    var totalCredits = 0;
-    var totalGPA = 0;
+
+    const { getGpa } = useEnroll()
+    const [gpa, setGpa] = useState('')
+
+    useEffect(() => {
+        getGpa().then(res => setGpa(res.toFixed(2)));
+    }, [])
     
     return(
     <>
         <div id='CompletedTable'> 
             <h2>Completed Courses </h2> 
-            <p>GPA {totalGPA / totalCredits}/4.30</p> 
+            <p>GPA {gpa}/4.30</p> 
         </div>
         <table id ="homepage-table">
         <thead>
@@ -274,9 +299,13 @@ const CompletedTable = ({completedCourse}) => {
             </tr>
         </thead>
         <tbody>
-                {completedCourse && completedCourse.map((completed, idx) => (
-                    <CompletedTableRow completedCourse={completed.courseID} completedGrade={completed.grade} key={idx}/>
-                ))}
+            {completedCourse && completedCourse.map((completed, idx) => (
+                <CompletedTableRow 
+                    completedCourse={completed.courseID} 
+                    completedGrade={completed.grade} 
+                    key={idx}
+                />
+            ))}
         </tbody>
         </table>
     </>
@@ -296,8 +325,8 @@ const CompletedTableRow = ({completedCourse, completedGrade}) => {
     //console.log(course)
 
     const calculateGrade = (gpa) => {
-        return gpaToGrade[gpa] || '';
-    }
+        return gpaToGrade[gpa] || "";
+    };
 
     return(
         <>

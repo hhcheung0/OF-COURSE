@@ -11,8 +11,8 @@ const CompactRelax = ({courseArray}) =>{
     const {swap} = useEnroll()
 
     // This function write the class time into the timetable array
-    const writeIntoArray = (newcourseArray) => {
-        newcourseArray.forEach(({courseID, tutorialID}, colorIndex) => {
+    const writeIntoArray = useCallback((courseArray) => {
+        courseArray.forEach(({courseID, tutorialID}, colorIndex) => {
             // get the course
             const course = courses.find(course => course.courseID === courseID)
 
@@ -56,8 +56,7 @@ const CompactRelax = ({courseArray}) =>{
                 ))))
             })
         })
-        compactMode()
-    }
+    }, [weekdayList, courses])
 
     const timetableDistance = () =>{
         //outputs the distance criterion of a given timetableArray
@@ -101,9 +100,12 @@ const CompactRelax = ({courseArray}) =>{
         courseArray.forEach(({courseID, tutorialID}) => {
             // get the course
             const course = courses.find(course => course.courseID === courseID)
-            
+            console.log(timetableArray)
+            console.log(currArray)
             // if there is no course, return (usually in first render)
-            if (!course) return
+            if (!course) return             
+            
+            console.log(course.tutorialInfo)
 
             //only try to compare timetableDistance if the course has more than one tutorial
             if(course.tutorialInfo.length>1)
@@ -129,7 +131,8 @@ const CompactRelax = ({courseArray}) =>{
     }, [courseArray, writeIntoArray])
 
     return(
-        CompactRelax
+        <button onClick={()=>compactMode()}>Compact Mode</button>
     )
 
 }
+export default CompactRelax
