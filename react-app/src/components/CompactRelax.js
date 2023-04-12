@@ -11,7 +11,7 @@ const CompactRelax = ({courseArray}) =>{
     const {swap} = useEnroll()
 
     // This function write the class time into the timetable array
-    const writeIntoArray = useCallback((courseArray) => {
+    const writeIntoArray = (courseArray) => {
         courseArray.forEach(({courseID, tutorialID}, colorIndex) => {
             // get the course
             const course = courses.find(course => course.courseID === courseID)
@@ -56,7 +56,7 @@ const CompactRelax = ({courseArray}) =>{
                 ))))
             })
         })
-    }, [weekdayList, courses])
+    }
 
     const timetableDistance = () =>{
         //outputs the distance criterion of a given timetableArray
@@ -126,9 +126,6 @@ const CompactRelax = ({courseArray}) =>{
         })
         
     }
-    useEffect(() => {
-        writeIntoArray(courseArray)
-    }, [courseArray, writeIntoArray])
 
     return(
         <button onClick={()=>compactMode()}>Compact Mode</button>

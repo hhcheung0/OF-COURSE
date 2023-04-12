@@ -64,7 +64,6 @@ const Timetable = ({courseArray}) => {
         const isEqual = (course1, course2) => {
             return course1.courseID === course2.courseID && course1.type === course2.type
         }
-        console.log(timetableArray);
         const result = []
         for (const j in timetableArray) {
             const tableRow = []
