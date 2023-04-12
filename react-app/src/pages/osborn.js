@@ -18,7 +18,6 @@ const Osborn = () => {
                 <button onClick={() => swap("ARCH1290", "T01", "ARCH1290","T02")}>Swap</button>
                 <button onClick={() => removeComment("HIST1890","Testing")}>Remove Comment</button>
                 <button onClick={() => getEnrolledCredit()}>Get enrolled credit</button>
-                <button onClick={() => getCompletedCredit()}>Get completed credit</button>
             </div>
         </div>
     )
