@@ -40,7 +40,6 @@ const CoursePanel = () => {
                 </div>
                 <div className="column" id="courseCommentAdd">
                     <h3>To Add Comment:</h3>
-                    <br/>
                     <button><Link to="/course">Course Browsing Page</Link></button>
                 </div>
             </div>
@@ -190,6 +189,7 @@ const CourseForm = ({course}) => { // state
         setForbiddenCourseID([])
         setCredit('')
         setOutline('')
+        setTutorialFormNubmer([])
         setTutorialID('')
         setTutorialTime('')
         setTutorialLocation('')
@@ -233,6 +233,7 @@ const CourseForm = ({course}) => { // state
     }, [formType])
 
     useEffect(() => {
+        console.log("tutorialIndex: " +tutorialIndex)
         if (!course.tutorialInfo || course.tutorialInfo.length == 0){
             setTutorialID('')
             setTutorialTime('')
@@ -259,82 +260,70 @@ const CourseForm = ({course}) => { // state
                 <h3>Lecture</h3>
                     <label htmlFor="courseID">Course ID</label>
                     <input type="text" id="courseID" name="courseID" value={courseID} onChange={handleCourseIDChange} disabled={formType=="Update" ? true : false}/>
-                    <br/>
 
                     <label htmlFor="courseName">Course Name</label>
                     <input type="text" id="courseName" name="courseName" value={courseName} onChange={handleCourseNameChange}/>
-                    <br/>
 
                     <label htmlFor="courseTime">Time</label>
                     <input type="text" id="courseTime" name="courseTime" value={courseTime} onChange={handleCourseTimeChange} /> 
-                    <br/>
                     
                     <label htmlFor="courseLocation">Location</label>
                     <input type="text" id="courseLocation" name="courseLocation" value={courseLocation} onChange={handleCourseLocationChange}/>
-                    <br/>
 
                     <label htmlFor="instructor">Instructor</label>
                     <input type="text" id="instructor" name="instructor" value={instructor} onChange={handleInstructorChange}/>
-                    <br/>
 
                     <label htmlFor="department">Department</label>
                     <input type="text" id="department" name="department" value={department} onChange={handleDepartmentChange}/>
-                    <br/>
 
                     <label htmlFor="courseCapacity">Capacity</label>
                     <input type="text" id="courseCapacity" name="courseCapacity" value={courseCapacity} onChange={handleCourseCapacityChange}/>
-                    <br/>
 
                     <label htmlFor="prerequisiteCourseID">Pre-requisite Course(s)</label>
                     <input type="text" id="prerequisiteCourseID" name="prerequisiteCourseID" value={prerequisiteCourseID} onChange={handlePrerequisiteCourseIDChange}/>
-                    <br/>
 
                     <label htmlFor="forbiddenCourseID">Forbidden Course(s)</label>
                     <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={forbiddenCourseID} onChange ={handleForbidenCourseIDChange}/>
-                    <br/>
 
                     <label htmlFor="credit">Credit</label>
                     <input type="text" id="credit" name="credit" value={credit} onChange={handleCreditChange}/>
-                    <br/>
 
                     <label htmlFor="outline">Outline</label>
                     <input type="text" id="outline" name="outline" value={outline} onChange={handleOutlineChange}/>
-                    <br/>
                 </div>
                 <div className="column" id="right">
-                <h3>Tutorial 
-                    <select name="tutNo" id="tutNo" onChange={handleTutorialIndexChange} value={String(tutorialIndex)} >
-                    {tutorialFormNumber && tutorialFormNumber.map((number, idx) => (
-                        <option value={number} key={idx}> {number+1} </option>
-                    ))}
-                    </select> 
-                </h3>
-                    <label htmlFor="tutorialID">Tutorial ID</label>
-                    <input type="text" id="tutorialID" name="tutorialID" value={tutorialID} onChange={handleTutorialIDChange}/>
-                    <br/>
+                    <h3>Tutorial 
+                        <select name="tutNo" id="tutNo" onChange={handleTutorialIndexChange} value={String(tutorialIndex)} >
+                        {tutorialFormNumber && tutorialFormNumber.map((number, idx) => (
+                            <option value={number} key={idx}> {number+1} </option>
+                        ))}
+                        </select> 
+                    </h3>
+                        <label htmlFor="tutorialID">Tutorial ID</label>
+                        <input type="text" id="tutorialID" name="tutorialID" value={tutorialID} onChange={handleTutorialIDChange}/>
 
-                    <label htmlFor="tutorialTime">Time</label>
-                    <input type="text" id="tutorialTime" name="tutorialTime" value={tutorialTime} onChange={handleTutorialTimeChange}/>
-                    <br/>
+                        <label htmlFor="tutorialTime">Time</label>
+                        <input type="text" id="tutorialTime" name="tutorialTime" value={tutorialTime} onChange={handleTutorialTimeChange}/>
+                        
+                        <label htmlFor="tutoriaLocation">Location</label>
+                        <input type="text" id="tutoriaLocation" name="tutoriaLocation" value={tutorialLocation} onChange={handleTutorialLocationChange}/>
+
+                        <label htmlFor="tutor">Tutor</label>
+                        <input type="text" id="tutor" name="tutor" value={tutor} onChange={handleTutorChange}/>
+
+                        <label htmlFor="tutorialCapacity">Capacity</label>
+                        <input type="text" id="tutorialCapacity" name="tutorialCapacity" value={tutorialCapacity} onChange={handleTutorialCapacityChange}/>
                     
-                    <label htmlFor="tutoriaLocation">Location</label>
-                    <input type="text" id="tutoriaLocation" name="tutoriaLocation" value={tutorialLocation} onChange={handleTutorialLocationChange}/>
-                    <br/>
-
-                    <label htmlFor="tutor">Tutor</label>
-                    <input type="text" id="tutor" name="tutor" value={tutor} onChange={handleTutorChange}/>
-                    <br/>
-
-                    <label htmlFor="tutorialCapacity">Capacity</label>
-                    <input type="text" id="tutorialCapacity" name="tutorialCapacity" value={tutorialCapacity} onChange={handleTutorialCapacityChange}/>
-                    <br/>
-                
-                <button className="btn1"> Add/Update</button>
-                <button className="btn2" onClick={handleClear}>Clear</button>
+                    <div className="row">
+                        <div className="column d-flex justify-content-center">
+                            <button className="btn1"> {formType=="Update" ? "Update" : "Add"}</button>
+                        </div>
+                        <div className="column d-flex justify-content-center">
+                            <button className="btn2" onClick={handleClear}>Clear</button>
+                        </div>
+                    </div>
 
                 </div>
-                <br/>
-
             </form>
         </>
     )
