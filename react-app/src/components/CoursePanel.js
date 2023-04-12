@@ -20,162 +20,24 @@ const CoursePanel = () => {
     return (
         <div id="admin-course">
             <div className="row">
-{/* courseSearchbar */}
-                {/* <h3 id="courseSearchbar">Search <input type="text"></input></h3> */}
                 <div id='table-panel'>
                     <SearchBar controller={setSearch} />
                     <CourseTable courseArray={getCourse()} controller={setCourse} /> 
                 </div>
             </div>
-
-{/* courseTable */}
-            {/* <div class="row" id="courseTable">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Course ID</th>
-                            <th>Course Name</th>
-                            <th>Time</th>
-                            <th>Location</th>
-                            <th>Capacity</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>ARCH4180</td>
-                            <td>Applications of Architectural studies</td>
-                            <td>Tue 16:30-18:15</td>
-                            <td>MMW Room 1</td>
-                            <td>200</td>
-                            <td><button id="deleteCourse">🗑Delete</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> */}
             
-            <div className="row">
-{/* courseForm */}                    
+            <div className="row">                  
                     <div className="grid-container" id="courseForm">
                         <CourseForm course={course}/>
-                        {/* <form method="post"> */}
-{/* Left side of the form - Lecture*/}
-                        {/* <div class="column" id="left">
-                        <h3>Lecture</h3>
-                            <label for="courseID">Course ID</label>
-                            <input type="text" id="courseID" name="courseID" disabled/>
-                            <br/>
-
-                            <label for="courseName">Course Name</label>
-                            <input type="text" id="courseName" name="courseName"/>
-                            <br/>
-
-                            <label for="courseTime">Time</label>
-                            <input type="text" id="courseTime" name="courseTime"/>
-                            <br/>
-                            
-                            <label for="courseLocation">Location</label>
-                            <input type="text" id="courseLocation" name="courseLocation"/>
-                            <br/>
-
-                            <label for="instructor">Instructor</label>
-                            <input type="text" id="instructor" name="instructor"/>
-                            <br/>
-
-                            <label for="department">Department</label>
-                            <input type="text" id="department" name="department"/>
-                            <br/>
-
-                            <label for="courseCapacity">Capacity</label>
-                            <input type="text" id="courseCapacity" name="courseCapacity"/>
-                            <br/>
-
-                            <label for="prerequisiteCourseID">Pre-requisite Course(s)</label>
-                            <input type="text" id="prerequisiteCourseID" name="prerequisiteCourseID"/>
-                            <br/>
-
-                            <label for="forbiddenCourseID">Forbidden Course(s)</label>
-                            <input type="text" id="forbiddenCourseID" name="forbiddenCourseID"/>
-                            <br/>
-
-                            <label for="credit">Credit</label>
-                            <input type="text" id="credit" name="credit"/>
-                            <br/>
-
-                            <label for="outline">Outline</label>
-                            <input type="text" id="outline" name="outline"/>
-                            <br/>
-                        </div> */}
-{/* Right side of the form - Tutorial */}
-                        {/* <div class="column" id="right">
-                        <h3>Tutorial 
-                            <select name="tutNo" id="tutNo">
-                            <option value="one">1</option>  
-                            <option value="two">2</option>
-                            <option value="three">3</option>
-                            </select> 
-                        </h3>
-                            <label for="tutid">Tutorial ID</label>
-                            <input type="text" id="tutid" name="tutid"/>
-                            <br/>
-
-                            <label for="tuttime">Time</label>
-                            <input type="text" id="tuttime" name="tuttime"/>
-                            <br/>
-                            
-                            <label for="tutloc">Location</label>
-                            <input type="text" id="tutloc" name="tutloc"/>
-                            <br/>
-
-                            <label for="tutor">Tutor</label>
-                            <input type="text" id="tutor" name="tutor"/>
-                            <br/>
-
-                            <label for="tutcap">Capacity</label>
-                            <input type="text" id="tutcap" name="tutcap"/>
-                            <br/> */}
-                        {/* <input type="submit" class="btn1" value="Add/Update" />
-                        <input type="submit" class="btn2" value="Clear" /> */}
-                        {/* <button class="btn1">Add/Update</button>
-                        <button class="btn2">Clear</button>
-
-                        </div>
-                        <br/>
-
-                        </form> */}
                     </div>
             </div>
 
             <div className="row">
                 <div className="column">
-{/* courseComment */}
                     <div id="courseCommentSection">
-                    <CourseCommentSection course={course} />
+                        <CourseCommentSection course={course} />
                     </div>
-                    {/* <table id="courseComment">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Comment</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>I really enjoyed this course.</td>
-                                <td><button id="deleteUser">🗑Delete</button></td>
-                            </tr>
-
-                            <tr>
-                                <td>2</td>
-                                <td>FANTASTIC, OFFER MORE CLASSES.</td>
-                                <td><button id="deleteUser">🗑Delete</button></td>
-                            </tr>
-                        </tbody>
-                    </table> */}
                 </div>
-{/* courseCommentAdd */}
                 <div className="column" id="courseCommentAdd">
                     <h3>To Add Comment:</h3>
                     <br/>
@@ -264,8 +126,7 @@ const CourseTableRow = ({course, controller}) => {
 }
 
 const CourseForm = ({course}) => { // state
-    const { parseTimecodeArray } = useTime()
-    const [ tutorial, setTutorial ] = useState({}); // state, function to adjust the state
+    const [ formType, setFormType ] = useState('Add');
 
     const [ courseID, setCourseID ] = useState(''); // handleCourseIDChange?
     const [ courseName, setCourseName ] = useState('')
@@ -276,24 +137,23 @@ const CourseForm = ({course}) => { // state
     const [ courseCapacity, setCourseCapacity ] = useState('');
     const [ prerequisiteCourseID, setPrerequisiteCourseID ] = useState([]);
     const [ forbiddenCourseID, setForbiddenCourseID ] = useState([]);
-    const [ credit, setCredit ] = useState();
-    const [ outline, setOutline ] = useState({});
+    const [ credit, setCredit ] = useState('');
+    const [ outline, setOutline ] = useState("");
     const [ tutorialInfo, setTutorialInfo ] = useState([]);
-
-    // const [ comment, setComment ] = useState([]);
 
     const [ tutorialID, setTutorialID ] = useState('');
     const [ tutorialTime, setTutorialTime ] = useState('');
     const [ tutorialLocation, setTutorialLocation ] = useState([]);
     const [ tutor, setTutor ] = useState('');
-    const [ tutorialCapacity, setTutorialCapacity ] = useState();
+    const [ tutorialCapacity, setTutorialCapacity ] = useState('');
 
     const [ tutorialIndex, setTutorialIndex ] = useState(null)
     const [ tutorialFormNumber, setTutorialFormNubmer ] = useState([]);
 
     // console.log(course);
-    console.log(course.tutorialInfo);
+    //console.log(course.tutorialInfo);
 
+    const handleCourseIDChange = (e) => {console.log(e.target.id); setCourseID(e.target.value);}
     const handleCourseNameChange = (e) => { console.log(e.target.id); setCourseName(e.target.value); }
     const handleCourseTimeChange = (e) => { console.log(e.target.id); setCourseTime(e.target.value);  }
     const handleCourseLocationChange = (e) => {console.log(e.target.id); setCourseLocation(e.target.value); }
@@ -318,6 +178,7 @@ const CourseForm = ({course}) => { // state
     const handleClear = (e) => {
         e.preventDefault()
 
+        setFormType('Add')
         setCourseID('')
         setCourseName('')
         setCourseTime([])
@@ -334,10 +195,13 @@ const CourseForm = ({course}) => { // state
         setTutorialLocation('')
         setTutor('')
         setTutorialCapacity('')
-        console.log(outline)
+        //console.log(outline)
     }
 
     useEffect(() => {
+        if(course.courseID){
+            setFormType("Update")
+        }
         setCourseID(course.courseID)
         setCourseName(course.courseName)
         setCourseTime(course.courseTime)
@@ -351,9 +215,13 @@ const CourseForm = ({course}) => { // state
         setOutline(course.outline)
         // setComment(course.comment)
         setTutorialInfo(course.tutorialInfo)
-        if (!course.tutorialInfo) return
-        setTutorialIndex(course.tutorialInfo.length? 0: null)
-        setTutorialFormNubmer([...new Array(course.tutorialInfo.length).keys()])
+        if (!course.tutorialInfo || course.tutorialInfo.length == 0){
+            setTutorialIndex(null)
+            setTutorialFormNubmer([])
+        }else{
+            setTutorialIndex(0)
+            setTutorialFormNubmer([...new Array(course.tutorialInfo.length).keys()])
+        }
     }, [course])
 
     useEffect(() => {
@@ -361,21 +229,24 @@ const CourseForm = ({course}) => { // state
     }, [tutorialFormNumber])
 
     useEffect(() => {
-        if (course.tutorialInfo === []) 
-        return
-        setTutorialID('')
-        setTutorialTime('')
-        setTutorialLocation('')
-        setTutor('')
-        setTutorialCapacity('')
-        
-        if (!course.tutorialInfo || !course.tutorialInfo[Number(tutorialIndex)]) return
-        setTutorialID(course.tutorialInfo[Number(tutorialIndex)].tutorialID)
-        setTutorialTime(course.tutorialInfo[Number(tutorialIndex)].tutorialTime)
-        setTutorialLocation(course.tutorialInfo[Number(tutorialIndex)].tutorialLocation)
-        setTutor(course.tutorialInfo[Number(tutorialIndex)].tutor)
-        setTutorialCapacity(course.tutorialInfo[Number(tutorialIndex)].tutorialCapacity)
-    }, [tutorialIndex, setTutorialID, setTutorialTime, setTutorialLocation, setTutor, setTutorialCapacity, course])
+        console.log(formType)
+    }, [formType])
+
+    useEffect(() => {
+        if (!course.tutorialInfo || course.tutorialInfo.length == 0){
+            setTutorialID('')
+            setTutorialTime('')
+            setTutorialLocation('')
+            setTutor('')
+            setTutorialCapacity('')
+        }else{
+            setTutorialID(course.tutorialInfo[Number(tutorialIndex)].tutorialID)
+            setTutorialTime(course.tutorialInfo[Number(tutorialIndex)].tutorialTime)
+            setTutorialLocation(course.tutorialInfo[Number(tutorialIndex)].tutorialLocation)
+            setTutor(course.tutorialInfo[Number(tutorialIndex)].tutor)
+            setTutorialCapacity(course.tutorialInfo[Number(tutorialIndex)].tutorialCapacity)
+        }
+    }, [tutorialIndex])
 
     const handleTutorialIndexChange = (e) => {
         setTutorialIndex(e.target.value)
@@ -383,107 +254,92 @@ const CourseForm = ({course}) => { // state
 
     return(
         <>
-        {/* {course && */}
-                    <form>
-{/* Left side of the form - Lecture*/}
-                        <div className="column" id="left">
-                        <h3>Lecture</h3>
-                            <label htmlFor="courseID">Course ID</label>
-                            <input type="text" id="courseID" name="courseID" value={courseID} disabled/>
-                            <br/>
+            <form>
+                <div className="column" id="left">
+                <h3>Lecture</h3>
+                    <label htmlFor="courseID">Course ID</label>
+                    <input type="text" id="courseID" name="courseID" value={courseID} onChange={handleCourseIDChange} disabled={formType=="Update" ? true : false}/>
+                    <br/>
 
-                            <label htmlFor="courseName">Course Name</label>
-                            <input type="text" id="courseName" name="courseName" value={courseName} onChange={handleCourseNameChange}/>
-                            <br/>
+                    <label htmlFor="courseName">Course Name</label>
+                    <input type="text" id="courseName" name="courseName" value={courseName} onChange={handleCourseNameChange}/>
+                    <br/>
 
-                            <label htmlFor="courseTime">Time</label>
-                            <input type="text" id="courseTime" name="courseTime" value={courseTime} onChange={handleCourseTimeChange} /> 
-                            <br/>
-                            
-                            <label htmlFor="courseLocation">Location</label>
-                            <input type="text" id="courseLocation" name="courseLocation" value={courseLocation} onChange={handleCourseLocationChange}/>
-                            <br/>
+                    <label htmlFor="courseTime">Time</label>
+                    <input type="text" id="courseTime" name="courseTime" value={courseTime} onChange={handleCourseTimeChange} /> 
+                    <br/>
+                    
+                    <label htmlFor="courseLocation">Location</label>
+                    <input type="text" id="courseLocation" name="courseLocation" value={courseLocation} onChange={handleCourseLocationChange}/>
+                    <br/>
 
-                            <label htmlFor="instructor">Instructor</label>
-                            <input type="text" id="instructor" name="instructor" value={instructor} onChange={handleInstructorChange}/>
-                            <br/>
+                    <label htmlFor="instructor">Instructor</label>
+                    <input type="text" id="instructor" name="instructor" value={instructor} onChange={handleInstructorChange}/>
+                    <br/>
 
-                            <label htmlFor="department">Department</label>
-                            <input type="text" id="department" name="department" value={department} onChange={handleDepartmentChange}/>
-                            <br/>
+                    <label htmlFor="department">Department</label>
+                    <input type="text" id="department" name="department" value={department} onChange={handleDepartmentChange}/>
+                    <br/>
 
-                            <label htmlFor="courseCapacity">Capacity</label>
-                            <input type="text" id="courseCapacity" name="courseCapacity" value={courseCapacity} onChange={handleCourseCapacityChange}/>
-                            <br/>
+                    <label htmlFor="courseCapacity">Capacity</label>
+                    <input type="text" id="courseCapacity" name="courseCapacity" value={courseCapacity} onChange={handleCourseCapacityChange}/>
+                    <br/>
 
-                            <label htmlFor="prerequisiteCourseID">Pre-requisite Course(s)</label>
-                            <input type="text" id="prerequisiteCourseID" name="prerequisiteCourseID" value={prerequisiteCourseID} onChange={handlePrerequisiteCourseIDChange}/>
-                            <br/>
+                    <label htmlFor="prerequisiteCourseID">Pre-requisite Course(s)</label>
+                    <input type="text" id="prerequisiteCourseID" name="prerequisiteCourseID" value={prerequisiteCourseID} onChange={handlePrerequisiteCourseIDChange}/>
+                    <br/>
 
-                            <label htmlFor="forbiddenCourseID">Forbidden Course(s)</label>
-                            <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={forbiddenCourseID} onChange ={handleForbidenCourseIDChange}/>
-                            <br/>
+                    <label htmlFor="forbiddenCourseID">Forbidden Course(s)</label>
+                    <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={forbiddenCourseID} onChange ={handleForbidenCourseIDChange}/>
+                    <br/>
 
-                            <label htmlFor="credit">Credit</label>
-                            <input type="text" id="credit" name="credit" value={credit} onChange={handleCreditChange}/>
-                            <br/>
+                    <label htmlFor="credit">Credit</label>
+                    <input type="text" id="credit" name="credit" value={credit} onChange={handleCreditChange}/>
+                    <br/>
 
-                            <label htmlFor="outline">Outline</label>
-                            <input type="text" id="outline" name="outline" value={outline} onChange={handleOutlineChange}/>
-                            <br/>
-                        </div>
-{/* Right side of the form - Tutorial */}
-                        <div className="column" id="right">
-                        <h3>Tutorial 
-                            <select name="tutNo" id="tutNo" onChange={handleTutorialIndexChange} value={String(tutorialIndex)} >
-                            {tutorialFormNumber && tutorialFormNumber.map((number, idx) => (
-                                <option value={number} key={idx}> {number+1} </option>
-                            ))}
-                            {/* <option value={0}>1</option>  
-                            <option value={1}>2</option>
-                            <option value={2}>3</option> */}
-                            </select> 
-                        </h3>
-                            <label htmlFor="tutorialID">Tutorial ID</label>
-                            <input type="text" id="tutorialID" name="tutorialID" value={tutorialID} onChange={handleTutorialIDChange}/>
-                            <br/>
+                    <label htmlFor="outline">Outline</label>
+                    <input type="text" id="outline" name="outline" value={outline} onChange={handleOutlineChange}/>
+                    <br/>
+                </div>
+                <div className="column" id="right">
+                <h3>Tutorial 
+                    <select name="tutNo" id="tutNo" onChange={handleTutorialIndexChange} value={String(tutorialIndex)} >
+                    {tutorialFormNumber && tutorialFormNumber.map((number, idx) => (
+                        <option value={number} key={idx}> {number+1} </option>
+                    ))}
+                    </select> 
+                </h3>
+                    <label htmlFor="tutorialID">Tutorial ID</label>
+                    <input type="text" id="tutorialID" name="tutorialID" value={tutorialID} onChange={handleTutorialIDChange}/>
+                    <br/>
 
-                            <label htmlFor="tutorialTime">Time</label>
-                            <input type="text" id="tutorialTime" name="tutorialTime" value={tutorialTime} onChange={handleTutorialTimeChange}/>
-                            <br/>
-                            
-                            <label htmlFor="tutoriaLocation">Location</label>
-                            <input type="text" id="tutoriaLocation" name="tutoriaLocation" value={tutorialLocation} onChange={handleTutorialLocationChange}/>
-                            <br/>
+                    <label htmlFor="tutorialTime">Time</label>
+                    <input type="text" id="tutorialTime" name="tutorialTime" value={tutorialTime} onChange={handleTutorialTimeChange}/>
+                    <br/>
+                    
+                    <label htmlFor="tutoriaLocation">Location</label>
+                    <input type="text" id="tutoriaLocation" name="tutoriaLocation" value={tutorialLocation} onChange={handleTutorialLocationChange}/>
+                    <br/>
 
-                            <label htmlFor="tutor">Tutor</label>
-                            <input type="text" id="tutor" name="tutor" value={tutor} onChange={handleTutorChange}/>
-                            <br/>
+                    <label htmlFor="tutor">Tutor</label>
+                    <input type="text" id="tutor" name="tutor" value={tutor} onChange={handleTutorChange}/>
+                    <br/>
 
-                            <label htmlFor="tutorialCapacity">Capacity</label>
-                            <input type="text" id="tutorialCapacity" name="tutorialCapacity" value={tutorialCapacity} onChange={handleTutorialCapacityChange}/>
-                            <br/>
-                        {/* <input type="submit" class="btn1" value="Add/Update" />
-                        <input type="submit" class="btn2" value="Clear" /> */}
-                        
-                        <button className="btn1"> Add/Update</button>
-                        {/* <p>    </p> */}
-                        <button className="btn2" onClick={handleClear}>Clear</button>
+                    <label htmlFor="tutorialCapacity">Capacity</label>
+                    <input type="text" id="tutorialCapacity" name="tutorialCapacity" value={tutorialCapacity} onChange={handleTutorialCapacityChange}/>
+                    <br/>
+                
+                <button className="btn1"> Add/Update</button>
+                <button className="btn2" onClick={handleClear}>Clear</button>
 
-                        </div>
-                        <br/>
+                </div>
+                <br/>
 
-                    </form>
-                    {/* // onChange={handleChange} */}
-        {/* } */}
+            </form>
         </>
     )
 }
-// const changeSlash = (courseArray) =>{
-//     if (courseArray === "")
-//         return "/";
-//     return courseArray;
-// }
+
 const CourseCommentTable = ({courseID, comment}) =>{
     const { removeComment} = useComment();
     const [activeTab, setActiveTab] = useState("coursePanelTab");
@@ -505,8 +361,6 @@ const CourseCommentSection = ({course}) =>{
         setComment(course.comment)
         setCourseID(course.courseID)
     }, [comment, courseID, course])
-
-    // <input type="text" id="forbiddenCourseID" name="forbiddenCourseID" value={forbiddenCourseID} onChange ={handleForbidenCourseIDChange}/>
 
     return(
         <div id="courseCommentSection">
