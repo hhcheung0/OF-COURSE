@@ -138,7 +138,6 @@ router.get('/admin/course/:courseID', (req, res) => {
 
 // create a course
 router.post('/admin/course', adminCheck, (req, res) => {
-    console.log(req.body)
     Course.findOne({courseID: req.body['courseID']})
     .then(existCourse => {
         if (existCourse) {
@@ -152,6 +151,17 @@ router.post('/admin/course', adminCheck, (req, res) => {
         .catch(message => res.json({success:false, message}))
     })
 });
+
+router.delete('/admin/course', adminCheck, (req, res) => {
+    Course.deleteOne({courseID: req.body.courseID})
+    .then((result) => {
+        // delete request can not be recognized
+        if (!result.acknowledged) return res.json({success: false, message: "unknown error"})
+        // if nothing is deleted
+        else if (!result.deletedCount) return res.json({success: false, message: "No course is found"})
+        else return res.json({success: true, message: 'Successfully deleted course'})
+    })
+})
 
 // update a course
 router.post('/admin/course/update', (req, res) => {
@@ -177,16 +187,5 @@ router.post('/admin/course/update', (req, res) => {
     })
     .catch(error => res.json({error}))
 });
-
-// delete a course
-router.post('/admin/course/delete', (req, res) => {
-    Course.findOneAndDelete({courseID: req.body['courseID']})
-    .then(course => {
-        if (!course) return res.send("Course not found.")
-        res.send("Delete course: " + courseName)
-    })
-    .catch(error => res.json({error}))
-});
-
 
 module.exports = router
