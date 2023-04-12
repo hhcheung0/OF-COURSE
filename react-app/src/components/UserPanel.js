@@ -69,7 +69,7 @@ const UserPanel = () => {
                         </tbody>
                     </table> */}
                 <br></br>
-                <br></br>
+
 {/* userForm */}
                 <UserForm />
             </div>
@@ -225,6 +225,7 @@ const UserSearchBar = (props) => {
 const UserTable = ({userArray, controller}) => {
 
     return (
+        <div class="row" id="table-user">
             <table id='userTable'>
                 <thead>
                     <tr>
@@ -241,6 +242,7 @@ const UserTable = ({userArray, controller}) => {
                     ))}
                 </tbody>
             </table>
+        </div>
     )
 }
 const UserTableRow = ({user, controller}) => {
@@ -296,7 +298,7 @@ const UserForm = () => {
 
                     <p><label htmlfor="password">Password</label>
                     <input type="password" id="password" name="password" onChange={handlePasswordChange}/></p>
-                    <br/>
+                    
 
                     <div id='toggle-button-panel'>
                             <input type="radio" name="accessRight" id="Student" value={true} onChange={handleAccessRightChange} />
@@ -307,7 +309,7 @@ const UserForm = () => {
                     <button onClick={() => createUser({username: username, password: password, accessRight: accessRight})}>Add</button>
                     {/* // createUser({username: "admin", password:"admin", accessRight: true}) */}
                     {/* <input type="submit" value="Add/Update" /> */}
-                    <br/>
+                    
                 </form>
                 </div>
         </>
@@ -386,6 +388,7 @@ const UserCourseTable = ({user}) => {
         <>
             <h3>Enrolled Courses</h3>
 {/* userCourseTable-enrolled */}
+            <div class="row" id="table-courses">
                 <table id='userCourseTable-enrolled'>
                     <thead>
                         <tr>
@@ -402,9 +405,10 @@ const UserCourseTable = ({user}) => {
                     </tbody>
                 </table>
                 <br></br>
-
+            </div>
                 <h3>Shopping Cart</h3>
 {/* userCourseTable-shoppingCart */}
+            <div class="row" id="table-courses">
                 <table id='userCourseTable-shoppingCart'>
                     <thead>
                         <tr>
@@ -425,10 +429,11 @@ const UserCourseTable = ({user}) => {
                     </tbody>
                 </table>
                 <br></br>
-
+            </div>
 
                 <h3>Completed Courses</h3>
 {/* userCourseTable-completed */}
+            <div class="row" id="table-courses">
                 <table id='userCourseTable-completed'>
                     <thead>
                         <tr>
@@ -445,6 +450,7 @@ const UserCourseTable = ({user}) => {
                     ))}
                     </tbody>
                 </table>
+            </div>
         </>
     )
 }

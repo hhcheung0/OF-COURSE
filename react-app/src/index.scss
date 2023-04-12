@@ -774,7 +774,7 @@ table{
   }
   table{    
     border: 2px solid #A7D094;
-    width: 100%;
+    //width: 100%;
     color: $primary-color;
     max-height: 50%;
     overflow-y:scroll;
@@ -805,6 +805,10 @@ table{
   #userCourseTable{
     border: 2px solid #A7D094;
     width: 100%;
+    #userCourseTable-enrolled{
+      height: 10px;
+      overflow-y: scroll;
+    }
   }
   #userSearchbar {
     display: flex;
@@ -818,6 +822,10 @@ table{
       outline: none;
     }
   }
+  #userTable {
+    height: 500px;
+    overflow-y: scroll;
+  }
   #userForm{
     display: flex;
     background-color: #277582;
@@ -827,6 +835,7 @@ table{
     justify-content: center;
     align-items: center;
     position: relative;
+    max-height: 30%;
     // h2{
     //   // color: white;
     //   // padding: 0 0 30px 30px; 
@@ -888,7 +897,7 @@ table{
 }
 #table-container {
     flex: 1;
-    max-height: 30vh;
+    max-height: 13vh;
     overflow-y:scroll;
     #userCourseTable-add {
       border: 2px solid #A7D094;
@@ -916,6 +925,16 @@ table{
     }
 }
 
+#table-user {
+flex: 1;
+max-height: 40%;
+overflow-y:scroll;
+}
+#table-courses {
+flex: 1;
+max-height: 10vh;
+overflow-y:scroll;
+}
 // #userCourseTable-add{
 //   button{
 //     color: white;
