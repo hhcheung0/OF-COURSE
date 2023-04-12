@@ -494,7 +494,7 @@ const ShoppingCartTableRow = ({shoppingCartCourse, remover}) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => {remover('shoppingCartCourse', course.courseID)}}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => {remover('shoppingCartCourse', course.courseID)}}><BsTrash3 /> Remove</button></td>
                 </tr>
             }
         </>

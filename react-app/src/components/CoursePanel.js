@@ -8,6 +8,7 @@ import useTime from '../hooks/useTime'
 import useConstant from '../hooks/useConstant'
 import useUser from "../hooks/useUser";
 import useComment from "../hooks/useComment";
+import useAdmin from "../hooks/useAdmin";
 
 
 const CoursePanel = () => {
@@ -16,19 +17,20 @@ const CoursePanel = () => {
     const { parseTimecodeArray } = useTime();
     const [ course, setCourse ] = useState({});
     const { removeComment } = useComment();
+    const { createCourse,deleteCourse } = useAdmin();
 
     return (
         <div id="admin-course">
             <div className="row">
                 <div id='table-panel'>
                     <SearchBar controller={setSearch} />
-                    <CourseTable courseArray={getCourse()} controller={setCourse} /> 
+                    <CourseTable courseArray={getCourse()} controller={setCourse} deleter={deleteCourse}/> 
                 </div>
             </div>
             
             <div className="row">                  
                     <div className="grid-container" id="courseForm">
-                        <CourseForm course={course}/>
+                        <CourseForm course={course} creater={createCourse}/>
                     </div>
             </div>
 
@@ -69,7 +71,7 @@ const SearchBar = (props) => {
     )
 }
 
-const CourseTable = ({courseArray, controller}) => {
+const CourseTable = ({courseArray, controller, deleter}) => {
 
     return (
         <div className="row" id='table-container'>
@@ -87,7 +89,7 @@ const CourseTable = ({courseArray, controller}) => {
 
                 <tbody>
                     {courseArray && courseArray.map((course, idx) => (
-                        <CourseTableRow course={course} key={idx} controller={controller} />
+                        <CourseTableRow course={course} key={idx} controller={controller} deleter={deleter}/>
                     ))}
                 </tbody>
             </table>
@@ -95,7 +97,7 @@ const CourseTable = ({courseArray, controller}) => {
     )
 }
 
-const CourseTableRow = ({course, controller}) => {
+const CourseTableRow = ({course, controller, deleter}) => {
     const { parseTimecodeArray } = useTime()
 
     return (
@@ -117,14 +119,14 @@ const CourseTableRow = ({course, controller}) => {
                 </td>
                 <td>{course.courseLocation}</td>
                 <td>{course.courseCapacity}</td>
-                <td><button id="deleteCourse">🗑Delete</button></td>
+                <td><button onClick={() => {deleter(course.courseID)}}>🗑Delete</button></td>
             </tr>
         }
         </>
     )
 }
 
-const CourseForm = ({course}) => { // state
+const CourseForm = ({course, creater}) => { // state
     const [ formType, setFormType ] = useState('Add');
 
     const [ courseID, setCourseID ] = useState(''); // handleCourseIDChange?
@@ -189,16 +191,53 @@ const CourseForm = ({course}) => { // state
         setForbiddenCourseID([])
         setCredit('')
         setOutline('')
-        setTutorialFormNubmer([])
         setTutorialID('')
         setTutorialTime('')
         setTutorialLocation('')
         setTutor('')
         setTutorialCapacity('')
+        setTutorialIndex(null)
+        setTutorialFormNubmer([])
         //console.log(outline)
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        let course = {
+            courseID : courseID,
+            courseName : courseName,
+            courseTime : courseTime.split(','),
+            courseLocation : courseLocation,
+            department :　department,
+            instructor : instructor,
+            courseCapacity : Number(courseCapacity),
+            enrolledID: [],
+            prerequisiteCourseID : prerequisiteCourseID.split(','),
+            forbiddenCourseID : forbiddenCourseID.split(','),
+            credit : Number(credit),
+            outline : outline,
+            comment : [],
+            tutorialInfo : [{
+                tutorialID: tutorialID,
+                tutorialTime : tutorialTime.split(','),
+                tutorialLocation : tutorialLocation,
+                tutor : tutor,
+                tutorialCapacity : Number(tutorialCapacity),
+                enrolledID: []
+            }]
+        };
+
+        //console.log(course)
+        if(formType == "Add"){
+            creater(course)
+        }else{
+
+        }
+    }
+
     useEffect(() => {
+        console.log(course)
         if(course.courseID){
             setFormType("Update")
         }
@@ -224,6 +263,7 @@ const CourseForm = ({course}) => { // state
         }
     }, [course])
 
+    /*
     useEffect(() => {
         console.log(tutorialFormNumber)
     }, [tutorialFormNumber])
@@ -231,10 +271,11 @@ const CourseForm = ({course}) => { // state
     useEffect(() => {
         console.log(formType)
     }, [formType])
+    */
 
     useEffect(() => {
-        console.log("tutorialIndex: " +tutorialIndex)
-        if (!course.tutorialInfo || course.tutorialInfo.length == 0){
+        //console.log("tutorialIndex: " +tutorialIndex)
+        if (tutorialIndex == null){
             setTutorialID('')
             setTutorialTime('')
             setTutorialLocation('')
@@ -316,7 +357,7 @@ const CourseForm = ({course}) => { // state
                     
                     <div className="row">
                         <div className="column d-flex justify-content-center">
-                            <button className="btn1"> {formType=="Update" ? "Update" : "Add"}</button>
+                            <button className="btn1" onClick={handleSubmit}> {formType=="Update" ? "Update" : "Add"}</button>
                         </div>
                         <div className="column d-flex justify-content-center">
                             <button className="btn2" onClick={handleClear}>Clear</button>
