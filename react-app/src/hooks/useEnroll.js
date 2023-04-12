@@ -144,7 +144,7 @@ const useEnroll = () => {
     }
 
     const getEnrolledCredit = () => {
-        fetch('http://localhost:3001/data/user/getEnrolledCredit', {credentials: 'include'})
+        return fetch('http://localhost:3001/data/user/getEnrolledCredit', {credentials: 'include'})
         .then(res => res.json())
         .then(json => {
             console.log(json)
