@@ -62,6 +62,23 @@ const useAdmin = () => {
         })
     }, [navigate])
 
+    // add a course into user's array
+    // if add to complete course array: addCourseToUser(userID, completedCourse, courseID, grade)
+    // if others: addCourseToUser(userID, completedCourse, courseID)
+    const addCourseToUser = useCallback((userID, arrayName, courseID, ...grade) => {
+        fetch('http://localhost:3001/admin/user/addCourse', {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify({userID, arrayName, courseID, ...grade})
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) navigate(0)
+            alert(json.message)
+        })
+    }, [navigate])
+
     // create a course, course: {
     //     courseID: String,
     //     courseName: String,
@@ -123,6 +140,7 @@ const useAdmin = () => {
         getUserArray,
         createUser,
         deleteUser,
+        addCourseToUser,
         createCourse,
         deleteCourse
     }

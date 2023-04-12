@@ -71,6 +71,23 @@ router.delete('/admin/user', adminCheck, (req, res) => {
     })
 })
 
+// add course into user's array
+router.put('/admin/user/addCourse', adminCheck, (req, res) => {
+    Course.findOne({courseID: req.body.courseID})
+    .then((course) => {
+        if (!course) return res.json({success: false, message: 'Course is not found'})
+        User.updateOne({userID: req.body.userID}, {
+            $push: {[req.body.arrayName]: req.body.grade? {courseID: course.courseID, grade: req.body.grade}: {courseID: course.courseID, tutorialID: ""}}
+        })
+        .then((result) => {
+            if (!result.acknowledged) return res.json({success: false, message: "unknown error"})
+            else if (!matchedCount) return res.json({success: false, message: "user is not found"})
+            else if (!modifiedCount) return res.json({success: false, message: "cannot update user"})
+            else return res.json({success: true, message: "Successfully added course to user"})
+        })
+    })
+})
+
 // update an user (username & password only)
 router.post('/admin/user/updateUser', (req, res) => {
     User.findOneAndUpdate({username: req.body['username']}, {
