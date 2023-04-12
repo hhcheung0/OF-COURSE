@@ -18,7 +18,7 @@ const TimetableTab = ({courseArray}) => {
         pdf.save(pdfFileName); 
     };
 
-    const Upperpart = () => {
+    const Upperpart = ({courseArray}) => {
         return(
             <>
                 <CompactRelax courseArray={courseArray}/>
@@ -33,7 +33,7 @@ const TimetableTab = ({courseArray}) => {
     return (
         <div id='homepage-timetable-tab'>
            <div id='homepage-timetable-up'>
-                <Upperpart />
+                <Upperpart courseArray={courseArray}/>
            </div>
            <div id='homepage-timetable-bottom' ref={exportRef}>
                 {/* <Timetable /> */}
