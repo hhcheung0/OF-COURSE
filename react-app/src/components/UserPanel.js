@@ -225,7 +225,7 @@ const UserSearchBar = (props) => {
 const UserTable = ({userArray, controller}) => {
 
     return (
-        <div class="row" id="table-user">
+        <div className="row" id="table-user">
             <table id='userTable'>
                 <thead>
                     <tr>
@@ -296,7 +296,7 @@ const UserForm = () => {
                     <input type="text" id="username" name="username" onChange={handleUsernameChange} /></p>
                     <br/>
 
-                    <p><label htmlfor="password">Password</label>
+                    <p><label htmlFor="password">Password</label>
                     <input type="password" id="password" name="password" onChange={handlePasswordChange}/></p>
                     
 
@@ -388,7 +388,7 @@ const UserCourseTable = ({user}) => {
         <>
             <h3>Enrolled Courses</h3>
 {/* userCourseTable-enrolled */}
-            <div class="row" id="table-courses">
+            <div className="row" id="table-courses">
                 <table id='userCourseTable-enrolled'>
                     <thead>
                         <tr>
@@ -408,7 +408,7 @@ const UserCourseTable = ({user}) => {
             </div>
                 <h3>Shopping Cart</h3>
 {/* userCourseTable-shoppingCart */}
-            <div class="row" id="table-courses">
+            <div className="row" id="table-courses">
                 <table id='userCourseTable-shoppingCart'>
                     <thead>
                         <tr>
@@ -433,7 +433,7 @@ const UserCourseTable = ({user}) => {
 
                 <h3>Completed Courses</h3>
 {/* userCourseTable-completed */}
-            <div class="row" id="table-courses">
+            <div className="row" id="table-courses">
                 <table id='userCourseTable-completed'>
                     <thead>
                         <tr>
