@@ -1,5 +1,5 @@
 // ADMIN PAGE
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useCallback} from "react";
 import { BrowserRouter, Route, Routes, Link, useLocation, useNavigate } from "react-router-dom";
 import { BsTrash3} from 'react-icons/bs';
 
@@ -16,8 +16,16 @@ const UserPanel = () => {
     const { getCourse, setSearch } = useCourse();
     const { parseTimecodeArray } = useTime();
     const [ course, setCourse ] = useState({});
-    const { getUserArray, setSearchString, createUser, deleteUser } = useAdmin();
+    const { getUserArray, setSearchString } = useAdmin();
     const [ user, setUser ] = useState({});
+    // This state is for controlling which array when adding course for user
+    const [targetArrayName, setTargetArrayName] = useState('enrolledCourse')
+    // For storing input grade
+    const [grade, setGrade] = useState('')
+
+    const handleSelect = useCallback((e) => {
+        setTargetArrayName(e.target.value)
+    }, [])
 
     return (
         <div id="admin-user">
@@ -155,21 +163,21 @@ const UserPanel = () => {
                             {/* <div> */}
                                 <h3>Add Courses</h3>
                                     <SearchBar controller={setSearch} />
-                                <select name="addCourseCategory">
-                                    <option value="enrolledCourses">Enrolled Courses</option>  
-                                    <option value="shoppingCart">Shopping Cart</option>
-                                    <option value="passedCourses">Completed Courses</option>
+                                <select name="addCourseCategory" value={targetArrayName} onChange={handleSelect}>
+                                    <option value="enrolledCourse">Enrolled Courses</option>  
+                                    <option value="shoppingCartCourse">Shopping Cart</option>
+                                    <option value="completedCourse">Completed Courses</option>
                                 </select> 
                             {/* </div> */}
                             <div>
                                 <h5>Completed Course Grade:
                                     <br></br>
-                                <input type="text"></input></h5>
+                                <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)}></input></h5>
                             </div>
                         </div>
                         
 {/* userCourseTable-add */}
-                        <CourseAddTable courseArray={getCourse()} controller={setCourse} /> 
+                        <CourseAddTable courseArray={getCourse()} arrayName={targetArrayName} grade={grade} user={user}  /> 
                         {/* <table id='userCourseTable-add'>
                             <thead>
                                 <tr>
@@ -550,7 +558,7 @@ const SearchBar = (props) => {
     )
 }
 
-const CourseAddTable = ({courseArray, controller}) => {
+const CourseAddTable = ({courseArray, arrayName, grade, user}) => {
 
     return (
         <div className="row" id='table-container'>
@@ -562,21 +570,37 @@ const CourseAddTable = ({courseArray, controller}) => {
                         <th>Time</th>
                         <th>Location</th>
                         <th>Capacity</th>
+                        <th>Tutorial</th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {courseArray && courseArray.map((course, idx) => (
-                        <CourseAddTableRow course={course} key={idx} controller={controller} />
+                        <CourseAddTableRow course={course} key={idx} arrayName={arrayName} grade={grade} user={user} />
                     ))}
                 </tbody>
             </table>
         </div>
     )
 }
-const CourseAddTableRow = ({course, controller}) => {
+const CourseAddTableRow = ({course, arrayName, grade, user}) => {
+    // For storing selected tutorial
+    const [tutorialID, setTutorialID] = useState(course.tutorialInfo.length? 'T01': '')
     const { parseTimecodeArray } = useTime()
+    const { addCourseToUser } = useAdmin()
+
+    const handleSelect = useCallback((e) => {
+        setTutorialID(e.target.value)
+    }, [])
+
+    const handleAddToUser = useCallback((e) => {
+        // return if no user selected
+        if (!Object.keys(user).length) return alert('No user is selected!')
+        if (arrayName === 'completedCourse' && !grade.length) return alert('Please add grade for this function!')
+        if (grade.length) addCourseToUser(user.userID, arrayName, course.courseID, Number(grade))
+        else addCourseToUser(user.userID, arrayName, course.courseID, tutorialID)
+    }, [user, arrayName, course, grade, addCourseToUser, tutorialID])
 
     return (
         <>
@@ -593,7 +617,14 @@ const CourseAddTableRow = ({course, controller}) => {
                 </td>
                 <td>{course.courseLocation}</td>
                 <td>{course.courseCapacity}</td>
-                <td><button id="addCourse">Add</button></td>
+                <td>
+                    <select name="tutorialID" value={tutorialID} onChange={handleSelect}>
+                        {course.tutorialInfo && course.tutorialInfo.map((tutorial, idx) => (
+                            <option key={idx} value={tutorial.tutorialID}>{tutorial.tutorialID}</option>
+                        ))}
+                    </select>
+                </td>
+                <td><button id="addCourse" onClick={handleAddToUser}>Add</button></td>
             </tr>
         }
         </>

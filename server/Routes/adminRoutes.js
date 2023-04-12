@@ -77,12 +77,12 @@ router.put('/admin/user/addCourse', adminCheck, (req, res) => {
     .then((course) => {
         if (!course) return res.json({success: false, message: 'Course is not found'})
         User.updateOne({userID: req.body.userID}, {
-            $push: {[req.body.arrayName]: req.body.grade? {courseID: course.courseID, grade: req.body.grade}: {courseID: course.courseID, tutorialID: ""}}
+            $push: {[req.body.arrayName]: req.body.arrayName === 'completedCourse'? {courseID: course.courseID, grade: req.body.residual}: {courseID: course.courseID, tutorialID: req.body.residual}}
         })
         .then((result) => {
             if (!result.acknowledged) return res.json({success: false, message: "unknown error"})
-            else if (!matchedCount) return res.json({success: false, message: "user is not found"})
-            else if (!modifiedCount) return res.json({success: false, message: "cannot update user"})
+            else if (!result.matchedCount) return res.json({success: false, message: "user is not found"})
+            else if (!result.modifiedCount) return res.json({success: false, message: "cannot update user"})
             else return res.json({success: true, message: "Successfully added course to user"})
         })
     })
