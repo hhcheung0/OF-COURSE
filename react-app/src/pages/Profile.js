@@ -104,9 +104,9 @@ const Icon = () => {
             break;
             case 2: setIconFileName("/bibi.jpg")
             break;
-            case 3: setIconFileName("/man.jpg")
+            case 3: setIconFileName("/slamdunk.gif")
             break;
-            case 4: setIconFileName("/mario.jpg")
+            case 4: setIconFileName("/slamdunk2.jpeg")
             break;
             case 5: setIconFileName("/kenji.jpg")
             break;
@@ -153,8 +153,8 @@ const Icon = () => {
                 <div className="d-flex justify-content-center">
                     <img id="icon-1" src="/nekko.jpg" alt="" onClick={e => changeIcon(1)}/>
                     <img id="icon-2" src="/bibi.jpg" alt="" onClick={e => changeIcon(2)}/>
-                    <img id="icon-3" src="/man.jpg" alt="" onClick={e => changeIcon(3)}/>
-                    <img id="icon-4" src="/mario.jpg" alt="" onClick={e => changeIcon(4)}/>
+                    <img id="icon-3" src="/slamdunk.gif" alt="" onClick={e => changeIcon(3)}/>
+                    <img id="icon-4" src="/slamdunk2.jpeg" alt="" onClick={e => changeIcon(4)}/>
                     <img id="icon-5" src="/kenji.jpg" alt="" onClick={e => changeIcon(5)}/>
                 </div>
                 <div className="d-flex justify-content-center">
