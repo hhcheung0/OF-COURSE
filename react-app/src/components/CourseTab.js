@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect } from "react"
 import { BsArrowDown, BsArrowUp, BsTrash3} from 'react-icons/bs';
 
 // import hooks
@@ -8,7 +8,6 @@ import useTime from "../hooks/useTime";
 import useEnroll from "../hooks/useEnroll";
 
 var selected = []
-var creditCourse = []
 
 const CourseTab = () => {
 
@@ -92,8 +91,6 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
     const { course } = useCourse(enrolledCourse);
     const { drop } = useEnroll()
     const [dropTutorial, setDropTutorial] = useState('')
-    //console.log(course)
-    //console.log(enrolledTutorial)
 
     useEffect(() => { 
         setDropTutorial(enrolledTutorial); 
@@ -108,7 +105,6 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
                     ]); // Display the success/error message
                 })
                 .catch((error) => {
-                    console.error(error);
                     alert(error.error); // Display the error message
                 });
         }
@@ -158,7 +154,6 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
             for(var i = 0; i < selected.length; i++){
                 var tutorialID = null
                 tutorialID = shoppingCartCourse.find(c => c.courseID === selected[i]).tutorialID;
-                console.log(tutorialID)
                 enroll(selected[i], tutorialID)
                 .then((response) => {
                     const confirmed = window.alert(response.error, [
@@ -166,7 +161,6 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
                     ]); // Display the success/error message
                 })
                 .catch((error) => {
-                    console.error(error);
                     alert(error.error); // Display the error message
                 });
             }
@@ -212,8 +206,6 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
     const { parseTimecodeArray } = useTime()
     const { course } = useCourse(shoppingCartCourse);
     const { removeFromCart } = useEnroll()
-    //console.log(course)
-    //console.log(shoppingCartTutorial)
 
     //const [checkedState, setCheckedState] = useState('');
     
@@ -221,7 +213,6 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
     const handleOnChange = (courseID) => {
         if (!selected.includes(courseID)){
             selected.push(courseID);
-            console.log(selected)
         } else {
             selected.splice(courseID, 1)
         }
@@ -236,7 +227,6 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
                     ]); // Display the success/error message
                 })
                 .catch((error) => {
-                    console.error(error);
                     alert(error.error); // Display the error message
                 });
         }
@@ -322,7 +312,6 @@ const gpaToGrade = {
 
 const CompletedTableRow = ({completedCourse, completedGrade}) => {
     const { course } = useCourse(completedCourse);
-    //console.log(course)
 
     const calculateGrade = (gpa) => {
         return gpaToGrade[gpa] || "";
@@ -367,7 +356,6 @@ const SwapCourse = ({enrolledCourse, shoppingCartCourse}) => {
         }else if(CourseTo === ""){
             alert("please select course")
         }else{
-            console.log(CourseFrom, TutorialFrom, CourseTo, TutorialTo)
             swap(CourseFrom, TutorialFrom, CourseTo, TutorialTo)
         }
     }
