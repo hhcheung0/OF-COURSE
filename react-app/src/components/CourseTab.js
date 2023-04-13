@@ -105,7 +105,6 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
                     ]); // Display the success/error message
                 })
                 .catch((error) => {
-                    console.error(error);
                     alert(error.error); // Display the error message
                 });
         }
@@ -162,7 +161,6 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
                     ]); // Display the success/error message
                 })
                 .catch((error) => {
-                    console.error(error);
                     alert(error.error); // Display the error message
                 });
             }
@@ -229,7 +227,6 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
                     ]); // Display the success/error message
                 })
                 .catch((error) => {
-                    console.error(error);
                     alert(error.error); // Display the error message
                 });
         }
