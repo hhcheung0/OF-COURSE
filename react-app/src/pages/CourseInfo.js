@@ -96,7 +96,7 @@ const CourseInfo = () => {
                             </tr>
                             <tr>
                                 <th> Capacity</th>
-                                <td > {course.courseCapacity}</td>
+                                <td > {course.courseCapacity - course.enrolledID.length}/{course.courseCapacity}</td>
                             </tr>
                             <tr>
                                 <th> Pre-requisite Course(s)</th>
