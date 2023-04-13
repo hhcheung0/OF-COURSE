@@ -508,7 +508,7 @@ const CourseAddTableRow = ({ course, arrayName, grade, user }) => {
                         <div key={idx}>{str}</div>))}
                     </td>
                     <td>{course.courseLocation}</td>
-                    <td>{course.courseCapacity}</td>
+                    <td>{course.courseCapacity - course.enrolledID.length}/{course.courseCapacity}</td>
                     <td>
                         <select name="tutorialID" value={tutorialID} onChange={handleSelect}>
                             {course.tutorialInfo && course.tutorialInfo.map((tutorial, idx) => (

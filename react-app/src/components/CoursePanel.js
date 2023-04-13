@@ -118,7 +118,7 @@ const CourseTableRow = ({course, controller, deleter}) => {
                     <div key={idx}>{str}</div>))}
                 </td>
                 <td>{course.courseLocation}</td>
-                <td>{course.courseCapacity}</td>
+                <td>{course.courseCapacity - course.enrolledID.length}/{course.courseCapacity}</td>
                 <td><button onClick={() => {if(window.confirm("Confirm to delete course?")){deleter(course.courseID)}}}>🗑Delete</button></td>
             </tr>
         }
