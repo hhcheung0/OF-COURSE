@@ -239,7 +239,7 @@ const CourseTableRow = ({course}) => {
                     <div key={idx}>{str}</div>
                 ))}</td>
                 <td>{course.courseLocation}</td>
-                <td>{course.courseCapacity}</td>
+                <td>{course.courseCapacity - course.enrolledID.length}/{course.courseCapacity}</td>
             </tr>
         }
         </>
