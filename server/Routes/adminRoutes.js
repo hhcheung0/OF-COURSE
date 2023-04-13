@@ -247,13 +247,6 @@ router.put('/admin/course', adminCheck, (req, res) => {
                     else return res.json({success: true, message: "Course updated with updating tutorial successfully."});
                 })
             }
-            console.log(course.tutorialInfo[0].tutorialTime)
-            console.log(course.tutorialInfo[0].tutorialLocation)
-            console.log(course.tutorialInfo[0].tutor)
-            console.log(course.tutorialInfo[0].tutorialCapacity)
-            /*
-            
-            */
         }else{
             Course.updateOne({
                 "courseID" : course.courseID,
