@@ -54,7 +54,7 @@ router.post('/signup', (req, res) => {
                     userID: users[0].userID + 1, //existUser.userID + 1
                     username: username,
                     password: hashedPassword,
-                    accessRight: true, //admin
+                    accessRight: false, //true:admin false:student
                     maxCredit: 18,
                     enrolledCourse: [],
                     completedCourse: [],
