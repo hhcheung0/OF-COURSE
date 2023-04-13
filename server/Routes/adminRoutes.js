@@ -211,7 +211,26 @@ router.put('/admin/course', adminCheck, (req, res) => {
             if(course.tutorialInfo[0].tutorialCapacity == 0){
                 Course.updateOne(
                     {"courseID" : course.courseID},
-                    {"$pull" : {"tutorialInfo" : {"tutorialID" : course.tutorialInfo[0].tutorialID}}}
+                    {
+                        "$set" : {
+                            "courseID" : course.courseID,
+                            "courseName" : course.courseName,
+                            "courseTime" : course.courseTime,
+                            "courseLocation" : course.courseLocation,
+                            "department" : course.department,
+                            "instructor" : course.instructor,
+                            "courseCapacity" : course.courseCapacity,
+                            "prerequisiteCourseID" : course.prerequisiteCourseID,
+                            "forbiddenCourseID" : course.forbiddenCourseID,
+                            "credit" : course.credit,
+                            "outline" : course.outline
+                        },
+                        "$pull" : {
+                            "tutorialInfo" : {
+                                "tutorialID" : course.tutorialInfo[0].tutorialID
+                            }
+                        }
+                    }
                 )
                 .then(result => {
                     if (!result) return res.json({success: false, message: 'unknown error'})
