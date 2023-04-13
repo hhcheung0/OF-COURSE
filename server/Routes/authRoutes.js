@@ -46,10 +46,12 @@ router.post('/signup', (req, res) => {
         // hashing password
         bcrypt.hash(password, 10)
         .then(hashedPassword => {
-            User.countDocuments()
-            .then(count => {
+            User
+            .find()
+            .sort('-userID')
+            .then(users => {
                 User.create({
-                    userID: count + 1, //existUser.userID + 1
+                    userID: users[0].userID + 1, //existUser.userID + 1
                     username: username,
                     password: hashedPassword,
                     accessRight: true,
