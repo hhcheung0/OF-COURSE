@@ -209,7 +209,7 @@ const CourseForm = ({course, creater, updater}) => { // state
             courseName : courseName,
             courseTime : courseTime.split(','),
             courseLocation : courseLocation,
-            department :　department,
+            department : department,
             instructor : instructor,
             courseCapacity : Number(courseCapacity),
             enrolledID: [],
@@ -229,7 +229,7 @@ const CourseForm = ({course, creater, updater}) => { // state
         };
 
         //console.log(course)
-        if(formType == "Add"){
+        if(formType === "Add"){
             creater(course)
         }else{
             updater(course)
@@ -254,7 +254,7 @@ const CourseForm = ({course, creater, updater}) => { // state
         setOutline(course.outline)
         // setComment(course.comment)
         setTutorialInfo(course.tutorialInfo)
-        if (!course.tutorialInfo || course.tutorialInfo.length == 0){
+        if (!course.tutorialInfo || course.tutorialInfo.length === 0){
             setTutorialIndex(null)
             setTutorialFormNubmer([])
         }else{
@@ -357,7 +357,7 @@ const CourseForm = ({course, creater, updater}) => { // state
                     
                     <div className="row">
                         <div className="column d-flex justify-content-center">
-                            <button className="btn1" onClick={handleSubmit}> {formType=="Update" ? "Update" : "Add"}</button>
+                            <button className="btn1" onClick={handleSubmit}> {formType==="Update" ? "Update" : "Add"}</button>
                         </div>
                         <div className="column d-flex justify-content-center">
                             <button className="btn2" onClick={handleClear}>Clear</button>
