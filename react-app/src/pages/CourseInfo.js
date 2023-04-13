@@ -239,7 +239,7 @@ const CourseInfo = () => {
         return (
             <div id="comment-input">
                 <h3> Add Comment</h3>
-                <textarea ref={textareaRef} id="text-box" value={comment} onChange={(e) => setComment(e.target.value)} />
+                <textarea ref={textareaRef} id="text-box" placeholder="Add comment here" value={comment} onChange={(e) => setComment(e.target.value)} />
                 <input type="submit" id="submit-button" value="Add" style={{ float: 'right' }} />
             </div>
         )
