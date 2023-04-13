@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect } from "react"
 import { BsArrowDown, BsArrowUp, BsTrash3} from 'react-icons/bs';
 
 // import hooks
@@ -8,7 +8,6 @@ import useTime from "../hooks/useTime";
 import useEnroll from "../hooks/useEnroll";
 
 var selected = []
-var creditCourse = []
 
 const CourseTab = () => {
 
@@ -106,7 +105,6 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
                     ]); // Display the success/error message
                 })
                 .catch((error) => {
-                    console.error(error);
                     alert(error.error); // Display the error message
                 });
         }
@@ -163,7 +161,6 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
                     ]); // Display the success/error message
                 })
                 .catch((error) => {
-                    console.error(error);
                     alert(error.error); // Display the error message
                 });
             }
@@ -230,7 +227,6 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
                     ]); // Display the success/error message
                 })
                 .catch((error) => {
-                    console.error(error);
                     alert(error.error); // Display the error message
                 });
         }
