@@ -186,6 +186,18 @@ router.post('/admin/course', adminCheck, (req, res) => {
     })
 });
 
+router.put('/admin/course', adminCheck, (req, res) => {
+    let course = req.body;
+    console.log(course)
+
+    /*
+    Course.updateOne({
+        "courseID" : course.courseID,
+
+    })
+    */
+});
+
 router.delete('/admin/course', adminCheck, (req, res) => {
     Course.deleteOne({courseID: req.body.courseID})
     .then((result) => {

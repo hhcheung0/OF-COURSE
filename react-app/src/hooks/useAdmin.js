@@ -117,6 +117,7 @@ const useAdmin = () => {
     //     comment: [String]
     // }
     const createCourse = useCallback((course) => {
+        console.log(course)
         fetch('http://localhost:3001/admin/course', {
             method: 'POST',
             credentials: 'include',

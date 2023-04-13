@@ -204,6 +204,22 @@ const CourseForm = ({course, creater, updater}) => { // state
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        let prerequisiteCourseArray = [];
+        if(prerequisiteCourseID != "") prerequisiteCourseArray = prerequisiteCourseID.split(',');
+        let forbiddenCourseArray = [];
+        if(forbiddenCourseID != "") forbiddenCourseArray = forbiddenCourseID.split(',');
+        let tutorialArray = [];
+        if(tutorialID != ""){
+            tutorialArray = [{
+                tutorialID: tutorialID,
+                tutorialTime : String(tutorialTime).split(','),
+                tutorialLocation : tutorialLocation,
+                tutor : tutor,
+                tutorialCapacity : Number(tutorialCapacity),
+                enrolledID: []
+            }]
+        }
+
         let course = {
             courseID : courseID,
             courseName : courseName,
@@ -213,20 +229,13 @@ const CourseForm = ({course, creater, updater}) => { // state
             instructor : instructor,
             courseCapacity : Number(courseCapacity),
             enrolledID: [],
-            prerequisiteCourseID : prerequisiteCourseID.split(','),
-            forbiddenCourseID : forbiddenCourseID.split(','),
+            prerequisiteCourseID : prerequisiteCourseArray,
+            forbiddenCourseID : forbiddenCourseArray,
             credit : Number(credit),
             outline : outline,
             comment : [],
-            tutorialInfo : [{
-                tutorialID: tutorialID,
-                tutorialTime : tutorialTime.split(','),
-                tutorialLocation : tutorialLocation,
-                tutor : tutor,
-                tutorialCapacity : Number(tutorialCapacity),
-                enrolledID: []
-            }]
-        };
+            tutorialInfo : tutorialArray
+        }
 
         //console.log(course)
         if(formType == "Add"){
@@ -237,7 +246,6 @@ const CourseForm = ({course, creater, updater}) => { // state
     }
 
     useEffect(() => {
-        console.log(course)
         if(course.courseID){
             setFormType("Update")
         }
