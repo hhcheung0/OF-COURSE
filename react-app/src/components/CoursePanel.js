@@ -393,7 +393,7 @@ const CourseCommentSection = ({course}) =>{
     }, [comment, courseID, course])
 
     return(
-        <div id="courseCommentSection">
+        // <div id="courseCommentSection">
             <table id="courseComment">
                 <thead>
                     <tr>
@@ -407,7 +407,7 @@ const CourseCommentSection = ({course}) =>{
                     ))}
                 </tbody>
             </table>
-        </div>
+        // </div>
     )
 }
 
