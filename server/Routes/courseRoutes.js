@@ -34,9 +34,12 @@ router.put('/shoppingCart/add', (req,res)=>{
 
     User.findOne({username})
     .then(user => {
-        const found = user.shoppingCartCourse.some(el => el.courseID === courseID)
-        if(found){
+        const shoppingCartFound = user.shoppingCartCourse.some(el => el.courseID === courseID)
+        const completedCourseFound = user.completedCourse.some(el => el.courseID === courseID)
+        if(shoppingCartFound){
             return res.status(400).send({success: false, error: "Course already added to shopping cart"})
+        }else if(completedCourseFound){
+            return res.status(400).send({success: false, error: "You have already completed this course"})
         }else{
             User.updateOne({ username }, {$push: { shoppingCartCourse: {courseID, tutorialID}}})
             .then(()=> {
