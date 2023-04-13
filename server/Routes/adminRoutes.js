@@ -197,14 +197,75 @@ router.post('/admin/course', adminCheck, (req, res) => {
 
 router.put('/admin/course', adminCheck, (req, res) => {
     let course = req.body;
-    console.log(course)
 
-    /*
+    //tutorialID not existed, then add it
     Course.updateOne({
         "courseID" : course.courseID,
-
+        "tutorialInfo" : {
+            "$not" : {
+                "$elemMatch" : {
+                    "tutorialID" : course.tutorialInfo[0].tutorialID
+                }
+            }
+        }
+    }, {
+        "$set" : {
+            "courseID" : course.courseID,
+            "courseName" : course.courseName,
+            "courseTime" : course.courseTime,
+            "courseLocation" : course.courseLocation,
+            "department" : course.department,
+            "instructor" : course.instructor,
+            "courseCapacity" : course.courseCapacity,
+            "prerequisiteCourseID" : course.prerequisiteCourseID,
+            "forbiddenCourseID" : course.forbiddenCourseID,
+            "credit" : course.credit,
+            "outline" : course.outline
+        },
+        "$addToSet" : {
+            "tutorialInfo" : {
+                "tutorialID" : course.tutorialInfo[0].tutorialID,
+                "tutorialTime" : course.tutorialInfo[0].tutorialTime,
+                "tutorialLocation" : course.tutorialInfo[0].tutorialLocation,
+                "tutor" : course.tutorialInfo[0].tutor,
+                "tutorialCapacity" : course.tutorialInfo[0].tutorialCapacity,
+                "enrolledID" : []
+            }
+        }
     })
-    */
+    .then(result => {
+        if (!result) return res.json({success: false, message: 'unknown error'})
+        else return res.json({success: true, message: "Course updated with adding tutorial successfully."});
+    })
+
+    //tutorial existed, then update it
+    Course.updateOne({
+        "courseID" : course.courseID,
+        "tutorialInfo.tutorialID" : course.tutorialInfo[0].tutorialID
+    }, {
+        "$set" : {
+            "courseID" : course.courseID,
+            "courseName" : course.courseName,
+            "courseTime" : course.courseTime,
+            "courseLocation" : course.courseLocation,
+            "department" : course.department,
+            "instructor" : course.instructor,
+            "courseCapacity" : course.courseCapacity,
+            "prerequisiteCourseID" : course.prerequisiteCourseID,
+            "forbiddenCourseID" : course.forbiddenCourseID,
+            "credit" : course.credit,
+            "outline" : course.outline,
+            "tutorialInfo.$.tutorialID" : course.tutorialInfo[0].tutorialID,
+            "tutorialInfo.$.tutorialTime" : course.tutorialInfo[0].tutorialTime,
+            "tutorialInfo.$.tutorialLocation" : course.tutorialInfo[0].tutorialLocation,
+            "tutorialInfo.$.tutor" : course.tutorialInfo[0].tutor,
+            "tutorialInfo.$.tutorialCapacity" : course.tutorialInfo[0].tutorialCapacity,
+        }
+    })
+    .then(result => {
+        if (!result) return res.json({success: false, message: 'unknown error'})
+        else return res.json({success: true, message: "Course updated with updating tutorial successfully."});
+    })
 });
 
 router.delete('/admin/course', adminCheck, (req, res) => {

@@ -205,11 +205,11 @@ const CourseForm = ({course, creater, updater}) => { // state
         e.preventDefault()
 
         let prerequisiteCourseArray = [];
-        if(prerequisiteCourseID != "") prerequisiteCourseArray = prerequisiteCourseID.split(',');
+        if(prerequisiteCourseID && prerequisiteCourseID != "") prerequisiteCourseArray = String(prerequisiteCourseID).split(',');
         let forbiddenCourseArray = [];
-        if(forbiddenCourseID != "") forbiddenCourseArray = forbiddenCourseID.split(',');
+        if(forbiddenCourseID && forbiddenCourseID != "") forbiddenCourseArray = String(forbiddenCourseID).split(',');
         let tutorialArray = [];
-        if(tutorialID != ""){
+        if(tutorialID && tutorialID != ""){
             tutorialArray = [{
                 tutorialID: tutorialID,
                 tutorialTime : String(tutorialTime).split(','),
@@ -223,7 +223,7 @@ const CourseForm = ({course, creater, updater}) => { // state
         let course = {
             courseID : courseID,
             courseName : courseName,
-            courseTime : courseTime.split(','),
+            courseTime : String(courseTime).split(','),
             courseLocation : courseLocation,
             department : department,
             instructor : instructor,
