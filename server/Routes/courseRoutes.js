@@ -177,14 +177,15 @@ router.put('/enrolledCourse/enroll', (req, res) => {
                         return timeClashed;
                     }
 
-                    function checkPrerequisiteAndForbidden(userCmpletedCourseArray) {
+                    function checkPrerequisiteAndForbidden(userCmpletedCourseArray, userEnrolledCourseArray) {
                         let unfulfilled = false;
                         //console.log(userCmpletedCourseArray)
 
                         if (goingToBeEnrolledCourse[0].forbiddenCourseID.length != 0) {
                             for (i = 0; i < goingToBeEnrolledCourse[0].forbiddenCourseID.length; i++) {
-                                const forbidden = userCmpletedCourseArray.some(el => el.courseID === goingToBeEnrolledCourse[0].forbiddenCourseID[i])
-                                if (forbidden) {
+                                const completedForbidden = userCmpletedCourseArray.some(el => el.courseID === goingToBeEnrolledCourse[0].forbiddenCourseID[i])
+                                const enrolledForbidden = userEnrolledCourseArray.some(el => el.courseID === goingToBeEnrolledCourse[0].forbiddenCourseID[i])
+                                if (completedForbidden || enrolledForbidden) {
                                     unfulfilled = true;
                                     break;
                                 }
@@ -212,7 +213,7 @@ router.put('/enrolledCourse/enroll', (req, res) => {
                     let TimeClashed = await checkTimeClash(user.enrolledCourse); // need to input user.enrolledCourse
                     //console.log(TimeClashed)
 
-                    let unfulfillRequirement = checkPrerequisiteAndForbidden(user.completedCourse)
+                    let unfulfillRequirement = checkPrerequisiteAndForbidden(user.completedCourse, user.enrolledCourse)
                     //console.log(unfulfillRequirement);
 
                     if (goingToBeEnrolledCourse[0].enrolledID.length >= goingToBeEnrolledCourse[0].courseCapacity) {
