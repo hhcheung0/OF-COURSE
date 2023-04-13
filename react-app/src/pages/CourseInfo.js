@@ -31,6 +31,7 @@ const CourseInfo = () => {
             addToCart(course.courseID, tutorialID)
                 .then((response) => {
                     alert(response.error); // Display the success/error message
+                    window.location.assign(`/course`)
                 })
                 .catch((error) => {
                     console.error('Error adding to cart:', error);
