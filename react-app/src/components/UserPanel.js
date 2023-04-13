@@ -276,7 +276,7 @@ const UserTableRow = ({user, controller}) => {
 }
 
 const UserForm = () => {
-    const { createUser } = useAdmin()
+    const { createOrUpdateUser } = useAdmin()
 
     const [ username, setUsername ] = useState('')
     const [ password, setPassword ] = useState('')
@@ -314,8 +314,8 @@ const UserForm = () => {
                             <input type="radio" name="accessRight" id="Admin" value={false} onChange={handleAccessRightChange} default />
                             <label htmlFor="Admin">Admin</label>
                     </div>
-                    <button onClick={() => createUser({username: username, password: password, accessRight: accessRight})}>Add</button>
-                    {/* // createUser({username: "admin", password:"admin", accessRight: true}) */}
+                    <button onClick={() => createOrUpdateUser({username: username, password: password, accessRight: accessRight})}>Add / Update</button>
+                    {/* // createOrUpdateUser({username: "admin", password:"admin", accessRight: true}) */}
                     {/* <input type="submit" value="Add/Update" /> */}
                     
                 </form>
