@@ -35,9 +35,9 @@ const Sidebar = () => {
             break;
             case 2: setIconFileName("/bibi.jpg")
             break;
-            case 3: setIconFileName("/man.jpg")
+            case 3: setIconFileName("/slamdunk.gif")
             break;
-            case 4: setIconFileName("/mario.jpg")
+            case 4: setIconFileName("/slamdunk2.jpeg")
             break;
             case 5: setIconFileName("/kenji.jpg")
             break;

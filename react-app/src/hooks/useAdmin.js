@@ -24,9 +24,9 @@ const useAdmin = () => {
         else return userArray.filter(user => (String(user.userID) === searchString || user.username.toLowerCase().includes(searchString.toLowerCase())))
     }, [userArray, searchString])
 
-    // create an user, user: {username: String, password: String, accessRight: Boolean}
-    // createUser({username: "admin", password:"admin", accessRight: true})
-    const createUser = useCallback((user) => {
+    // create/update an user, user: {username: String, password: String, accessRight: Boolean}
+    // createOrUpdateUser({username: "admin", password:"admin", accessRight: true})
+    const createOrUpdateUser = useCallback((user) => {
         fetch('http://localhost:3001/admin/user', {
             method: 'POST',
             credentials: 'include',
@@ -171,7 +171,7 @@ const useAdmin = () => {
     return {
         setSearchString,
         getUserArray,
-        createUser,
+        createOrUpdateUser,
         deleteUser,
         addCourseToUser,
         removeCourseFromUser,

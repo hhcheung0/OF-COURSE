@@ -48,13 +48,13 @@ router.post('/signup', (req, res) => {
         .then(hashedPassword => {
             User
             .find()
-            .sort('-userID')
+            .sort({userID: -1})
             .then(users => {
                 User.create({
                     userID: users[0].userID + 1, //existUser.userID + 1
                     username: username,
                     password: hashedPassword,
-                    accessRight: true,
+                    accessRight: true, //admin
                     maxCredit: 18,
                     enrolledCourse: [],
                     completedCourse: [],

@@ -33,31 +33,40 @@ router.get('/admin/user/:userID', (req, res) => {
 
 // create an user
 router.post('/admin/user', adminCheck, async (req, res) => {
-    const hashedPassword = await bcrypt.hash(req.body['password'], 10)
-    User.find({username: req.body.username})
-    .then(existUser => {
-        if (existUser.length) {
-            return res.json({success: false, error: "User already exists."})
-        }
-        User.countDocuments()
-        .then(count => {
-            User.create({
-                userID: count + 1, //existUser.userID + 1
-                username: req.body.username,
+    try {
+      const hashedPassword = await bcrypt.hash(req.body['password'], 10);
+      const existUser = await User.find({ username: req.body.username });
+      if (existUser.length) {
+        await User.updateOne(
+            { username: req.body['username'] },
+            {
                 password: hashedPassword,
                 accessRight: req.body.accessRight,
-                maxCredit: 18,
-                enrolledCourse: [],
-                completedCourse: [],
-                shoppingCartCourse: [],
-                icon: 1
-            })
-            .then(() => {
-                return res.json({success: true, message: 'User successfully created'});
-            })
-        }) 
-    })
-});
+            }
+        );
+
+        return res.json({ success: true, message: 'User successfully updated' });
+
+      } else {
+        const users = await User.find().sort({userID: -1});
+        await User.create({
+            userID: users[0].userID + 1,
+            username: req.body.username,
+            password: hashedPassword,
+            accessRight: req.body.accessRight,
+            maxCredit: 18,
+            enrolledCourse: [],
+            completedCourse: [],
+            shoppingCartCourse: [],
+            icon: 1,
+        });
+        return res.json({ success: true, message: 'User successfully created' });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, error: error.message });
+    }
+  });
 
 // delete an user by username
 router.delete('/admin/user', adminCheck, (req, res) => {
