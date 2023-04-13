@@ -34,50 +34,12 @@ const UserPanel = () => {
                 {/* Left side of the userPanel */}
                 {/* admin-userLeft */}
                 <div className="column" id="admin-userLeft">
-                    <br></br>
+                    <br></br><br></br>
                     {/* userSearchbar */}
                     <UserSearchBar controller={setSearchString} />
                     {/* userTable */}
                     <UserTable userArray={getUserArray()} controller={setUser} />
-                    {/* <table id='userTable'>
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>Username</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Mary</td>
-                                <td><button id="showUser">Show</button></td>
-                                <td><button id="deleteUser">🗑Delete</button></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Bob</td>
-                                <td><button id="showUser">Show</button></td>
-                                <td><button id="deleteUser">🗑Delete</button></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Jason</td>
-                                <td><button id="showUser">Show</button></td>
-                                <td><button id="deleteUser">🗑Delete</button></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Peter</td>
-                                <td><button id="showUser">Show</button></td>
-                                <td><button id="deleteUser">🗑Delete</button></td>
-                            </tr>
-                        </tbody>
-                    </table> */}
                     <br></br>
-
                     {/* userForm */}
                     <UserForm />
                 </div>
@@ -89,91 +51,27 @@ const UserPanel = () => {
                     {/* userCourseTable */}
                     <div id="userCourseTable" className="container">
                         <UserCourseTable user={user} remover={removeCourseFromUser} />
-                        {/* <h3>Enrolled Courses</h3> */}
-                        {/* userCourseTable-enrolled */}
-                        {/* <table id='userCourseTable-enrolled'>
-                            <thead>
-                                <tr>
-                                    <th>Course ID</th>
-                                    <th>Course Name</th>
-                                    <th>Credit</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>ARCH4180</td>
-                                    <td>Applications of Architectural studies</td>
-                                    <td>2</td>
-                                    <td><button id="deleteCourse">🗑Delete</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br></br>
-
-                        <h3>Shopping Cart</h3> */}
-                        {/* userCourseTable-shoppingCart */}
-                        {/* <table id='userCourseTable-shoppingCart'>
-                            <thead>
-                                <tr>
-                                    <th>Course ID</th>
-                                    <th>Course Name</th>
-                                    <th>Credit</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>ANTH4440</td>
-                                    <td>Applications of Anthropology</td>
-                                    <td>3</td>
-                                    <td><button id="deleteCourse">🗑Delete</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br></br> */}
-
-
-                        {/* <h3>Completed Courses</h3> */}
-                        {/* userCourseTable-completed */}
-                        {/* <table id='userCourseTable-completed'>
-                            <thead>
-                                <tr>
-                                    <th>Course ID</th>
-                                    <th>Course Name</th>
-                                    <th>Credit</th>
-                                    <th>Grade</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>GEOG2350</td>
-                                    <td>Recent History of Geography</td>
-                                    <td>3</td>
-                                    <td>A</td>
-                                    <td><button id="deleteCourse">🗑Delete</button></td>
-                                </tr>
-                            </tbody>
-                        </table> */}
                         <br></br>
 
                         {/* addCourseCategory */}
                         <div id="addCourseCategory">
-                            {/* <div> */}
                             <h3>Add Courses</h3>
-                            <SearchBar controller={setSearch} />
-                            <select name="addCourseCategory" value={targetArrayName} onChange={handleSelect}>
-                                <option value="enrolledCourse">Enrolled Courses</option>
-                                <option value="shoppingCartCourse">Shopping Cart</option>
-                                <option value="completedCourse">Completed Courses</option>
-                            </select>
-                            {/* </div> */}
+
+                                <SearchBar controller={setSearch} />
+  
+
+                                <select name="addCourseCategory" value={targetArrayName} onChange={handleSelect}>
+                                    <option value="enrolledCourse">Enrolled Courses</option>
+                                    <option value="shoppingCartCourse">Shopping Cart</option>
+                                    <option value="completedCourse">Completed Courses</option>
+                                </select>
+
+                            
+                            {targetArrayName == "completedCourse" ? 
                             <div>
-                                <h5>Completed Course Grade:
-                                    <br></br>
-                                    <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)}></input></h5>
-                            </div>
+                                <h5>Completed Course Grade:</h5>
+                                <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)}></input>
+                            </div> : <div></div>}
                         </div>
 
                         {/* userCourseTable-add */}
@@ -268,7 +166,7 @@ const UserTableRow = ({ user, controller }) => {
                     <td> {user.userID} </td>
                     <td> {user.username} </td>
                     <td><button id="showUser" onClick={() => controller(user)}>Show</button></td>
-                    <td><button id="deleteUser" onClick={() => deleteUser(username)}>🗑Delete</button></td>
+                    <td><button id="deleteUser" onClick={() => {if(window.confirm("Confirm to delete user?")){deleteUser(username)}}}>🗑Delete</button></td>
                 </tr>
             }
         </>
@@ -478,7 +376,7 @@ const EnrolledTableRow = ({ enrolledCourse, remover }) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => { remover('enrolledCourse', course.courseID) }}><BsTrash3 /> Drop</button></td>
+                    <td><button onClick={() => { if(window.confirm("Confirm to drop course?")){remover('enrolledCourse', course.courseID)} }}><BsTrash3 /> Drop</button></td>
                 </tr>
             }
         </>
@@ -495,7 +393,7 @@ const ShoppingCartTableRow = ({ shoppingCartCourse, remover }) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => { remover('shoppingCartCourse', course.courseID) }}><BsTrash3 /> Remove</button></td>
+                    <td><button onClick={() => { if(window.confirm("Confirm to remove course?")){remover('shoppingCartCourse', course.courseID)} }}><BsTrash3 /> Remove</button></td>
                 </tr>
             }
         </>
@@ -524,7 +422,7 @@ const CompletedTableRow = ({ completedCourse, completedGrade, remover }) => {
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
                     <td>{calculateGrade(completedGrade)}</td>
-                    <td><button onClick={() => { remover('completedCourse', course.courseID) }}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => { if(window.confirm("Confirm to delete course?")){remover('completedCourse', course.courseID)} }}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
         </>

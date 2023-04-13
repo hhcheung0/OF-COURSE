@@ -119,7 +119,7 @@ const CourseTableRow = ({course, controller, deleter}) => {
                 </td>
                 <td>{course.courseLocation}</td>
                 <td>{course.courseCapacity}</td>
-                <td><button onClick={() => {deleter(course.courseID)}}>🗑Delete</button></td>
+                <td><button onClick={() => {if(window.confirm("Confirm to delete course?")){deleter(course.courseID)}}}>🗑Delete</button></td>
             </tr>
         }
         </>
@@ -239,9 +239,11 @@ const CourseForm = ({course, creater, updater}) => { // state
 
         //console.log(course)
         if(formType === "Add"){
-            creater(course)
+            if(window.confirm("Confirm to add course?"))
+                creater(course)
         }else{
-            updater(course)
+            if(window.confirm("Confirm to update course?"))
+                updater(course)
         }
     }
 
@@ -385,7 +387,7 @@ const CourseCommentTable = ({courseID, comment}) =>{
     return(
                <tr>
                     <td>{comment}</td>
-                    <td><button id="deleteComment" onClick={() => {removeComment(courseID,comment); window.location.reload()}}>🗑Delete</button></td>
+                    <td><button id="deleteComment" onClick={() => {if(window.confirm("Confirm to delete comment?")){removeComment(courseID,comment); window.location.reload()}}}>🗑Delete</button></td>
                </tr>
     )
    }
