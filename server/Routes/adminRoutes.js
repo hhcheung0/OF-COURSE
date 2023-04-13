@@ -208,33 +208,52 @@ router.put('/admin/course', adminCheck, (req, res) => {
     })
     .then(tutorialExisted => {
         if(tutorialExisted){
-            Course.updateOne({
-                "courseID" : course.courseID,
-                "tutorialInfo.tutorialID" : course.tutorialInfo[0].tutorialID
-            }, {
-                "$set" : {
+            if(course.tutorialInfo[0].tutorialCapacity == 0){
+                Course.updateOne(
+                    {"courseID" : course.courseID},
+                    {"$pull" : {"tutorialInfo" : {"tutorialID" : course.tutorialInfo[0].tutorialID}}}
+                )
+                .then(result => {
+                    if (!result) return res.json({success: false, message: 'unknown error'})
+                    else return res.json({success: true, message: "Course updated with deleting tutorial successfully."});
+                })
+                .catch(error => res.json(error))
+            }else{
+                Course.updateOne({
                     "courseID" : course.courseID,
-                    "courseName" : course.courseName,
-                    "courseTime" : course.courseTime,
-                    "courseLocation" : course.courseLocation,
-                    "department" : course.department,
-                    "instructor" : course.instructor,
-                    "courseCapacity" : course.courseCapacity,
-                    "prerequisiteCourseID" : course.prerequisiteCourseID,
-                    "forbiddenCourseID" : course.forbiddenCourseID,
-                    "credit" : course.credit,
-                    "outline" : course.outline,
-                    "tutorialInfo.$.tutorialID" : course.tutorialInfo[0].tutorialID,
-                    "tutorialInfo.$.tutorialTime" : course.tutorialInfo[0].tutorialTime,
-                    "tutorialInfo.$.tutorialLocation" : course.tutorialInfo[0].tutorialLocation,
-                    "tutorialInfo.$.tutor" : course.tutorialInfo[0].tutor,
-                    "tutorialInfo.$.tutorialCapacity" : course.tutorialInfo[0].tutorialCapacity,
-                }
-            })
-            .then(result => {
-                if (!result) return res.json({success: false, message: 'unknown error'})
-                else return res.json({success: true, message: "Course updated with updating tutorial successfully."});
-            })
+                    "tutorialInfo.tutorialID" : course.tutorialInfo[0].tutorialID
+                }, {
+                    "$set" : {
+                        "courseID" : course.courseID,
+                        "courseName" : course.courseName,
+                        "courseTime" : course.courseTime,
+                        "courseLocation" : course.courseLocation,
+                        "department" : course.department,
+                        "instructor" : course.instructor,
+                        "courseCapacity" : course.courseCapacity,
+                        "prerequisiteCourseID" : course.prerequisiteCourseID,
+                        "forbiddenCourseID" : course.forbiddenCourseID,
+                        "credit" : course.credit,
+                        "outline" : course.outline,
+                        "tutorialInfo.$.tutorialID" : course.tutorialInfo[0].tutorialID,
+                        "tutorialInfo.$.tutorialTime" : course.tutorialInfo[0].tutorialTime,
+                        "tutorialInfo.$.tutorialLocation" : course.tutorialInfo[0].tutorialLocation,
+                        "tutorialInfo.$.tutor" : course.tutorialInfo[0].tutor,
+                        "tutorialInfo.$.tutorialCapacity" : course.tutorialInfo[0].tutorialCapacity,
+                    }
+                })
+                .then(result => {
+                    if (!result) return res.json({success: false, message: 'unknown error'})
+                    else return res.json({success: true, message: "Course updated with updating tutorial successfully."});
+                })
+            }
+            console.log(course.tutorialInfo[0].tutorialTime)
+            console.log(course.tutorialInfo[0].tutorialLocation)
+            console.log(course.tutorialInfo[0].tutor)
+            console.log(course.tutorialInfo[0].tutorialCapacity)
+            /*
+            
+            */
         }else{
             Course.updateOne({
                 "courseID" : course.courseID,
