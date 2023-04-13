@@ -309,9 +309,9 @@ const UserForm = () => {
                     
 
                     <div id='toggle-button-panel'>
-                            <input type="radio" name="accessRight" id="Student" value={true} onChange={handleAccessRightChange} />
+                            <input type="radio" name="accessRight" id="Student" value={false} onChange={handleAccessRightChange} />
                             <label htmlFor="Student">Student</label>
-                            <input type="radio" name="accessRight" id="Admin" value={false} onChange={handleAccessRightChange} default />
+                            <input type="radio" name="accessRight" id="Admin" value={true} onChange={handleAccessRightChange} default />
                             <label htmlFor="Admin">Admin</label>
                     </div>
                     <button onClick={() => createOrUpdateUser({username: username, password: password, accessRight: accessRight})}>Add / Update</button>
