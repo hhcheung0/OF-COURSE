@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect } from "react"
 import { BsArrowDown, BsArrowUp, BsTrash3} from 'react-icons/bs';
 
 // import hooks
@@ -8,7 +8,6 @@ import useTime from "../hooks/useTime";
 import useEnroll from "../hooks/useEnroll";
 
 var selected = []
-var creditCourse = []
 
 const CourseTab = () => {
 
