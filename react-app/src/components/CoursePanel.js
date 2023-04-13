@@ -17,7 +17,7 @@ const CoursePanel = () => {
     const { parseTimecodeArray } = useTime();
     const [ course, setCourse ] = useState({});
     const { removeComment } = useComment();
-    const { createCourse,deleteCourse } = useAdmin();
+    const { createCourse, updateCourse, deleteCourse } = useAdmin();
 
     return (
         <div id="admin-course">
@@ -30,7 +30,7 @@ const CoursePanel = () => {
             
             <div className="row">                  
                     <div className="grid-container" id="courseForm">
-                        <CourseForm course={course} creater={createCourse}/>
+                        <CourseForm course={course} creater={createCourse} updater={updateCourse}/>
                     </div>
             </div>
 
@@ -126,7 +126,7 @@ const CourseTableRow = ({course, controller, deleter}) => {
     )
 }
 
-const CourseForm = ({course, creater}) => { // state
+const CourseForm = ({course, creater, updater}) => { // state
     const [ formType, setFormType ] = useState('Add');
 
     const [ courseID, setCourseID ] = useState(''); // handleCourseIDChange?
@@ -232,7 +232,7 @@ const CourseForm = ({course, creater}) => { // state
         if(formType == "Add"){
             creater(course)
         }else{
-
+            updater(course)
         }
     }
 

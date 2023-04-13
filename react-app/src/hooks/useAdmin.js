@@ -133,6 +133,23 @@ const useAdmin = () => {
         })
     }, [navigate])
 
+    const updateCourse = useCallback((course) => {
+        fetch('http://localhost:3001/admin/course', {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify(course)
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (!json.success) alert(json.message)
+            else {
+                navigate(0)
+                alert(json.message)
+            }
+        })
+    }, [navigate])
+
     // delete a course by courseID
     const deleteCourse = useCallback((courseID) => {
         fetch('http://localhost:3001/admin/course', {
@@ -158,6 +175,7 @@ const useAdmin = () => {
         addCourseToUser,
         removeCourseFromUser,
         createCourse,
+        updateCourse,
         deleteCourse
     }
 }
