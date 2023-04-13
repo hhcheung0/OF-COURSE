@@ -19,7 +19,6 @@ const CourseInfo = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formID = e.target.id;
-        console.log(formID);
         //handle addToCart button
         if (formID === "course-info") {
             //if there is tutorial but user didn't select, alert error message
@@ -34,7 +33,6 @@ const CourseInfo = () => {
                     window.location.assign(`/course`)
                 })
                 .catch((error) => {
-                    console.error('Error adding to cart:', error);
                     alert(error.error); // Display the error message
                 });
         }
@@ -55,7 +53,6 @@ const CourseInfo = () => {
                         window.location.reload();
                 })
                 .catch((error) => {
-                    console.error('Error adding comment:', error);
                     alert(error.error); // Display the error message
                 });
 
