@@ -92,8 +92,6 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
     const { course } = useCourse(enrolledCourse);
     const { drop } = useEnroll()
     const [dropTutorial, setDropTutorial] = useState('')
-    //console.log(course)
-    //console.log(enrolledTutorial)
 
     useEffect(() => { 
         setDropTutorial(enrolledTutorial); 
@@ -158,7 +156,6 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
             for(var i = 0; i < selected.length; i++){
                 var tutorialID = null
                 tutorialID = shoppingCartCourse.find(c => c.courseID === selected[i]).tutorialID;
-                console.log(tutorialID)
                 enroll(selected[i], tutorialID)
                 .then((response) => {
                     const confirmed = window.alert(response.error, [
@@ -212,8 +209,6 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
     const { parseTimecodeArray } = useTime()
     const { course } = useCourse(shoppingCartCourse);
     const { removeFromCart } = useEnroll()
-    //console.log(course)
-    //console.log(shoppingCartTutorial)
 
     //const [checkedState, setCheckedState] = useState('');
     
@@ -221,7 +216,6 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
     const handleOnChange = (courseID) => {
         if (!selected.includes(courseID)){
             selected.push(courseID);
-            console.log(selected)
         } else {
             selected.splice(courseID, 1)
         }
@@ -322,7 +316,6 @@ const gpaToGrade = {
 
 const CompletedTableRow = ({completedCourse, completedGrade}) => {
     const { course } = useCourse(completedCourse);
-    //console.log(course)
 
     const calculateGrade = (gpa) => {
         return gpaToGrade[gpa] || "";
@@ -367,7 +360,6 @@ const SwapCourse = ({enrolledCourse, shoppingCartCourse}) => {
         }else if(CourseTo === ""){
             alert("please select course")
         }else{
-            console.log(CourseFrom, TutorialFrom, CourseTo, TutorialTo)
             swap(CourseFrom, TutorialFrom, CourseTo, TutorialTo)
         }
     }
