@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from 'react-router-dom'
 
 // import hooks
 import useUser from '../hooks/useUser'
@@ -26,6 +27,7 @@ const Password = () => {
     const [newPW, setNewPW] = useState("");
     const [confirmPW, setConfirmPW] = useState("");
     const { getUserByToken } = useUser()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const { username } = getUserByToken()
@@ -59,7 +61,8 @@ const Password = () => {
             if(!json.success){
                 alert(json.error);
             }else{
-                console.log(json);
+                alert(json.error);
+                navigate(0)
             }
         })
         .catch(err => console.error(err));
@@ -96,6 +99,7 @@ const Password = () => {
 const Icon = () => {
     const [iconFileName, setIconFileName] = useState('')
     const { getUserByToken } = useUser()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const { icon } = getUserByToken()
@@ -136,9 +140,9 @@ const Icon = () => {
         })
         .then(res => res.json())
         .then(json => {
-            console.log(json)
             if(json.success){
-                window.location.reload()
+                alert(json.error);
+                navigate(0)
             }
         });
     };
