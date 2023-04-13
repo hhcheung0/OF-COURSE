@@ -41,7 +41,7 @@ const UserPanel = () => {
                     <UserTable userArray={getUserArray()} controller={setUser} />
                     <br></br>
                     {/* userForm */}
-                    <UserForm />
+                    <UserForm user={user}/>
                 </div>
 
                 {/* Right-side of the userPanel */}
@@ -173,33 +173,37 @@ const UserTableRow = ({ user, controller }) => {
     )
 }
 
-const UserForm = () => {
+const UserForm = ({user}) => {
     const { createOrUpdateUser } = useAdmin()
 
+    const [ formType, setFormType ] = useState('Add');
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [accessRight, setAccessRight] = useState()
+    const [accessRight, setAccessRight] = useState(null)
+
+    useEffect(() => {
+        if(user.username){
+            console.log(user.username)
+            setFormType('Update')
+        }
+        setUsername(user.username)
+        setAccessRight(user.accessRight)
+    }, [user])
 
     const handleUsernameChange = (e) => { console.log(e.target.id); setUsername(e.target.value); }
     const handlePasswordChange = (e) => { console.log(e.target.id); setPassword(e.target.value); }
-    const handleAccessRightChange = (e) => { console.log(e.target.id); setAccessRight(e.target.value); }
+    const handleAccessRightChange = (e) => { console.log(e.target.id); setAccessRight(e.target.value)}
 
     useEffect(() => {
-        setUsername(username)
-        setPassword(password)
-        setAccessRight(accessRight)
-    }, [username, password, accessRight])
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    }
+        console.log(accessRight)
+    }, [accessRight])
 
     return (
         <>
             <div className="container" id="userForm">
-                <form onSubmit={handleSubmit}>
+                <form>
                     <p><label htmlFor="username">Username</label>
-                        <input type="text" id="username" name="username" onChange={handleUsernameChange} /></p>
+                        <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} disabled={formType=="Update" ? true : false}/></p>
                     <br />
 
                     <p><label htmlFor="password">Password</label>
@@ -209,13 +213,10 @@ const UserForm = () => {
                     <div id='toggle-button-panel'>
                         <input type="radio" name="accessRight" id="Student" value={false} onChange={handleAccessRightChange} />
                         <label htmlFor="Student">Student</label>
-                        <input type="radio" name="accessRight" id="Admin" value={true} onChange={handleAccessRightChange} default />
+                        <input type="radio" name="accessRight" id="Admin" value={true} onChange={handleAccessRightChange} />
                         <label htmlFor="Admin">Admin</label>
                     </div>
-                    <button onClick={() => createOrUpdateUser({ username: username, password: password, accessRight: accessRight })}>Add / Update</button>
-                    {/* // createOrUpdateUser({username: "admin", password:"admin", accessRight: true}) */}
-                    {/* <input type="submit" value="Add/Update" /> */}
-
+                    <button onClick={() => createOrUpdateUser({ username: username, password: password, accessRight: accessRight })}>{formType==="Update" ? "Update" : "Add"}</button>
                 </form>
             </div>
         </>
@@ -226,10 +227,9 @@ const UserForm = () => {
 // right side of the page
 const User = ({ user }) => {
     const [username, setUsername] = useState('')
-    console.log(username);
     useEffect(() => {
         setUsername(user.username)
-    }, [username, user])
+    }, [user])
 
     return (
         <h3>{username ? `Username: ${username}` : "Please select a user from the table"} </h3>
@@ -376,7 +376,7 @@ const EnrolledTableRow = ({ enrolledCourse, remover }) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => { if(window.confirm("Confirm to drop course?")){remover('enrolledCourse', course.courseID)} }}><BsTrash3 /> Drop</button></td>
+                    <td><button onClick={() => { if(window.confirm("Confirm to drop course?")){remover('enrolledCourse', course.courseID)} }}><BsTrash3 />Drop</button></td>
                 </tr>
             }
         </>
