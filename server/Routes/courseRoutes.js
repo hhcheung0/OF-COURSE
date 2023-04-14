@@ -223,7 +223,7 @@ router.put('/enrolledCourse/enroll', (req, res) => {
                     } else if (TimeClashed) {
                         return res.status(400).send({ success: false, error: "The course has a time clash with your current timetable" })
                     } else if (unfulfillRequirement) {
-                        return res.status(400).send({ success: false, error: "You have either studied forbidden course or have not yet fulfilled prerequisite course" })
+                        return res.status(400).send({ success: false, error: "You have either studying/studied forbidden course or have not yet fulfilled prerequisite course" })
                     } else {
                         User.updateOne({ username }, { $pull: { shoppingCartCourse: { courseID: courseID } } })
                             .then(() => {

@@ -147,7 +147,7 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
     //const [selectedCourses, setSelectedCourses] = useState([]);
     const { enroll } = useEnroll()
 
-    const handleOnEnroll = () => {
+    const handleOnEnroll = async () => {
         if(selected.length === 0){
             alert("Please select course in shopping cart!")
         }else{
@@ -155,8 +155,16 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
                 for(var i = 0; i < selected.length; i++){
                     var tutorialID = null
                     tutorialID = shoppingCartCourse.find(c => c.courseID === selected[i]).tutorialID;
+                    const response = await enroll(selected[i], tutorialID)
+                    if(response.success){
+                        alert(selected[i] + " enroll successful")
+                    }else{
+                        alert(selected[i] + " enroll failed. " + response.error)
+                    }
+                    /*
                     enroll(selected[i], tutorialID)
                     .then((response) => {
+                        console.log(response)
                         const confirmed = window.alert(response.error, [
                             {text: 'OK', onPress: window.location.reload()},
                         ]); // Display the success/error message
@@ -164,7 +172,9 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
                     .catch((error) => {
                         alert(error.error); // Display the error message
                     });
+                    */
                 }
+                window.location.reload()
             }
         }
     }
