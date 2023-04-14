@@ -187,6 +187,7 @@ const UserForm = ({user}) => {
         setUsername('')
         setPassword('')
         setAccessRight('')
+        setFormType('Add')
         //console.log(outline)
     }
 
