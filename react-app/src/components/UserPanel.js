@@ -181,6 +181,16 @@ const UserForm = ({user}) => {
     const [password, setPassword] = useState('')
     const [accessRight, setAccessRight] = useState(null)
 
+    const handleClear = (e) => {
+        e.preventDefault()
+
+        setUsername('')
+        setPassword('')
+        setAccessRight('')
+        //console.log(outline)
+    }
+
+
     useEffect(() => {
         if(user.username){
             console.log(user.username)
@@ -203,7 +213,7 @@ const UserForm = ({user}) => {
             <div className="container" id="userForm">
                 <form>
                     <p><label htmlFor="username">Username</label>
-                        <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} disabled={formType=="Update" ? true : false}/></p>
+                        <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} disabled={formType==="Update" ? true : false}/></p>
                     <br />
 
                     <p><label htmlFor="password">Password</label>
@@ -216,7 +226,11 @@ const UserForm = ({user}) => {
                         <input type="radio" name="accessRight" id="Admin" value={true} onChange={handleAccessRightChange} />
                         <label htmlFor="Admin">Admin</label>
                     </div>
-                    <button onClick={() => createOrUpdateUser({ username: username, password: password, accessRight: accessRight })}>{formType==="Update" ? "Update" : "Add"}</button>
+
+                    <div className="column d-flex justify-content-center">
+                    <button className="btn1" onClick={() => createOrUpdateUser({ username: username, password: password, accessRight: accessRight })}>{formType==="Update" ? "Update" : "Add"}</button>
+                    <button className="btn2" onClick={handleClear}>Clear</button>
+                    </div>
                 </form>
             </div>
         </>
