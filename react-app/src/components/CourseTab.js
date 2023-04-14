@@ -121,7 +121,7 @@ const EnrolledTableRow = ({enrolledCourse, enrolledTutorial}) => {
                     <td>{parseTimecodeArray(course.courseTime).join(', ')}</td>
                     <td>{course.courseLocation}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => handleOnDrop(course.courseID, dropTutorial)}><BsTrash3 /> Drop</button></td>
+                    <td><button onClick={() => {if(window.confirm("Confirm to drop course?")){handleOnDrop(course.courseID, dropTutorial)}}}><BsTrash3 /> Drop</button></td>
                 </tr>
             }
             {course.tutorialInfo && 
@@ -151,20 +151,21 @@ const ShoppingCartTable = ({shoppingCartCourse}) => {
         if(selected.length === 0){
             alert("Please select course in shopping cart!")
         }else{
-            for(var i = 0; i < selected.length; i++){
-                var tutorialID = null
-                tutorialID = shoppingCartCourse.find(c => c.courseID === selected[i]).tutorialID;
-                enroll(selected[i], tutorialID)
-                .then((response) => {
-                    const confirmed = window.alert(response.error, [
-                        {text: 'OK', onPress: window.location.reload()},
-                    ]); // Display the success/error message
-                })
-                .catch((error) => {
-                    alert(error.error); // Display the error message
-                });
+            if(window.confirm("Confirm to enroll course?")){
+                for(var i = 0; i < selected.length; i++){
+                    var tutorialID = null
+                    tutorialID = shoppingCartCourse.find(c => c.courseID === selected[i]).tutorialID;
+                    enroll(selected[i], tutorialID)
+                    .then((response) => {
+                        const confirmed = window.alert(response.error, [
+                            {text: 'OK', onPress: window.location.reload()},
+                        ]); // Display the success/error message
+                    })
+                    .catch((error) => {
+                        alert(error.error); // Display the error message
+                    });
+                }
             }
-
         }
     }
 
@@ -243,7 +244,7 @@ const ShoppingCartTableRow = ({shoppingCartCourse,shoppingCartTutorial}) => {
                     <td>{parseTimecodeArray(course.courseTime).join(', ')}</td>
                     <td>{course.courseLocation}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => handleOnDelete(course.courseID)}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => {if(window.confirm("Confirm to delete course?")){handleOnDelete(course.courseID)}}}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
             {course.tutorialInfo && 
@@ -356,7 +357,9 @@ const SwapCourse = ({enrolledCourse, shoppingCartCourse}) => {
         }else if(CourseTo === ""){
             alert("please select course")
         }else{
-            swap(CourseFrom, TutorialFrom, CourseTo, TutorialTo)
+            if(window.confirm("Confirm to swap course?")){
+                swap(CourseFrom, TutorialFrom, CourseTo, TutorialTo)
+            }
         }
     }
 
