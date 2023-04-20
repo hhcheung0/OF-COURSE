@@ -21,8 +21,6 @@ const TimetableTab = ({ courseArray }) => {
     const Upperpart = ({ courseArray }) => {
         return (
             <>
-                {/* <CompactRelax courseArray={courseArray}/>
-                <button>Relax mode</button> */}
                 <h2>Export As: </h2>
                 <button onClick={() => exportToPdf(exportRef.current, "timetable")}>PDF (.pdf)</button>
                 <button onClick={() => ExportAsPng(exportRef.current, "timetable")}>Image (.png)</button>
