@@ -27,13 +27,11 @@ const CoursePanel = () => {
                     <CourseTable courseArray={getCourse()} controller={setCourse} deleter={deleteCourse}/> 
                 </div>
             </div>
-            
             <div className="row">                  
                     <div className="grid-container" id="courseForm">
                         <CourseForm course={course} creater={createCourse} updater={updateCourse}/>
                     </div>
             </div>
-
             <div className="row">
                 <div className="column">
                     <div id="courseCommentSection">
@@ -53,7 +51,7 @@ const CoursePanel = () => {
 
 const SearchBar = (props) => {
     const [search, setSearch] = useState('')
-    
+
     const handleChange = (e) => {
         props.controller(e.target.value)
         setSearch(e.target.value)
@@ -151,9 +149,6 @@ const CourseForm = ({course, creater, updater}) => { // state
     const [ tutorialIndex, setTutorialIndex ] = useState(null)
     const [ tutorialFormNumber, setTutorialFormNubmer ] = useState([]);
 
-    // console.log(course);
-    //console.log(course.tutorialInfo);
-
     const handleCourseIDChange = (e) => {console.log(e.target.id); setCourseID(e.target.value);}
     const handleCourseNameChange = (e) => { console.log(e.target.id); setCourseName(e.target.value); }
     const handleCourseTimeChange = (e) => { console.log(e.target.id); setCourseTime(e.target.value);  }
@@ -167,9 +162,6 @@ const CourseForm = ({course, creater, updater}) => { // state
     const handleOutlineChange = (e) => {console.log(e.target.id); setOutline(e.target.value); }
     const handleTutorialInfoChange = (e) => {console.log(e.target.id); setTutorialInfo(e.target.value); }
 
-
-    // const handleCommentChange = (e) => {console.log(e.target.id); setComment(e.target.value); }
-
     const handleTutorialIDChange = (e) => {console.log(e.target.id); setTutorialID(e.target.value); }
     const handleTutorialTimeChange = (e) => {console.log(e.target.id); setTutorialTime(e.target.value); }
     const handleTutorialLocationChange = (e) => {console.log(e.target.id); setTutorialLocation(e.target.value); }
@@ -178,7 +170,6 @@ const CourseForm = ({course, creater, updater}) => { // state
 
     const handleClear = (e) => {
         e.preventDefault()
-
         setFormType('Add')
         setCourseID('')
         setCourseName('')
@@ -198,12 +189,10 @@ const CourseForm = ({course, creater, updater}) => { // state
         setTutorialCapacity('')
         setTutorialIndex(null)
         setTutorialFormNubmer([])
-        //console.log(outline)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
         let prerequisiteCourseArray = [];
         if(prerequisiteCourseID && prerequisiteCourseID != "") prerequisiteCourseArray = String(prerequisiteCourseID).split(',');
         let forbiddenCourseArray = [];
@@ -219,7 +208,6 @@ const CourseForm = ({course, creater, updater}) => { // state
                 enrolledID: []
             }]
         }
-
         let course = {
             courseID : courseID,
             courseName : courseName,
@@ -236,7 +224,6 @@ const CourseForm = ({course, creater, updater}) => { // state
             comment : [],
             tutorialInfo : tutorialArray
         }
-
         //console.log(course)
         if(formType === "Add"){
             if(window.confirm("Confirm to add course?"))
@@ -273,18 +260,7 @@ const CourseForm = ({course, creater, updater}) => { // state
         }
     }, [course])
 
-    /*
     useEffect(() => {
-        console.log(tutorialFormNumber)
-    }, [tutorialFormNumber])
-
-    useEffect(() => {
-        console.log(formType)
-    }, [formType])
-    */
-
-    useEffect(() => {
-        //console.log("tutorialIndex: " +tutorialIndex)
         if (tutorialIndex == null){
             setTutorialID('')
             setTutorialTime('')
@@ -298,7 +274,7 @@ const CourseForm = ({course, creater, updater}) => { // state
             setTutor(course.tutorialInfo[Number(tutorialIndex)].tutor)
             setTutorialCapacity(course.tutorialInfo[Number(tutorialIndex)].tutorialCapacity)
         }
-    }, [tutorialIndex])
+    }, [tutorialIndex, course.tutorialInfo])
 
     const handleTutorialIndexChange = (e) => {
         setTutorialIndex(e.target.value)
@@ -373,7 +349,6 @@ const CourseForm = ({course, creater, updater}) => { // state
                             <button className="btn2" onClick={handleClear}>Clear</button>
                         </div>
                     </div>
-
                 </div>
             </form>
         </>
@@ -403,7 +378,6 @@ const CourseCommentSection = ({course}) =>{
     }, [comment, courseID, course])
 
     return(
-        // <div id="courseCommentSection">
             <table id="courseComment">
                 <thead>
                     <tr>
@@ -417,7 +391,6 @@ const CourseCommentSection = ({course}) =>{
                     ))}
                 </tbody>
             </table>
-        // </div>
     )
 }
 

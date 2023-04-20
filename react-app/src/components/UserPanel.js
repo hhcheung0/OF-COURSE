@@ -76,29 +76,6 @@ const UserPanel = () => {
 
                         {/* userCourseTable-add */}
                         <CourseAddTable courseArray={getCourse()} arrayName={targetArrayName} grade={grade} user={user} />
-                        {/* <table id='userCourseTable-add'>
-                            <thead>
-                                <tr>
-                                    <th>Course ID</th>
-                                    <th>Course Name</th>
-                                    <th>Time</th>
-                                    <th>Location</th>
-                                    <th>Capacity</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>PHIL2410</td>
-                                    <td>Advanced Philosophy</td>
-                                    <td>Fri 8:30-10:15</td>
-                                    <td>CML Room 1</td>
-                                    <td>20</td>
-                                </tr>
-                            </tbody>
-                        </table> */}
-                        {/* <button id="add-button">Add</button> */}
-                        {/* <input type="submit" id="submit-button" value="Add" style={{float: "right"}}/> */}
                     </div>
                 </div>
             </div>
@@ -190,8 +167,6 @@ const UserForm = ({user}) => {
         setFormType('Add')
         //console.log(outline)
     }
-
-
     useEffect(() => {
         if(user.username){
             console.log(user.username)
@@ -204,7 +179,6 @@ const UserForm = ({user}) => {
     const handleUsernameChange = (e) => { console.log(e.target.id); setUsername(e.target.value); }
     const handlePasswordChange = (e) => { console.log(e.target.id); setPassword(e.target.value); }
     const handleAccessRightChange = (e) => { console.log(e.target.id); setAccessRight(e.target.value)}
-
     useEffect(() => {
         console.log(accessRight)
     }, [accessRight])
@@ -216,18 +190,14 @@ const UserForm = ({user}) => {
                     <p><label htmlFor="username">Username</label>
                         <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} disabled={formType==="Update" ? true : false}/></p>
                     <br />
-
                     <p><label htmlFor="password">Password</label>
                         <input type="password" id="password" name="password" onChange={handlePasswordChange} /></p>
-
-
                     <div id='toggle-button-panel'>
                         <input type="radio" name="accessRight" id="Student" value={false} onChange={handleAccessRightChange} />
                         <label htmlFor="Student">Student</label>
                         <input type="radio" name="accessRight" id="Admin" value={true} onChange={handleAccessRightChange} />
                         <label htmlFor="Admin">Admin</label>
                     </div>
-
                     <div className="column d-flex justify-content-center">
                     <button className="btn1" onClick={() => createOrUpdateUser({ username: username, password: password, accessRight: accessRight })}>{formType==="Update" ? "Update" : "Add"}</button>
                     <button className="btn2" onClick={handleClear}>Clear</button>
@@ -256,12 +226,6 @@ const UserCourseTable = ({ user, remover }) => {
     const [enrolledCourse, setEnrolledCourse] = useState({})
     const [completedCourse, setCompletedCourse] = useState({})
     const [shoppingCartCourse, setShoppingCartCourse] = useState({})
-    // const [ enrolledCourseID, setEnrolledCourseID ] = useState('')
-    // const [ enrolledTutorialID, setEnrolledTutorialID ] = useState('')
-    // const [ shoppingCartCourseID, setShoppingCartCourseID ] = useState('')
-    // const [ shoppingCartTutorialID, setShoppingCartTutorialID ] = useState('')
-    // const [ completedCourseID, setCompletedCourseID ] = useState('')
-    // const [ grade, setGrade] = useState()
     const [enrolledCourseIndex, setEnrolledCourseIndex] = useState(null)
     const [shoppingCartIndex, setShoppingCartCourseIndex] = useState(null)
     const [completedCourseIndex, setCompletedCourseIndex] = useState(null)
@@ -269,26 +233,12 @@ const UserCourseTable = ({ user, remover }) => {
     const handleEnrolledCourseChange = (e) => { console.log(e.target.id); setEnrolledCourse(e.target.value); }
     const handleCompletedCourse = (e) => { console.log(e.target.id); setCompletedCourse(e.target.value); }
     const handleShoppingCartCourse = (e) => { console.log(e.target.id); setShoppingCartCourse(e.target.value); }
-    // const handleEnrolledCourseIDChange = (e) => { console.log(e.target.id); setEnrolledCourseID(e.target.value); }
-    // const handlenrolledTutorialIDChange = (e) => { console.log(e.target.id); setEnrolledTutorialID(e.target.value); }
-    // const handleShopingCartCourseIDChange = (e) => { console.log(e.target.id); setShoppingCartCourseID(e.target.value); }
-    // const handleShoppingCartTutorialIDChange = (e) => { console.log(e.target.id); setShoppingCartTutorialID(e.target.value); }
-    // const handleCompletedCourseIDChange = (e) => { console.log(e.target.id); setCompletedCourseID(e.target.value); }
-    // const handleGradeChange = (e) => { console.log(e.target.id); setGrade(e.target.value); }
-
-    // useEffect(() => {
-    //     return
-    //     setEnrolledCourse({})
-    //     setCompletedCourse({})
-    //     setShoppingCartCourse({})
-    // }, [enrolledCourse, completedCourse, shoppingCartCourse, user])
 
     const handleRemove = useCallback((arrayName, courseID) => {
         remover(user.userID, arrayName, courseID)
     }, [remover, user])
 
     useEffect(() => {
-        // const { enrolledCourse, completedCourse, shoppingCartCourse } = getUserByToken()
         setEnrolledCourse(user.enrolledCourse)
         setCompletedCourse(user.completedCourse)
         setShoppingCartCourse(user.shoppingCartCourse)
@@ -299,16 +249,6 @@ const UserCourseTable = ({ user, remover }) => {
         if (!user.shoppingCartCourse) return
         setShoppingCartCourseIndex(user.shoppingCartCourse.length ? 0 : null)
     }, [user])
-
-    // useEffect(() => {
-    // //     if (user === {})
-    // //     return
-    // //     setEnrolledCourse([])
-    // //     setCompletedCourse([])
-    // //     setShoppingCartCourse([])
-    // if (!user.enrolledCourse || !user.completedCourse || !user.shoppingCartCourse) return
-    // set
-    // }, [enrolledCourse, completedCourse, shoppingCartCourse, user])
 
     return (
         <>
@@ -424,7 +364,6 @@ const gpaToGrade = {
 
 const CompletedTableRow = ({ completedCourse, completedGrade, remover }) => {
     const { course } = useCourse(completedCourse)
-
     const calculateGrade = (gpa) => {
         return gpaToGrade[gpa] || '';
     }
@@ -447,7 +386,6 @@ const CompletedTableRow = ({ completedCourse, completedGrade, remover }) => {
 
 const SearchBar = (props) => {
     const [search, setSearch] = useState('')
-
     const handleChange = (e) => {
         props.controller(e.target.value)
         setSearch(e.target.value)
@@ -501,9 +439,9 @@ const CourseAddTableRow = ({ course, arrayName, grade, user }) => {
     }, [])
 
     const handleAddToUser = useCallback((e) => {
-        // return if no user selected
+        // Return if no user selected
         if (!Object.keys(user).length) return alert('No user is selected!')
-        // return if add to completed course array but no grade provided
+        // Return if add to completed course array but no grade provided
         if (arrayName === 'completedCourse' && !grade.length) return alert('Please add grade for this function!')
         if (grade.length) addCourseToUser(user.userID, arrayName, course.courseID, Number(grade))
         else addCourseToUser(user.userID, arrayName, course.courseID, tutorialID)

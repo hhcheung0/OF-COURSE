@@ -9,13 +9,6 @@ import UserPanel from "../components/UserPanel";
 import CoursePanel from "../components/CoursePanel";
 
 const Admin = () => {
-//     // const [userID] = useState("");
-//     // const [username, setUsername] = useState("");
-//     // const [password, setPassword] = useState("");
-//     // const [user, setUser] = useState("");    // const [enrolledCourseID] = useState("");
-//     // // const [shoppingCartCourseID] = useState("");
-//     // // const [passedCourseID] = useState(""); // Completed Courses
-    // const [activeTab, setActiveTab] = useState("userPanelTab");
     const [activeTab, setActiveTab] = useState("userPanelTab");
     
     return (
@@ -36,24 +29,3 @@ const Admin = () => {
     );
 };
 export default Admin;
-
-//     // // get user info from DB
-//     // const { course } = useCourse(window.location.href.split("/").slice(-1)[0]);  
-
-// const UserSearchBar = (props) => {
-//     const handleChange = (e) => {
-//         props.controller(e.target.value)
-//         setuser(e.target.value)
-//     }
-//     const [search, setSearch] = useState('')
-//     return (
-//         <div id='search-bar'>
-//             <div>Search</div>
-//             <input
-//                 type="text"
-//                 onChange={handleChange}
-//                 value={search}
-//             />
-//         </div>
-//     )
-// }

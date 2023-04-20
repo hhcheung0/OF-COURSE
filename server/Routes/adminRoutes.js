@@ -10,7 +10,6 @@ const User = require('../Models/UserModel')
 const { adminCheck } = require('../Tools/authTools')
 
 // USER
-
 // get an array of all users
 router.get('/admin/user', adminCheck, (req, res) => {
     User.find().sort('userID')
