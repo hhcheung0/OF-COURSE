@@ -1,6 +1,6 @@
 import React from 'react'
 import './index.scss'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 // import components
 import Root from './components/Root'
@@ -39,10 +39,6 @@ const router = createBrowserRouter([
       {
         path: '/admin',
         element: <Admin />
-      },
-      {
-        path: '/osborn',
-        element: <Osborn />
       }
     ]
 

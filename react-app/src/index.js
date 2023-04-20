@@ -4,4 +4,4 @@ import './index.scss';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.querySelector('#app'));
-root.render(<App/>);
+root.render(<App />);

@@ -41,7 +41,7 @@ const UserPanel = () => {
                     <UserTable userArray={getUserArray()} controller={setUser} />
                     <br></br>
                     {/* userForm */}
-                    <UserForm user={user}/>
+                    <UserForm user={user} />
                 </div>
 
                 {/* Right-side of the userPanel */}
@@ -57,21 +57,21 @@ const UserPanel = () => {
                         <div id="addCourseCategory">
                             <h3>Add Courses</h3>
 
-                                <SearchBar controller={setSearch} />
-  
+                            <SearchBar controller={setSearch} />
 
-                                <select name="addCourseCategory" value={targetArrayName} onChange={handleSelect}>
-                                    <option value="enrolledCourse">Enrolled Courses</option>
-                                    <option value="shoppingCartCourse">Shopping Cart</option>
-                                    <option value="completedCourse">Completed Courses</option>
-                                </select>
 
-                            
-                            {targetArrayName == "completedCourse" ? 
-                            <div>
-                                <h5>Completed Course Grade:</h5>
-                                <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)}></input>
-                            </div> : <div></div>}
+                            <select name="addCourseCategory" value={targetArrayName} onChange={handleSelect}>
+                                <option value="enrolledCourse">Enrolled Courses</option>
+                                <option value="shoppingCartCourse">Shopping Cart</option>
+                                <option value="completedCourse">Completed Courses</option>
+                            </select>
+
+
+                            {targetArrayName == "completedCourse" ?
+                                <div>
+                                    <h5>Completed Course Grade:</h5>
+                                    <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)}></input>
+                                </div> : <div></div>}
                         </div>
 
                         {/* userCourseTable-add */}
@@ -143,17 +143,17 @@ const UserTableRow = ({ user, controller }) => {
                     <td> {user.userID} </td>
                     <td> {user.username} </td>
                     <td><button id="showUser" onClick={() => controller(user)}>Show</button></td>
-                    <td><button id="deleteUser" onClick={() => {if(window.confirm("Confirm to delete user?")){deleteUser(username)}}}>🗑Delete</button></td>
+                    <td><button id="deleteUser" onClick={() => { if (window.confirm("Confirm to delete user?")) { deleteUser(username) } }}>🗑Delete</button></td>
                 </tr>
             }
         </>
     )
 }
 
-const UserForm = ({user}) => {
+const UserForm = ({ user }) => {
     const { createOrUpdateUser } = useAdmin()
 
-    const [ formType, setFormType ] = useState('Add');
+    const [formType, setFormType] = useState('Add');
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [accessRight, setAccessRight] = useState(null)
@@ -168,7 +168,7 @@ const UserForm = ({user}) => {
         //console.log(outline)
     }
     useEffect(() => {
-        if(user.username){
+        if (user.username) {
             console.log(user.username)
             setFormType('Update')
         }
@@ -178,7 +178,7 @@ const UserForm = ({user}) => {
 
     const handleUsernameChange = (e) => { console.log(e.target.id); setUsername(e.target.value); }
     const handlePasswordChange = (e) => { console.log(e.target.id); setPassword(e.target.value); }
-    const handleAccessRightChange = (e) => { console.log(e.target.id); setAccessRight(e.target.value)}
+    const handleAccessRightChange = (e) => { console.log(e.target.id); setAccessRight(e.target.value) }
     useEffect(() => {
         console.log(accessRight)
     }, [accessRight])
@@ -188,7 +188,7 @@ const UserForm = ({user}) => {
             <div className="container" id="userForm">
                 <form>
                     <p><label htmlFor="username">Username</label>
-                        <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} disabled={formType==="Update" ? true : false}/></p>
+                        <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} disabled={formType === "Update" ? true : false} /></p>
                     <br />
                     <p><label htmlFor="password">Password</label>
                         <input type="password" id="password" name="password" onChange={handlePasswordChange} /></p>
@@ -199,8 +199,8 @@ const UserForm = ({user}) => {
                         <label htmlFor="Admin">Admin</label>
                     </div>
                     <div className="column d-flex justify-content-center">
-                    <button className="btn1" onClick={() => createOrUpdateUser({ username: username, password: password, accessRight: accessRight })}>{formType==="Update" ? "Update" : "Add"}</button>
-                    <button className="btn2" onClick={handleClear}>Clear</button>
+                        <button className="btn1" onClick={() => createOrUpdateUser({ username: username, password: password, accessRight: accessRight })}>{formType === "Update" ? "Update" : "Add"}</button>
+                        <button className="btn2" onClick={handleClear}>Clear</button>
                     </div>
                 </form>
             </div>
@@ -331,7 +331,7 @@ const EnrolledTableRow = ({ enrolledCourse, remover }) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => { if(window.confirm("Confirm to drop course?")){remover('enrolledCourse', course.courseID)} }}><BsTrash3 />Drop</button></td>
+                    <td><button onClick={() => { if (window.confirm("Confirm to drop course?")) { remover('enrolledCourse', course.courseID) } }}><BsTrash3 />Drop</button></td>
                 </tr>
             }
         </>
@@ -348,7 +348,7 @@ const ShoppingCartTableRow = ({ shoppingCartCourse, remover }) => {
                     <td>{course.courseID}</td>
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
-                    <td><button onClick={() => { if(window.confirm("Confirm to remove course?")){remover('shoppingCartCourse', course.courseID)} }}><BsTrash3 /> Remove</button></td>
+                    <td><button onClick={() => { if (window.confirm("Confirm to remove course?")) { remover('shoppingCartCourse', course.courseID) } }}><BsTrash3 /> Remove</button></td>
                 </tr>
             }
         </>
@@ -376,7 +376,7 @@ const CompletedTableRow = ({ completedCourse, completedGrade, remover }) => {
                     <td>{course.courseName}</td>
                     <td>{course.credit}</td>
                     <td>{calculateGrade(completedGrade)}</td>
-                    <td><button onClick={() => { if(window.confirm("Confirm to delete course?")){remover('completedCourse', course.courseID)} }}><BsTrash3 /> Delete</button></td>
+                    <td><button onClick={() => { if (window.confirm("Confirm to delete course?")) { remover('completedCourse', course.courseID) } }}><BsTrash3 /> Delete</button></td>
                 </tr>
             }
         </>
