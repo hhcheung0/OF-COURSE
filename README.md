@@ -14,7 +14,7 @@
 - [x] DFD Specification Document [ 25 Feb. (23:59:59) ] ----------------------8%
 - [x] GitHub Repository Creation [ 25 Feb. (23:59:59) ] -----------------------2%
 - [x] UML Specification and UI Design Document [ 25 Mar. (23:59:59) ] ----15%
-- [ ] Project Demo [ 13 and 14 Apr. ] -----------------------------------------60%
+- [x] Project Demo [ 14 Apr. ] -----------------------------------------60%
 - [ ] Testing Document [ 6 May (23:59:59) ] ----------------------------------8%
 - [ ] Final Commented Code  [ 6 May (23:59:59) ] ----------------------------2%
 
