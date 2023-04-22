@@ -3,7 +3,6 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import Timetable from './TimeTable';
 import ExportAsPng from './ExportPng';
-import CompactRelax from './CompactRelax'
 
 const TimetableTab = ({ courseArray }) => {
 
@@ -18,7 +17,7 @@ const TimetableTab = ({ courseArray }) => {
         pdf.save(pdfFileName);
     };
 
-    const Upperpart = ({ courseArray }) => {
+    const Upperpart = () => {
         return (
             <>
                 <h2>Export As: </h2>

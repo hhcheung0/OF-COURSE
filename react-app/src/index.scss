@@ -421,18 +421,6 @@ table{
       border-radius: 3px;
       padding-left: 8px;
     }
-    
-    /* Set a style for all buttons */
-    // button {
-    //   background-color: #04AA6D;
-    //   color: white;
-    //   padding: 14px 20px;
-    //   margin: 8px 0;
-    //   border: none;
-    //   cursor: pointer;
-    //   width: 100%;
-    // }
-  
   }
 }
 
@@ -677,23 +665,9 @@ table{
 // for all tables
 *{
   box-sizing: border-box;
-
-  // table,th,td{
-  //   th{
-
-  //     background-color:#04AA6D;
- 
-  //   }
-  //   tr:hover{
-  //     background-color: #277582;
-  //   }
-  //   th:hover{
-  //     background-color: #277582;
-  //     position: sticky;
-  //   }
-  // }
 }
 
+//formatting of CourseInfo.js
 #course-info,#comment-info {
   box-sizing: border-box;
 
@@ -725,9 +699,6 @@ table{
     margin-left: 5px;
     margin-right: 50px;
     flex: 0.9;
-
- //   flex: 1 5;
-
   }
   #tutorial-button {
       flex: 0.12;
@@ -1026,11 +997,6 @@ overflow-y:scroll;
       color: white;
     }
   }
-  // #courseCommentTable{
-  //   td {
-  //     color: black;
-  //   }
-  // }
 
   #table-panel {
     flex: 1;
@@ -1091,32 +1057,6 @@ overflow-y:scroll;
     }
   }
     
-  // table {
-  //   border: 2px solid #A7D094;
-  //   width: 100%;
-  //   color: $primary-color;
-  //   max-height: 50%;
-  //   overflow-y:scroll;
-  //   thead {
-  //     position: sticky;
-  //     top: 0;
-  //     th {
-  //       padding: 0.5em 1em;
-  //       text-align: center;
-  //       border: 2px 0 solid #A7D094;
-  //       background-clip: padding-box;
-  //     }
-  //   }
-  //   tbody {
-  //     color: black;
-  //     tr {
-  //       border: 2px solid #A7D094;
-  //       text-align: center;
-  //       td {
-  //         padding: 0 10px;
-  //       }
-  //     }
-  //   }
   #courseCommentSection{
     max-height: 15vh;
     overflow-y:scroll;

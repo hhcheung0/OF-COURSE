@@ -58,6 +58,7 @@ const CourseInfo = () => {
 
         }
     };
+    //Displays the lecture table of the course
     const CourseSection = ({ course }) => {
 
         const { parseTimecodeArray } = useTime();
@@ -120,6 +121,7 @@ const CourseInfo = () => {
             </>
         )
     }
+    //displays the buttons for user to choose tutorial session
     const TutorialButton = ({ tutorial }) => {
 
         return (
@@ -130,6 +132,7 @@ const CourseInfo = () => {
 
         )
     }
+    //displays the table for tutorial
     const TutorialTable = ({ tutorial }) => {
         const { parseTimecodeArray } = useTime();
         return (
@@ -160,6 +163,7 @@ const CourseInfo = () => {
             </table>
         )
     }
+    //controls the whole tutiral section (top right of screen)
     const TutorialSection = ({ course }) => {
 
         return (
@@ -190,6 +194,7 @@ const CourseInfo = () => {
             </>
         )
     }
+    //displays comments from the course
     const CommentTable = ({ comment }) => {
         //displays comment one by one
         return (
@@ -198,6 +203,7 @@ const CourseInfo = () => {
             </tr>
         )
     }
+    //whole table for comments
     const CommentSection = ({ course }) => {
         //Displays the comment section
         return (
@@ -220,10 +226,10 @@ const CourseInfo = () => {
 
         )
     }
-
+    //textarea for table
     const CommentInput = () => {
         const textareaRef = useRef();
-
+        //focus cursor to textarea and locates the end of the text input to focus
         useEffect(() => {
             if (textareaRef.current) {
                 const textarea = textareaRef.current;
@@ -269,7 +275,5 @@ const CourseInfo = () => {
 
     )
 }
-
-
 
 export default CourseInfo;
