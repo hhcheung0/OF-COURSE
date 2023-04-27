@@ -336,62 +336,22 @@ router.get('/data/user/getEnrolledCredit', (req, res) => {
         .catch(error => res.json({ error }))
 })
 
-/*router.get('/data/user/getGpa', (req,res) => {
-    const username = verifyToken(req.cookies.jwt)
-    //console.log(username)
-    
-    User.findOne({username})
-    .then(async user => {
-        //console.log(user)
-        async function findCourseCredit(courseID){
-            const course = await Course.findOne({courseID: { $eq: courseID}})
-            return course.credit
-        }
-
-        async function getUserCompletedCredit(array){
-            let completedCredit = 0;
-            for(i = 0; i < array.length; i++){
-                //console.log(array[i].courseID)
-                const credit = await findCourseCredit(array[i].courseID)
-                //console.log(credit)
-                completedCredit += credit;
-            }
-            return completedCredit;
-        }
-
-        async function getUserCompletedGrade(array){
-            let completedGrade = 0;
-            for(i = 0; i < array.length; i++){
-                //console.log(array[i].courseID)
-                const credit = await findCourseCredit(array[i].courseID)
-                const grade = array[i].grade
-                //console.log(credit)
-                completedGrade += (credit * grade);
-            }
-            return completedGrade;
-        }
-
-        let userCompletedCredit = await getUserCompletedGrade(user.completedCourse)/await getUserCompletedCredit(user.completedCourse); //need to input user.enrolledCourse
-        return userCompletedCredit
-    })
-    .then(gpa => {
-        //console.log(credit)
-        res.send({gpa: gpa})
-    })
-    .catch(error => res.json({error}))
-})*/
-
-
 router.get('/data/user/getGpa', async (req, res) => {
     try {
+
+        // Verify the user's token to get the username
         const username = verifyToken(req.cookies.jwt);
+
+        // Find the user in the database using the username
         const user = await User.findOne({ username });
 
+        // To find the credit of a course with the given course ID
         async function findCourseCredit(courseID) {
             const course = await Course.findOne({ courseID: { $eq: courseID } });
             return course.credit;
         }
 
+        // To calculate the completed credits of a user given an array of completed courses
         async function getUserCompletedCredit(array) {
             let completedCredit = 0;
             for (let i = 0; i < array.length; i++) {
@@ -401,6 +361,7 @@ router.get('/data/user/getGpa', async (req, res) => {
             return completedCredit;
         }
 
+        // To calculate the completed grade points of a user given an array of completed courses
         async function getUserCompletedGrade(array) {
             let completedGrade = 0;
             for (let i = 0; i < array.length; i++) {
@@ -411,10 +372,14 @@ router.get('/data/user/getGpa', async (req, res) => {
             return completedGrade;
         }
 
+        // To calculate the user's completed credit and grade points to get their GPA
         let userCompletedCredit = await getUserCompletedGrade(user.completedCourse) / await getUserCompletedCredit(user.completedCourse);
 
+        // Send the user's GPA as a response
         res.send({ gpa: userCompletedCredit });
+
     } catch (error) {
+        // If there is an error, send a JSON response with the error object
         res.json({ error });
     }
 });

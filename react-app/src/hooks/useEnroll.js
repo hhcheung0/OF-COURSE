@@ -162,12 +162,17 @@ const useEnroll = () => {
         });
     }
 
+    // Get the user's GPA data
     const getGpa = async () => {
         try {
             const res = await fetch('http://localhost:3001/data/user/getGpa', { credentials: 'include' });
             const json = await res.json();
+
+            // Return the user's GPA from the JSON object
             return json.gpa;
+
         } catch (error) {
+            // Log an error message if there was an error fetching the GPA
             console.error("Error fetching GPA:", error);
         }
     };
