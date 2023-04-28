@@ -13,7 +13,7 @@ const useCourse = (courseID) => {
 
     const { getUserByToken } = useUser()
 
-    // fetch all course data from server and store at "courseArray"
+    // Fetch all course data from server and store at "courseArray"
     // or fetch a specific course by the courseID argument
     useEffect(() => {
         fetch(`http://localhost:3001/data/course/${courseID? courseID: ''}`)
@@ -28,7 +28,7 @@ const useCourse = (courseID) => {
     // Retrieve the array from courseArray and apply filter and store in filtered CourseArray
     // This function is called whenever filter is updated
     useEffect(() => {
-        // helper function for returning boolean that whether the course satisfy the filter
+        // Helper function for returning boolean that whether the course satisfy the filter
         // (course) => bool
         const departmentFilter = (course) => {
             if (!filter.department.length) return true
@@ -47,14 +47,14 @@ const useCourse = (courseID) => {
         setFilteredCourseArray(courseArray.filter(course => departmentFilter(course) && classTimeFilter(course) && weekdayFilter(course)))
     }, [courseArray, filter])
 
-    // function for determining whether a course is eligible by user
+    // Function for determining whether a course is eligible by user
     // return true if user choose to show all courses
     // return true if there are no pre-requisite courses or the user has completed the pre-requisite course
     const isEligible = (course) => {
         const { completedCourse } = getUserByToken()
         if (!eligibleToggle) return true
 
-        // return true if
+        // Return true if
         // (no prerequisite for the course or the user has completed the requirement) and
         // (no forbidden course for the course or the user did not complete the forbidden course) and
         // the user did not complete the course
@@ -66,14 +66,14 @@ const useCourse = (courseID) => {
             !completedCourse.map(course => course.courseID).includes(course.courseID)
         )
     }
-    // function for searching keywords in courseID and courseName
+    // Function for searching keywords in courseID and courseName
     const searchArray = (courseArray) => {
         if (!course) return courseArray
         return courseArray.filter(course => course.courseID.toLowerCase().includes(search.toLowerCase()) || course.courseName.toLowerCase().includes(search.toLowerCase()))
     }
 
 
-    // get function for retrieving either the filtered or whole course array
+    // Get function for retrieving either the filtered or whole course array
     // the eligible filter is implemented here
     const getCourse = () => {
         if (Object.values(filter).some(array => array.length)) return searchArray(filteredCourseArray).filter(course => isEligible(course))

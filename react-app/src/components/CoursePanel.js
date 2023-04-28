@@ -1,8 +1,9 @@
-// ADMIN PAGE
+// ADMIN PAGE - CoursePanel (Course Information Tab)
+
 import React, { useState, useEffect} from "react";
 import { BrowserRouter, Route, Routes, Link, useLocation, useNavigate } from "react-router-dom";
 
-// import custom hooks
+// Import custom hooks
 import useCourse from '../hooks/useCourse'
 import useTime from '../hooks/useTime'
 import useConstant from '../hooks/useConstant'
@@ -12,13 +13,16 @@ import useAdmin from "../hooks/useAdmin";
 
 
 const CoursePanel = () => {
-
+    // Define various state variables using the useState hook
+    // and import the functions from the custom hook
     const { getCourse, setSearch } = useCourse();
     const { parseTimecodeArray } = useTime();
     const [ course, setCourse ] = useState({});
     const { removeComment } = useComment();
     const { createCourse, updateCourse, deleteCourse } = useAdmin();
 
+    // Render the CoursePanel component with different child components,
+    // including SearchBar, CourseTable, CourseForm, and CourseCommentSection
     return (
         <div id="admin-course">
             <div className="row">
@@ -48,8 +52,9 @@ const CoursePanel = () => {
     );
 }
 
-
+// Display a search bar of courses
 const SearchBar = (props) => {
+    // State variable using the useState hook
     const [search, setSearch] = useState('')
 
     const handleChange = (e) => {
@@ -69,6 +74,7 @@ const SearchBar = (props) => {
     )
 }
 
+// Display a table of courses
 const CourseTable = ({courseArray, controller, deleter}) => {
 
     return (
@@ -87,6 +93,7 @@ const CourseTable = ({courseArray, controller, deleter}) => {
 
                 <tbody>
                     {courseArray && courseArray.map((course, idx) => (
+                        // Render a row for each course using the CourseTableRow component
                         <CourseTableRow course={course} key={idx} controller={controller} deleter={deleter}/>
                     ))}
                 </tbody>
@@ -95,7 +102,9 @@ const CourseTable = ({courseArray, controller, deleter}) => {
     )
 }
 
+// Display a row for each course
 const CourseTableRow = ({course, controller, deleter}) => {
+    // Import a custom hook "useTime"
     const { parseTimecodeArray } = useTime()
 
     return (
@@ -103,11 +112,13 @@ const CourseTableRow = ({course, controller, deleter}) => {
         {course &&
             <tr>
                 <td>
+                    {/* On clicking courseID, show detailed course and tutorial information, if available, to the form below */}
                     <div className='link' onClick={() => controller(course)}>
                         {course.courseID}
                     </div>
                 </td>
                 <td>
+                    {/* On clicking courseName, show detailed course and tutorial information, if available, to the form below */}
                     <div className='link' onClick={() => controller(course)}>
                         {course.courseName}
                     </div>
@@ -117,6 +128,7 @@ const CourseTableRow = ({course, controller, deleter}) => {
                 </td>
                 <td>{course.courseLocation}</td>
                 <td>{course.courseCapacity - course.enrolledID.length}/{course.courseCapacity}</td>
+                {/* "Delete" button for course */}
                 <td><button onClick={() => {if(window.confirm("Confirm to delete course?")){deleter(course.courseID)}}}>🗑Delete</button></td>
             </tr>
         }
@@ -124,7 +136,9 @@ const CourseTableRow = ({course, controller, deleter}) => {
     )
 }
 
+// Display a form of a course and tutorial information, if available
 const CourseForm = ({course, creater, updater}) => { // state
+    // State variables using the useState hook
     const [ formType, setFormType ] = useState('Add');
 
     const [ courseID, setCourseID ] = useState(''); // handleCourseIDChange?
@@ -148,7 +162,7 @@ const CourseForm = ({course, creater, updater}) => { // state
 
     const [ tutorialIndex, setTutorialIndex ] = useState(null)
     const [ tutorialFormNumber, setTutorialFormNubmer ] = useState([]);
-
+    // Called when the following (respective) variables change
     const handleCourseIDChange = (e) => {console.log(e.target.id); setCourseID(e.target.value);}
     const handleCourseNameChange = (e) => { console.log(e.target.id); setCourseName(e.target.value); }
     const handleCourseTimeChange = (e) => { console.log(e.target.id); setCourseTime(e.target.value);  }
@@ -167,7 +181,7 @@ const CourseForm = ({course, creater, updater}) => { // state
     const handleTutorialLocationChange = (e) => {console.log(e.target.id); setTutorialLocation(e.target.value); }
     const handleTutorChange = (e) => {console.log(e.target.id); setTutor(e.target.value); }
     const handleTutorialCapacityChange = (e) => {console.log(e.target.id); setTutorialCapacity(e.target.value); }
-
+    // Called when the admin clicks the "Clear" button
     const handleClear = (e) => {
         e.preventDefault()
         setFormType('Add')
@@ -190,15 +204,19 @@ const CourseForm = ({course, creater, updater}) => { // state
         setTutorialIndex(null)
         setTutorialFormNubmer([])
     }
-
+    
     const handleSubmit = (e) => {
         e.preventDefault()
+        // Pre-requisite Course(s) field can be left empty
         let prerequisiteCourseArray = [];
         if(prerequisiteCourseID && prerequisiteCourseID != "") prerequisiteCourseArray = String(prerequisiteCourseID).split(',');
+        // Forbidden Course(s) field can be left empty
         let forbiddenCourseArray = [];
         if(forbiddenCourseID && forbiddenCourseID != "") forbiddenCourseArray = String(forbiddenCourseID).split(',');
+        // Tutorial information (Tutorial ID, Time, Location, Tutor, and Capacity) can be left empty
         let tutorialArray = [];
         if(tutorialID && tutorialID != ""){
+            // If tutorial information is not empty, 
             tutorialArray = [{
                 tutorialID: tutorialID,
                 tutorialTime : String(tutorialTime).split(','),
@@ -225,15 +243,18 @@ const CourseForm = ({course, creater, updater}) => { // state
             tutorialInfo : tutorialArray
         }
         //console.log(course)
+        // "Add" button
         if(formType === "Add"){
             if(window.confirm("Confirm to add course?"))
                 creater(course)
         }else{
+        // "Update" button
             if(window.confirm("Confirm to update course?"))
                 updater(course)
         }
     }
-
+    // Use the useEffect hook to decide when to change the form to "Update", instead of "Add" 
+    // and fetch the course data from the form
     useEffect(() => {
         if(course.courseID){
             setFormType("Update")
@@ -259,7 +280,7 @@ const CourseForm = ({course, creater, updater}) => { // state
             setTutorialFormNubmer([...new Array(course.tutorialInfo.length).keys()])
         }
     }, [course])
-
+    
     useEffect(() => {
         if (tutorialIndex == null){
             setTutorialID('')
@@ -275,7 +296,7 @@ const CourseForm = ({course, creater, updater}) => { // state
             setTutorialCapacity(course.tutorialInfo[Number(tutorialIndex)].tutorialCapacity)
         }
     }, [tutorialIndex, course.tutorialInfo])
-
+    // Called when the tutorial index changes
     const handleTutorialIndexChange = (e) => {
         setTutorialIndex(e.target.value)
     }
@@ -355,20 +376,27 @@ const CourseForm = ({course, creater, updater}) => { // state
     )
 }
 
+// Display a row of course comment
 const CourseCommentTable = ({courseID, comment}) =>{
+    // Import a custom hook "useComment"
     const { removeComment} = useComment();
     const [activeTab, setActiveTab] = useState("coursePanelTab");
     
     return(
                <tr>
                     <td>{comment}</td>
+                    {/* "Delete" button for comment */}
                     <td><button id="deleteComment" onClick={() => {if(window.confirm("Confirm to delete comment?")){removeComment(courseID,comment); window.location.reload()}}}>🗑Delete</button></td>
                </tr>
     )
-   }
+}
+
+// Display the course comment section
 const CourseCommentSection = ({course}) =>{
+    // Define various state variables using the useState hook
     const [ comment, setComment ] = useState(['']);
     const [ courseID, setCourseID ] = useState('');
+    
     const handleCommentChange = (e) => {console.log(e.target.id); setComment(e.target.value); }
     const handleCourseIDChange = (e) => {console.log(e.target.id); setCourseID(e.target.value); }
 
@@ -387,6 +415,7 @@ const CourseCommentSection = ({course}) =>{
                 </thead>
                 <tbody>
                     {course.comment && course.comment.map((comment,idx)=>(
+                        // Render a row of course comment using the CourseCommentTable component
                         <CourseCommentTable comment={comment} courseID={courseID} key ={idx}/>
                     ))}
                 </tbody>
