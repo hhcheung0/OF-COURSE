@@ -183,7 +183,7 @@ router.post('/admin/course', adminCheck, (req, res) => {
     Course.findOne({courseID: req.body['courseID']})
     .then(existCourse => {
         if (existCourse) {
-            return res.json({success: true, message: "course already exists."});
+            return res.json({success: true, message: "Course already exists."});
         }
         Course.create(req.body)
         .then((course) => {
