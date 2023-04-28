@@ -6,7 +6,7 @@ const useAdmin = () => {
     const [searchString, setSearchString] = useState('')
     const navigate = useNavigate()
 
-    // fetch userArray at first render
+    // Fetch userArray at first render
     useEffect(() => {
         fetch('http://localhost:3001/admin/user', {
             credentials: 'include'
@@ -18,13 +18,13 @@ const useAdmin = () => {
         })
     }, [])
 
-    // returning a searched user array
+    // Return a searched userArray
     const getUserArray = useCallback(() => {
         if (!searchString.length) return userArray
         else return userArray.filter(user => (String(user.userID) === searchString || user.username.toLowerCase().includes(searchString.toLowerCase())))
     }, [userArray, searchString])
 
-    // create/update an user, user: {username: String, password: String, accessRight: Boolean}
+    // Create/update an user, user: {username: String, password: String, accessRight: Boolean}
     // createOrUpdateUser({username: "admin", password:"admin", accessRight: true})
     const createOrUpdateUser = useCallback((user) => {
         fetch('http://localhost:3001/admin/user', {
@@ -43,7 +43,7 @@ const useAdmin = () => {
         })
     }, [navigate])
 
-    // delete an user, username: String
+    // Delete an user, username: String
     // deleteUser("admin")
     const deleteUser = useCallback((username) => {
         fetch('http://localhost:3001/admin/user', {
@@ -62,9 +62,9 @@ const useAdmin = () => {
         })
     }, [navigate])
 
-    // add a course into user's array
-    // if add to complete course array: addCourseToUser(userID, completedCourse, courseID, grade)
-    // if others: addCourseToUser(userID, completedCourse, courseID, tutorialID)
+    // Add a course into user's array
+    // If add to complete course array: addCourseToUser(userID, completedCourse, courseID, grade)
+    // If others: addCourseToUser(userID, completedCourse, courseID, tutorialID)
     const addCourseToUser = useCallback((userID, arrayName, courseID, residual) => {
         fetch('http://localhost:3001/admin/user/addCourse', {
             method: 'PUT',
@@ -79,7 +79,7 @@ const useAdmin = () => {
         })
     }, [navigate])
 
-    // remove a course from user's array
+    // Remove a course from user's array
     const removeCourseFromUser = useCallback((userID, arrayName, courseID) => {
         fetch('http://localhost:3001/admin/user/removeCourse', {
             method: 'PUT',
@@ -94,7 +94,7 @@ const useAdmin = () => {
         })
     }, [navigate])
 
-    // create a course, course: {
+    // Create a course, course: {
     //     courseID: String,
     //     courseName: String,
     //     courseTime: [String],
@@ -134,6 +134,7 @@ const useAdmin = () => {
         })
     }, [navigate])
 
+    // Update a course
     const updateCourse = useCallback((course) => {
         fetch('http://localhost:3001/admin/course', {
             method: 'PUT',
@@ -151,7 +152,7 @@ const useAdmin = () => {
         })
     }, [navigate])
 
-    // delete a course by courseID
+    // Delete a course by courseID
     const deleteCourse = useCallback((courseID) => {
         fetch('http://localhost:3001/admin/course', {
             method: 'DELETE',

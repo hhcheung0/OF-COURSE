@@ -2,15 +2,15 @@ const { Router } = require('express');
 const bcrypt = require('bcrypt')
 const router = Router();
 
-// require models
+// Required models
 const Course = require('../Models/CourseModel')
 const User = require('../Models/UserModel')
 
-// require tools
+// Required tools
 const { adminCheck } = require('../Tools/authTools')
 
 // USER
-// get an array of all users
+// Get an array of all users
 router.get('/admin/user', adminCheck, (req, res) => {
     User.find().sort('userID')
     .then(userArray => {
@@ -20,7 +20,7 @@ router.get('/admin/user', adminCheck, (req, res) => {
     .catch(error => res.json({error}))
 });
 
-// get a specific user
+// Get a specific user
 router.get('/admin/user/:userID', (req, res) => {
     User.findOne(req.params)
     .then(user => {
@@ -30,7 +30,7 @@ router.get('/admin/user/:userID', (req, res) => {
     .catch(error => res.json({error}))
 });
 
-// create an user
+// Create an user
 router.post('/admin/user', adminCheck, async (req, res) => {
     try {
       const hashedPassword = await bcrypt.hash(req.body['password'], 10);
@@ -67,19 +67,19 @@ router.post('/admin/user', adminCheck, async (req, res) => {
     }
   });
 
-// delete an user by username
+// Delete an user by username
 router.delete('/admin/user', adminCheck, (req, res) => {
     User.deleteOne({username: req.body.username})
     .then((result) => {
-        // delete request can not be recognized
+        // Delete request can not be recognized
         if (!result.acknowledged) return res.json({success: false, message: "unknown error"})
-        // if nothing is deleted
+        // If nothing is deleted
         else if (!result.deletedCount) return res.json({success: false, message: "No user is found"})
         else return res.json({success: true, message: 'Successfully deleted user'})
     })
 })
 
-// add course into user's array
+// Add course into user's array
 router.put('/admin/user/addCourse', adminCheck, (req, res) => {
     Course.findOne({courseID: req.body.courseID})
     .then((course) => {
@@ -96,7 +96,7 @@ router.put('/admin/user/addCourse', adminCheck, (req, res) => {
     })
 })
 
-// remove course from user's array
+// Remove course from user's array
 router.put('/admin/user/removeCourse', adminCheck, (req, res) => {
     Course.findOne({courseID: req.body.courseID})
     .then(course => {
@@ -113,7 +113,7 @@ router.put('/admin/user/removeCourse', adminCheck, (req, res) => {
     })
 })
 
-// update an user (username & password only)
+// Update an user (username & password only)
 router.post('/admin/user/updateUser', (req, res) => {
     User.findOneAndUpdate({username: req.body['username']}, {
         username: req.body['username'],
