@@ -1,4 +1,5 @@
 const useEnroll = () => {
+    //hooks to add the course and tutorial to the shopping cart with the corresponding IDs
     const addToCart = (courseID, tutorialID) => {
         return fetch('http://localhost:3001/shoppingCart/add', {
             method: 'PUT',
@@ -11,11 +12,11 @@ const useEnroll = () => {
         })
         .then(res => res.json())
         .then(json => {
-            console.log(json)
             return json
         });
     }
 
+    //hooks to remove the course and its tutorial from the shopping cart with the corresponding course ID
     const removeFromCart = (courseID) => {
         return fetch('http://localhost:3001/shoppingCart/remove', {
             method: 'PUT',
@@ -27,11 +28,11 @@ const useEnroll = () => {
         })
         .then(res => res.json())
         .then(json => {
-            console.log(json)
             return json
         });
     }
 
+    //hooks to enroll the course and the tutorial from the shopping cart with the corresponding IDs
     const enroll = (courseID, tutorialID) => {
         return fetch('http://localhost:3001/enrolledCourse/enroll', {
             method: 'PUT',
@@ -44,11 +45,11 @@ const useEnroll = () => {
         })
         .then(res => res.json())
         .then(json => {
-            //console.log(json)
             return json
         });
     }
 
+    //hooks to drop the course and the tutorial from the enrolled course with the corresponding IDs
     const drop = (courseID, tutorialID) => {
         return fetch('http://localhost:3001/enrolledCourse/drop', {
             method: 'PUT',
@@ -61,12 +62,13 @@ const useEnroll = () => {
         })
         .then(res => res.json())
         .then(json => {
-            console.log(json)
             return json
         });
     }
 
+    //hooks to swap the enrolled course with the course in shopping cart with their corresponding IDs
     const swap = (enrolledCourseID, enrolledTutorialID, cartCourseID, cartTutorialID) => {
+        //Drop the enrolled course first
         fetch('http://localhost:3001/enrolledCourse/drop', {
             method: 'PUT',
             credentials: 'include',
@@ -78,7 +80,7 @@ const useEnroll = () => {
         })
         .then(res => res.json())
         .then(json => {
-            //console.log(json);
+            //Enroll the course from shopping cart then
             fetch('http://localhost:3001/enrolledCourse/enroll', {
                 method: 'PUT',
                 credentials: 'include',
@@ -90,8 +92,8 @@ const useEnroll = () => {
             })
             .then(res => res.json())
             .then(json => {
-                //console.log(json);
-                
+                //If successful to enroll the course in shopping cart,
+                //then add the original enrolled course (dropped now) back to shopping cart
                 if(json.success){
                     fetch('http://localhost:3001/shoppingCart/add', {
                         method: 'PUT',
@@ -111,8 +113,9 @@ const useEnroll = () => {
                         console.error(error);
                         alert(error.error); // Display the error message
                     });
-                    //.then(window.location.reload())
                 }else{
+                    //If unsuccessful to enroll the course in shopping cart,
+                    //then enroll back the original enrolled course (dropped now)
                     fetch('http://localhost:3001/enrolledCourse/enroll', {
                         method: 'PUT',
                         credentials: 'include',
@@ -132,11 +135,11 @@ const useEnroll = () => {
                         alert(error.error); // Display the error message
                     });
                 }
-                
-            });
+             });
         })
     }
 
+    //remove the course record from the completed course
     const removeFromCompletedCourse = (courseID) => {
         return fetch('http://localhost:3001/completedCourse/remove', {
             method: 'PUT',
@@ -148,16 +151,15 @@ const useEnroll = () => {
         })
         .then(res => res.json())
         .then(json => {
-            console.log(json)
             return json
         });
     }
 
+    //get user's enrolled credit from all the enrolled courses
     const getEnrolledCredit = () => {
         return fetch('http://localhost:3001/data/user/getEnrolledCredit', {credentials: 'include'})
         .then(res => res.json())
         .then(json => {
-            //console.log(json)
             return json.credit
         });
     }
