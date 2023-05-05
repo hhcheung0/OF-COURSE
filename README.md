@@ -20,6 +20,8 @@ Unlike middle schools or high schools where students do not have the most freedo
 - [x] Final Commented Code  [ 6 May (23:59:59) ] ----------------------------2%
 
 ## Testing environment
+- Browser: Google Chrome (Version 112 or above), Microsoft Edge (Version 108 or above) 
+- OS: Windows (10,11)
 
 ## Download and Open project
 1. git clone from VScode or any IDE
