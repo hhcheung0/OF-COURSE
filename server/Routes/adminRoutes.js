@@ -117,7 +117,6 @@ router.put('/admin/user/removeCourse', adminCheck, (req, res) => {
 router.post('/admin/user/updateUser', (req, res) => {
     User.findOneAndUpdate({username: req.body['username']}, {
         username: req.body['username'],
-// ???
         password: bcrypt.hashSync(req.body['password'], 10) // hashing?
     })
     .then(() => {
@@ -129,7 +128,6 @@ router.post('/admin/user/updateUser', (req, res) => {
 // userID, username, password, accessRight, maxCredit, 
 // enrolledCourse, completedCourse, shoppingCartCourse
 
-// ???
 // update an user's course info (add/create OR delete)
 // add/create course (Enrolled Courses/Shopping Cart/Completed Courses )
 router.post('/admin/user/update/addCourse', (req, res) => {
@@ -341,8 +339,7 @@ router.post('/admin/course/update', (req, res) => {
     Course.findOneAndUpdate({courseID: req.body['courseID']}, {
         courseID: req.body['courseID'],
         courseName: req.body['courseName'],
-// ???
-        courseTime: [req.body['courseTime']], // how to store into an array?
+        courseTime: [req.body['courseTime']], // to store into an array
         courseLocation: req.body['courseLocation'],
         instructor: req.body['instructor'],
         department: req.body['department'],
@@ -351,9 +348,8 @@ router.post('/admin/course/update', (req, res) => {
         forbiddenCourseID: [req.body['forbiddenCourseID']], // an array
         credit: req.body['credit'],
         outline: req.body['outline'],
-// ???
         tutorialInfo: [req.body['tutid'], req.body['tuttime'], req.body['tutloc'], req.body['tutor'], req.body['tutcap']] 
-        // Tutorial form info. into one object arr??ay
+        // Tutorial form info. into one object array
     })
     .then(() => {
         res.send("Course data updated successfully.");
