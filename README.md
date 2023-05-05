@@ -19,7 +19,7 @@ Unlike middle schools or high schools where students do not have the most freedo
 - [x] Testing Document [ 6 May (23:59:59) ] ----------------------------------8%
 - [x] Final Commented Code  [ 6 May (23:59:59) ] ----------------------------2%
 
-## Testing environment
+## Environment
 - Browser: Google Chrome (Version 112 or above), Microsoft Edge (Version 108 or above) 
 - OS: Windows (10,11)
 
