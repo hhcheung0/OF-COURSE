@@ -1,4 +1,5 @@
 # OF-COURSE
+Unlike middle schools or high schools where students do not have the most freedom to select the courses they want to take, the university offers their students a wide range of courses to select from, based on their major/minor requirements, academic interests, research area, or future/career preparation. What would happen to the University and the Registration Office if thousands of students all had to run to the office in person for course registration? With the online course registration software system, students no longer need to fill in paper forms and manually hand them over to the office, but they can do the course registration at their convenience with easy reference to the course information and the management of their own courses. Once they sign up and log into the system, students can assess their profile pages and self-enroll in different courses by searching, selecting, adding, and dropping the courses. It also allows the university and the registration office to access the system and easily handle the data through admin functions, in which they can view all course and user information and control course enrollment if needed.
 
 ## Group Members
 * CHU Tsz Chim James 1155142348
@@ -15,8 +16,8 @@
 - [x] GitHub Repository Creation [ 25 Feb. (23:59:59) ] -----------------------2%
 - [x] UML Specification and UI Design Document [ 25 Mar. (23:59:59) ] ----15%
 - [x] Project Demo [ 14 Apr. ] -----------------------------------------60%
-- [ ] Testing Document [ 6 May (23:59:59) ] ----------------------------------8%
-- [ ] Final Commented Code  [ 6 May (23:59:59) ] ----------------------------2%
+- [x] Testing Document [ 6 May (23:59:59) ] ----------------------------------8%
+- [x] Final Commented Code  [ 6 May (23:59:59) ] ----------------------------2%
 
 ## Download and Open project
 1. git clone from VScode or any IDE
@@ -59,8 +60,9 @@
 4. Commit and push.
 
 ## Division of work
-1. Course Browsing (Hinson)
-2. Profile Page (Hangkhun)
+0. Sign up page / Login page
+1. Homepage (Hangkhun)
+2. Profile Page (Osborn)
 3. Course Information Page (James)
 4. Admin Page (Suzie)
-5. Course Enrolment (Osborn)
+5. Course Browsing (Hinson)
